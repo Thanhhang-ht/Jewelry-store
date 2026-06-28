@@ -36,7 +36,7 @@ let wishlistProducts = [
   {
     id: 6,
     name: "Nhẫn bạc đính đá CZ",
-    price: 61000,
+    price: 610000,
     image: "../image/image 4.png",
   },
   {

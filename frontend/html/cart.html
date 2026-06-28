@@ -63,65 +63,8 @@
                 <div>Thao tác</div>
             </div>
 
-            <!-- ITEM 1 -->
-            <div class="cart-item">
-                <div class="check">
-                    <i class="fa-regular fa-circle-check"></i>
-                </div>
-
-                <div class="product">
-                    <img src="../image/image 27.png">
-                    <div class="info">
-                        <h3>Dây chuyền bạc nữ</h3>
-                        <p>Chất liệu: Bạc 925</p>
-                        <p>Mã: DC001</p>
-                    </div>
-                </div>
-
-                <div class="price">670.000đ</div>
-
-                <div class="quantity">
-                    <button>-</button>
-                    <span>1</span>
-                    <button>+</button>
-                </div>
-
-                <div class="total">670.000đ</div>
-
-                <div class="delete">
-                    <i class="fa-regular fa-trash-can"></i>
-                </div>
-            </div>
-
-            <!-- ITEM 2 -->
-            <div class="cart-item">
-                <div class="check">
-                    <i class="fa-regular fa-circle"></i>
-                </div>
-
-                <div class="product">
-                    <img src="../image/image 23.png">
-                    <div class="info">
-                        <h3>Nhẫn kim cương thiết kế</h3>
-                        <p>Chất liệu: Bạc 999</p>
-                        <p>Mã: NT001</p>
-                    </div>
-                </div>
-
-                <div class="price">950.000đ</div>
-
-                <div class="quantity">
-                    <button>-</button>
-                    <span>2</span>
-                    <button>+</button>
-                </div>
-
-                <div class="total">1.900.000đ</div>
-
-                <div class="delete">
-                    <i class="fa-regular fa-trash-can"></i>
-                </div>
-            </div>
+            <!-- CONTAINER ĐỂ JS RENDER ĐỘNG -->
+            <div id="cartItems"></div>
 
             <!-- FOOTER -->
             <div class="cart-footer">
@@ -278,6 +221,7 @@
         </div>
     </footer>
 
+    <script src="../js/db.js"></script>
     <script src="../js/cart.js"></script>
 
 </body>

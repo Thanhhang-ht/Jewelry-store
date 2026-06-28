@@ -1,9 +1,11 @@
 {
   "name": "jewelry-store",
   "version": "1.0.0",
-  "description": "",
+  "description": "Dự án khóa luận tốt nghiệp - Jewelry Store",
   "keywords": [
-    "project"
+    "project",
+    "jewelry",
+    "ecommerce"
   ],
   "homepage": "https://github.com/Thanhhang-ht/Myproject#readme",
   "bugs": {
@@ -16,12 +18,15 @@
   "license": "ISC",
   "author": "thanhhang",
   "type": "commonjs",
-  "main": "main.js",
+  "main": "backend/server.js",
   "scripts": {
-    "start":"",
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
     "express": "^5.2.1"
   },
   "devDependencies": {

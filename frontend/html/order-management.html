@@ -6,11 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý đơn hàng - Jewelry Store</title>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/order-management.css">
-
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 </head>
 
@@ -18,18 +15,12 @@
 
     <div class="dashboard-container">
 
-        <!-- =========================
-                SIDEBAR
-        ========================= -->
-
+        <!-- SIDEBAR -->
         <aside class="sidebar">
 
             <div class="logo">
-
                 <h1>Jewelry Store</h1>
-
                 <p>ADMIN PANEL</p>
-
             </div>
 
             <hr>
@@ -88,377 +79,204 @@
             </ul>
 
             <div class="sidebar-user">
-
                 <div class="avatar">
                     <i class="fa-solid fa-user"></i>
                 </div>
 
                 <div class="user-info">
-
                     <h3 id="adminName">Admin</h3>
-
                     <span>Quản trị viên</span>
-
                 </div>
 
                 <i class="fa-solid fa-chevron-down"></i>
-
             </div>
 
         </aside>
 
-        <!-- =========================
-                MAIN CONTENT
-        ========================= -->
-
+        <!-- MAIN CONTENT -->
         <main class="main-content">
 
-            <!-- =========================
-                    HEADER
-            ========================= -->
-
+            <!-- TOPBAR -->
             <header class="topbar">
 
                 <div class="topbar-left">
-
                     <button class="menu-btn">
                         <i class="fa-solid fa-bars"></i>
                     </button>
 
                     <h2>Quản lý đơn hàng</h2>
-
                 </div>
 
                 <div class="topbar-right">
-
                     <button class="notification-btn">
                         <i class="fa-regular fa-bell"></i>
                     </button>
-
                 </div>
 
             </header>
 
-            <!-- =========================
-                    ORDER CONTAINER
-            ========================= -->
-
+            <!-- ORDER -->
             <section class="order-container">
-                <!-- =========================
-        TOOLBAR
-========================= -->
 
+                <!-- TOOLBAR -->
                 <div class="order-toolbar">
 
-                    <!-- LEFT -->
-
+                    <!-- FILTER -->
                     <div class="status-filter">
 
                         <button class="status-btn active" data-status="all">
-                            Tất cả
-                            (<span id="countAll">25</span>)
+                            Tất cả (<span id="countAll">25</span>)
                         </button>
 
                         <button class="status-btn" data-status="processing">
-                            Chờ xử lý
-                            (<span id="countProcessing">8</span>)
+                            Chờ xử lý (<span id="countProcessing">8</span>)
                         </button>
 
                         <button class="status-btn" data-status="shipping">
-                            Đang vận chuyển
-                            (<span id="countShipping">6</span>)
+                            Đang vận chuyển (<span id="countShipping">6</span>)
                         </button>
 
                         <button class="status-btn" data-status="completed">
-                            Hoàn thành
-                            (<span id="countCompleted">10</span>)
+                            Hoàn thành (<span id="countCompleted">10</span>)
                         </button>
 
                         <button class="status-btn" data-status="cancelled">
-                            Đã hủy
-                            (<span id="countCancelled">1</span>)
+                            Đã hủy (<span id="countCancelled">1</span>)
                         </button>
 
                     </div>
 
-                    <!-- RIGHT -->
-
+                    <!-- SEARCH -->
                     <div class="search-box">
 
                         <input type="text" id="searchOrder" placeholder="Tìm kiếm mã đơn hàng, tên khách hàng">
 
                         <button id="searchBtn">
-
                             <i class="fa-solid fa-magnifying-glass"></i>
-
                         </button>
 
                     </div>
 
                 </div>
 
-                <!-- =========================
-        TABLE
-========================= -->
-
+                <!-- TABLE -->
                 <div class="table-wrapper">
 
                     <table class="order-table">
 
                         <thead>
-
                             <tr>
-
                                 <th>Mã đơn</th>
-
                                 <th>Khách hàng</th>
-
                                 <th>SĐT</th>
-
                                 <th>Ngày đặt</th>
-
                                 <th>Tổng tiền</th>
-
                                 <th>Trạng thái</th>
-
                                 <th>Thanh toán</th>
-
                                 <th>Thao tác</th>
-
                             </tr>
-
                         </thead>
 
-                        <tbody id="orderTableBody">
-
+                        <!-- GIỮ NGUYÊN DATA MẪU -->
+                        <tbody id="orderTableBody" data-mode="static">
 
                             <!-- Order 1 -->
-                            <tr>
+                            <tr data-order-id="DH025">
 
                                 <td>DH025</td>
-
                                 <td>Phan Thanh Hằng</td>
-
                                 <td>0365954848</td>
-
                                 <td>10/12/2026 19:30</td>
-
                                 <td class="price">1.200.000</td>
 
                                 <td>
-
-                                    <span class="status processing">
-                                        Đang xử lý
-                                    </span>
-
+                                    <span class="status processing">Đang xử lý</span>
                                 </td>
 
                                 <td>
-
-                                    <span class="payment cod">
-                                        COD
-                                    </span>
-
+                                    <span class="payment cod">COD</span>
                                 </td>
 
                                 <td>
-
                                     <div class="action-group">
-
                                         <button class="action-btn view-btn">
-
                                             <i class="fa-regular fa-eye"></i>
-
                                         </button>
-
                                     </div>
-
                                 </td>
 
                             </tr>
 
                             <!-- Order 2 -->
-
-                            <tr>
-
+                            <tr data-order-id="DH024">
                                 <td>DH024</td>
-
                                 <td>Thái Lê Minh Hiếu</td>
-
                                 <td>0324789989</td>
-
                                 <td>10/12/2026 11:30</td>
-
                                 <td class="price">950.000</td>
-
+                                <td><span class="status shipping">Đang vận chuyển</span></td>
+                                <td><span class="payment cod">COD</span></td>
                                 <td>
-
-                                    <span class="status shipping">
-                                        Đang vận chuyển
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="payment cod">
-                                        COD
-                                    </span>
-
-                                </td>
-
-                                <td>
-
                                     <div class="action-group">
-
                                         <button class="action-btn view-btn">
-
                                             <i class="fa-regular fa-eye"></i>
-
                                         </button>
-
                                     </div>
-
                                 </td>
-
                             </tr>
 
                             <!-- Order 3 -->
-
-                            <tr>
-
+                            <tr data-order-id="DH023">
                                 <td>DH023</td>
-
                                 <td>Lê Nguyễn Bảo Ngọc</td>
-
                                 <td>0924685989</td>
-
                                 <td>10/12/2026 11:19</td>
-
                                 <td class="price">950.000</td>
-
+                                <td><span class="status shipping">Đang vận chuyển</span></td>
+                                <td><span class="payment bank">Chuyển khoản</span></td>
                                 <td>
-
-                                    <span class="status shipping">
-                                        Đang vận chuyển
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="payment bank">
-                                        Chuyển khoản
-                                    </span>
-
-                                </td>
-
-                                <td>
-
                                     <div class="action-group">
-
                                         <button class="action-btn view-btn">
-
                                             <i class="fa-regular fa-eye"></i>
-
                                         </button>
-
                                     </div>
-
                                 </td>
-
                             </tr>
 
                             <!-- Order 4 -->
-
-                            <tr>
-
+                            <tr data-order-id="DH022">
                                 <td>DH022</td>
-
                                 <td>Trần Huy Hoàng</td>
-
                                 <td>0726685284</td>
-
                                 <td>09/12/2026 09:35</td>
-
                                 <td class="price">670.000</td>
-
+                                <td><span class="status cancelled">Đã hủy</span></td>
+                                <td><span class="payment bank">Chuyển khoản</span></td>
                                 <td>
-
-                                    <span class="status cancelled">
-                                        Đã hủy
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="payment bank">
-                                        Chuyển khoản
-                                    </span>
-
-                                </td>
-
-                                <td>
-
                                     <div class="action-group">
-
                                         <button class="action-btn view-btn">
-
                                             <i class="fa-regular fa-eye"></i>
-
                                         </button>
-
                                     </div>
-
                                 </td>
-
                             </tr>
 
                             <!-- Order 5 -->
-
-                            <tr>
-
+                            <tr data-order-id="DH021">
                                 <td>DH021</td>
-
                                 <td>Trần Anh Tuấn</td>
-
                                 <td>0728885294</td>
-
                                 <td>09/12/2026 08:35</td>
-
                                 <td class="price">550.000</td>
-
+                                <td><span class="status completed">Đã giao hàng</span></td>
+                                <td><span class="payment cod">COD</span></td>
                                 <td>
-
-                                    <span class="status completed">
-                                        Đã giao hàng
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    <span class="payment cod">
-                                        COD
-                                    </span>
-
-                                </td>
-
-                                <td>
-
                                     <div class="action-group">
-
                                         <button class="action-btn view-btn">
-
                                             <i class="fa-regular fa-eye"></i>
-
                                         </button>
-
                                     </div>
-
                                 </td>
-
                             </tr>
 
                         </tbody>
@@ -466,6 +284,8 @@
                     </table>
 
                 </div>
+
+                <!-- PAGINATION -->
                 <div class="pagination">
 
                     <button class="page-btn">
@@ -473,13 +293,9 @@
                     </button>
 
                     <button class="page-btn active">1</button>
-
                     <button class="page-btn">2</button>
-
                     <button class="page-btn">3</button>
-
                     <span>...</span>
-
                     <button class="page-btn">7</button>
 
                     <button class="page-btn">
@@ -487,71 +303,43 @@
                     </button>
 
                     <select id="pageSize">
-
-                        <option value="10">
-                            10/Trang
-                        </option>
-
-                        <option value="20">
-                            20/Trang
-                        </option>
-
-                        <option value="50">
-                            50/Trang
-                        </option>
-
+                        <option value="10">10/Trang</option>
+                        <option value="20">20/Trang</option>
+                        <option value="50">50/Trang</option>
                     </select>
 
                 </div>
+
+                <!-- MODAL -->
                 <div class="modal" id="orderModal">
 
                     <div class="modal-content">
 
                         <div class="modal-header">
-
                             <h3>Chi tiết đơn hàng</h3>
-
                             <button id="closeModal">
-
                                 <i class="fa-solid fa-xmark"></i>
-
                             </button>
-
                         </div>
 
-                        <div class="modal-body" id="orderDetail">
-
-                        </div>
+                        <div class="modal-body" id="orderDetail"></div>
 
                     </div>
 
                 </div>
-    </div>
 
-    </section>
+            </section>
 
-    <!-- ==========================
-                FOOTER
-        =========================== -->
+            <!-- FOOTER -->
+            <footer class="footer">
+                <p>© 2026 Jewelry Store. All rights reserved.</p>
+            </footer>
 
-    <footer class="footer">
-
-        <p>
-
-            © 2026 Jewelry Store. All rights reserved.
-
-        </p>
-
-    </footer>
-
-    </main>
+        </main>
 
     </div>
 
-    <!-- ==========================
-        JAVASCRIPT
-=========================== -->
-
+    <script src="../js/db.js"></script>
     <script src="../js/order-management.js"></script>
 
 </body>
