@@ -1,0 +1,651 @@
+/* =========================
+   RESET CSS
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #edf0f5;
+}
+
+/* =========================
+       HEADER
+    ========================= */
+
+/* HEADER */
+
+header {
+  background: white;
+  border: 1px solid #0a4fb8;
+  border-radius: 12px;
+  padding: 20px 35px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+div h2 {
+  font-size: 28px;
+  font-family: "Ibarra Real Nova";
+  font-style: bold;
+}
+.logo {
+  font-size: 22px;
+  color: #0a4fb8;
+  font-weight: bold;
+}
+
+.logo {
+  color: #0c4fb5;
+}
+
+.menu {
+  display: flex;
+  gap: 40px;
+}
+
+.menu a {
+  position: relative;
+  text-decoration: none;
+  color: #0c4fb5;
+  font-weight: 600;
+  padding: 6px 0;
+  transition: 0.3s ease;
+}
+
+/* hiệu ứng hover nổi nhẹ */
+.menu a:hover {
+  color: #083a85;
+  transform: translateY(-2px);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+.menu a:hover {
+  background: rgba(12, 79, 181, 0.08);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* trạng thái active (nếu cần) */
+.menu a.active {
+  color: #083a85;
+}
+
+.menu a.active::after {
+  width: 100%;
+}
+
+.menu a:hover {
+  color: #083a85;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  width: 250px;
+  padding: 10px;
+  border: 1px solid #0c4fb5;
+  border-radius: 8px;
+}
+
+.search i {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  color: #0c4fb5;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #0c4fb5;
+}
+/* Icon giỏ hàng, tài khoản */
+
+.icon {
+  font-size: 34px;
+  cursor: pointer;
+}
+
+/* =====================================
+     BREADCRUMB
+  ===================================== */
+.breadcrumb {
+  margin: 25px 40px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #666;
+}
+
+/* =====================================
+     TIÊU ĐỀ TRANG GIỎ HÀNG
+  ===================================== */
+.page-title {
+  margin: 0 40px 25px;
+  font-size: 35px;
+}
+
+/* =====================================
+     KHUNG CHỨA GIỎ HÀNG + ĐƠN HÀNG
+  ===================================== */
+.cart-wrapper {
+  display: flex;
+  gap: 25px;
+
+  padding: 0 20px;
+
+  align-items: flex-start;
+}
+
+/* =====================================
+     BẢNG GIỎ HÀNG
+  ===================================== */
+.cart-container {
+  flex: 1;
+
+  background: #fff;
+  padding: 20px;
+
+  border-radius: 15px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Header bảng + mỗi dòng sản phẩm */
+.cart-header,
+.cart-item {
+  display: grid;
+
+  grid-template-columns:
+    80px
+    3fr
+    140px
+    180px
+    160px
+    100px;
+
+  align-items: center;
+}
+
+/* Tiêu đề cột */
+.cart-header {
+  font-weight: 700;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #ddd;
+}
+
+/* Mỗi sản phẩm */
+.cart-item {
+  padding: 22px 0;
+
+  border-bottom: 1px solid #ddd;
+}
+
+/* =====================================
+     CHECKBOX CHỌN SẢN PHẨM
+  ===================================== */
+.check {
+  text-align: center;
+  font-size: 28px;
+}
+
+/* =====================================
+     THÔNG TIN SẢN PHẨM
+  ===================================== */
+.product {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Ảnh sản phẩm */
+.product img {
+  width: 100px;
+  height: 80px;
+
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Tên sản phẩm */
+.info h3 {
+  margin-bottom: 10px;
+}
+
+/* Mô tả */
+.info p {
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* =====================================
+     ĐƠN GIÁ + THÀNH TIỀN
+  ===================================== */
+.price,
+.total {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* =====================================
+     TĂNG GIẢM SỐ LƯỢNG
+  ===================================== */
+.quantity {
+  display: flex;
+  gap: 10px;
+}
+
+/* Nút -, + và số lượng */
+.quantity button,
+.quantity span {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+
+  border: 1px solid #0c4fb5;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: white;
+}
+
+/* =====================================
+     ICON XOÁ SẢN PHẨM
+  ===================================== */
+.delete {
+  text-align: center;
+  font-size: 32px;
+}
+/* =========================
+   NÚT TIẾP TỤC MUA SẮM
+========================= */
+
+.continue-btn,
+.update-btn {
+  width: 280px;
+  height: 50px;
+
+  border: 1px solid #0c4fb5;
+  border-radius: 12px;
+
+  background: white;
+  color: #0c4fb5;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+
+.continue-btn:hover,
+.update-btn:hover {
+  background: #0c4fb5;
+  color: white;
+
+  transform: translateY(-3px);
+
+  box-shadow: 0 5px 15px rgba(12, 79, 181, 0.3);
+}
+
+/* Khi nhấn */
+
+.continue-btn:active,
+.update-btn:active {
+  transform: scale(0.96);
+}
+
+/* Focus */
+
+.continue-btn:focus,
+.update-btn:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(12, 79, 181, 0.4);
+}
+
+/* =====================================
+     PHẦN CUỐI GIỎ HÀNG
+  ===================================== */
+.cart-footer {
+  padding-top: 20px;
+}
+
+/* Checkbox chọn tất cả */
+.select-all {
+  display: flex;
+  gap: 10px;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+/* Hàng chứa nút + phân trang */
+.footer-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* =====================================
+     NÚT TIẾP TỤC MUA SẮM & CẬP NHẬT
+  ===================================== */
+.continue-btn,
+.update-btn {
+  width: 280px;
+  height: 50px;
+
+  border: 1px solid #0c4fb5;
+  border-radius: 12px;
+
+  background: white;
+
+  color: #0c4fb5;
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* =====================================
+     PHÂN TRANG
+  ===================================== */
+.pagination {
+  display: flex;
+  gap: 12px;
+}
+
+.pagination button {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px;
+  border: 1px solid #0c4fb5;
+
+  background: white;
+}
+
+/* Trang đang chọn */
+.pagination .active {
+  background: #0c4fb5;
+  color: white;
+}
+
+/* =====================================
+     KHUNG THÔNG TIN ĐƠN HÀNG
+  ===================================== */
+.order-box {
+  width: 360px;
+
+  background: white;
+  padding: 25px;
+
+  border-radius: 15px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Tiêu đề */
+.order-box h2 {
+  margin-bottom: 30px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Dòng thông tin */
+.row {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+/* Chữ miễn phí */
+.free {
+  color: #17a84b;
+}
+
+/* =====================================
+     TỔNG TIỀN
+  ===================================== */
+.total-order {
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 26px;
+  font-weight: bold;
+
+  margin: 25px 0;
+}
+
+/* =====================================
+     NÚT THANH TOÁN
+  ===================================== */
+.checkout-btn {
+  width: 278px;
+  height: 52px;
+
+  background: #0c4fb5;
+  color: white;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  margin: 25px auto;
+
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+.checkout-btn:hover {
+  background: #083a85;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 15px rgba(12, 79, 181, 0.3);
+}
+
+/* Khi nhấn */
+.checkout-btn:active {
+  transform: scale(0.98);
+}
+
+/* Dòng bảo mật thanh toán */
+.secure {
+  text-align: center;
+
+  margin-top: 15px;
+
+  color: #777;
+  font-size: 14px;
+}
+.suggest h2 {
+  font-size: 25px;
+  color: #0a4fb8;
+  padding: 14px;
+  padding-left: 30px;
+}
+/* Xử lý thẻ card */
+
+/* CARD GỢI Ý */
+
+.card {
+  background: #fff;
+
+  width: 300px;
+  height: 190px;
+
+  border-radius: 15px;
+  padding: 15px;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  flex-wrap: wrap;
+
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* ẢNH */
+
+.card img {
+  width: 115px;
+  height: 115px;
+
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* THÔNG TIN */
+
+.card-info {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.card-info h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+
+  line-height: 1.3;
+  margin-top: 5px;
+  margin-bottom: 25px;
+}
+
+.card-info p {
+  color: #0c4fb5;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* DÒNG DƯỚI */
+
+.card-bottom {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-top: 10px;
+}
+
+/* NÚT */
+
+.detail-btn {
+  width: 156px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid #0c4fb5;
+  border-radius: 12px;
+
+  text-decoration: none;
+  color: #666;
+  font-weight: 700;
+
+  background: white;
+
+  transition: 0.3s;
+}
+
+.detail-btn:hover {
+  background: #0c4fb5;
+  color: white;
+}
+/* TIM */
+
+.love {
+  font-size: 24px;
+  color: #111;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+/* Khi đã thích */
+
+.love.active {
+  color: red;
+}
+.suggest-list {
+  display: grid;
+  grid-template-columns: repeat(4, 300px);
+  justify-content: center;
+  gap: 25px;
+}
+/* =========================
+     FOOTER
+  ========================= */
+
+footer {
+  background: #003f9f;
+  color: white;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  padding: 25px 40px;
+}
+
+/* Mỗi mục trong footer */
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.footer-item i {
+  font-size: 40px;
+}
+
+.footer-item h4 {
+  margin-bottom: 5px;
+}

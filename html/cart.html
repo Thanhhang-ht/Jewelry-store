@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng | Jewelry Store</title>
+
+    <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <h2>Jewelry Store</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="../html/index.html">Trang chủ</a>
+            <a href="../html/products.html" class="active">Sản phẩm</a>
+            <a href="#">Liên hệ</a>
+        </nav>
+
+        <div class="right">
+            <div class="search">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <a href="../html/cart.html">
+                <i class="fa-solid fa-cart-shopping icon"></i>
+            </a>
+
+            <a href="../html/profile.html">
+                <i class="fa-regular fa-user icon"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        <span>Trang chủ</span> &gt; <span>Giỏ hàng</span>
+    </div>
+
+    <!-- PAGE TITLE -->
+    <h1 class="page-title">Giỏ hàng của bạn</h1>
+
+    <!-- WRAPPER -->
+    <div class="cart-wrapper">
+
+        <!-- CART LEFT -->
+        <section class="cart-container">
+
+            <div class="cart-header">
+                <div>Chọn</div>
+                <div>Sản phẩm</div>
+                <div>Đơn giá</div>
+                <div>Số lượng</div>
+                <div>Thành tiền</div>
+                <div>Thao tác</div>
+            </div>
+
+            <!-- ITEM 1 -->
+            <div class="cart-item">
+                <div class="check">
+                    <i class="fa-regular fa-circle-check"></i>
+                </div>
+
+                <div class="product">
+                    <img src="../image/image 27.png">
+                    <div class="info">
+                        <h3>Dây chuyền bạc nữ</h3>
+                        <p>Chất liệu: Bạc 925</p>
+                        <p>Mã: DC001</p>
+                    </div>
+                </div>
+
+                <div class="price">670.000đ</div>
+
+                <div class="quantity">
+                    <button>-</button>
+                    <span>1</span>
+                    <button>+</button>
+                </div>
+
+                <div class="total">670.000đ</div>
+
+                <div class="delete">
+                    <i class="fa-regular fa-trash-can"></i>
+                </div>
+            </div>
+
+            <!-- ITEM 2 -->
+            <div class="cart-item">
+                <div class="check">
+                    <i class="fa-regular fa-circle"></i>
+                </div>
+
+                <div class="product">
+                    <img src="../image/image 23.png">
+                    <div class="info">
+                        <h3>Nhẫn kim cương thiết kế</h3>
+                        <p>Chất liệu: Bạc 999</p>
+                        <p>Mã: NT001</p>
+                    </div>
+                </div>
+
+                <div class="price">950.000đ</div>
+
+                <div class="quantity">
+                    <button>-</button>
+                    <span>2</span>
+                    <button>+</button>
+                </div>
+
+                <div class="total">1.900.000đ</div>
+
+                <div class="delete">
+                    <i class="fa-regular fa-trash-can"></i>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="cart-footer">
+
+                <div class="select-all">
+                    <i class="fa-regular fa-circle"></i>
+                    <span>Chọn tất cả</span>
+                </div>
+
+                <div class="footer-action">
+
+                    <button class="continue-btn">Tiếp tục mua sắm</button>
+
+                    <div class="pagination">
+                        <button>&lt;</button>
+                        <button class="active">1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button>&gt;</button>
+                    </div>
+
+                    <button class="update-btn">Cập nhật giỏ hàng</button>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ORDER -->
+        <aside class="order-box">
+
+            <h2>Thông tin đơn hàng</h2>
+
+            <div class="row">
+                <span>Tạm tính:</span>
+                <span>670.000đ</span>
+            </div>
+
+            <div class="row">
+                <span>Phí vận chuyển:</span>
+                <span class="free">Miễn phí</span>
+            </div>
+
+            <hr>
+
+            <div class="total-order">
+                <span>Tổng cộng</span>
+                <span>670.000đ</span>
+            </div>
+
+            <button class="checkout-btn" onclick="goToCheckout()">
+                Tiến hành thanh toán
+            </button>
+
+            <p class="secure">
+                <i class="fa-solid fa-shield"></i>
+                Thanh toán an toàn, bảo mật
+            </p>
+
+        </aside>
+
+    </div>
+
+    <!-- SUGGEST -->
+    <section class="suggest">
+
+        <h2>Có thể bạn cũng thích</h2>
+
+        <div class="suggest-list">
+
+            <div class="card">
+                <img src="../image/image 25.png">
+                <div class="card-info">
+                    <h3>Vòng tay bạc PT</h3>
+                    <p>510.000đ</p>
+                </div>
+                <div class="card-bottom">
+                    <a href="product-detail.html" class="detail-btn">Xem chi tiết</a>
+                    <i class="fa-regular fa-heart love"></i>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 23.png">
+                <div class="card-info">
+                    <h3>Nhẫn kim cương</h3>
+                    <p>950.000đ</p>
+                </div>
+                <div class="card-bottom">
+                    <a href="product-detail.html" class="detail-btn">Xem chi tiết</a>
+                    <i class="fa-regular fa-heart love"></i>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 24.png">
+                <div class="card-info">
+                    <h3>Nhẫn bạc đính đá</h3>
+                    <p>470.000đ</p>
+                </div>
+                <div class="card-bottom">
+                    <a href="product-detail.html" class="detail-btn">Xem chi tiết</a>
+                    <i class="fa-regular fa-heart love"></i>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 22.png">
+                <div class="card-info">
+                    <h3>Vòng bạc thiên nga</h3>
+                    <p>570.000đ</p>
+                </div>
+                <div class="card-bottom">
+                    <a href="product-detail.html" class="detail-btn">Xem chi tiết</a>
+                    <i class="fa-regular fa-heart love"></i>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-item">
+            <i class="fa-solid fa-truck"></i>
+            <div>
+                <h4>Miễn phí vận chuyển</h4>
+                <p>Cho đơn hàng từ 500.000đ</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <div>
+                <h4>Bảo hành</h4>
+                <p>Miễn phí làm sáng</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-rotate"></i>
+            <div>
+                <h4>Đổi trả</h4>
+                <p>Trong 7 ngày</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-regular fa-comments"></i>
+            <div>
+                <h4>Hỗ trợ</h4>
+                <p>24/7</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/cart.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Thêm/Sửa sản phẩm</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/product-form.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- ===========================
+                SIDEBAR
+        ============================ -->
+
+        <aside class="sidebar">
+
+            <div>
+
+                <div class="logo">
+
+                    <h1>Jewelry Store</h1>
+
+                    <p>ADMIN PANEL</p>
+
+                </div>
+
+                <hr>
+
+                <ul class="sidebar-menu">
+
+                    <li>
+
+                        <a href="dashboard.html">
+
+                            <i class="fa-solid fa-house"></i>
+
+                            Dashboard
+
+                        </a>
+
+                    </li>
+
+                    <li class="active">
+
+                        <a href="product-management.html">
+
+                            <i class="fa-solid fa-cube"></i>
+
+                            Quản lý sản phẩm
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="category-management.html">
+
+                            <i class="fa-solid fa-table-list"></i>
+
+                            Danh mục
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="order-management.html">
+
+                            <i class="fa-solid fa-bag-shopping"></i>
+
+                            Quản lý đơn hàng
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="customer-management.html">
+
+                            <i class="fa-solid fa-user-group"></i>
+
+                            Quản lý khách hàng
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="statistics.html">
+
+                            <i class="fa-solid fa-chart-line"></i>
+
+                            Thống kê
+
+                        </a>
+
+                    </li>
+
+                    <li id="logoutBtn">
+
+                        <a href="#">
+
+                            <i class="fa-solid fa-right-from-bracket"></i>
+
+                            Đăng xuất
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="sidebar-user">
+
+                <div class="avatar">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <div class="user-info">
+
+                    <h3 id="adminName">Admin</h3>
+
+                    <span>Quản trị viên</span>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </div>
+
+        </aside>
+
+        <!-- ===========================
+                MAIN
+        ============================ -->
+
+        <main class="main-content">
+
+            <!-- HEADER -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button class="menu-btn">
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+                    <h2 id="formTitle">
+                        Thêm/Sửa sản phẩm
+                    </h2>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <button class="notification-btn">
+
+                        <i class="fa-regular fa-bell"></i>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+            <!-- ===========================
+                    FORM
+            ============================ -->
+
+            <section class="product-form-container">
+
+                <form id="productForm">
+
+                    <input type="hidden" id="productId" name="productId">
+
+                    <div class="form-grid">
+
+                        <!-- ======================
+                                LEFT
+                        ======================= -->
+
+                        <div class="form-left">
+
+                            <h2>
+                                Thông tin sản phẩm
+                            </h2>
+
+                            <!-- TÊN -->
+
+                            <div class="form-group">
+
+                                <label>
+
+                                    Tên sản phẩm
+
+                                    <span>*</span>
+
+                                </label>
+
+                                <input type="text" id="productName" name="productName"
+                                    placeholder="Nhập tên sản phẩm...">
+
+                            </div>
+
+                            <!-- DANH MỤC -->
+
+                            <div class="form-group">
+
+                                <label>
+
+                                    Danh mục
+
+                                    <span>*</span>
+
+                                </label>
+
+                                <!-- Backend chỉ cần render option -->
+
+                                <select id="categoryId" name="categoryId" required>
+                                    <option value="">-- Chọn danh mục --</option>
+                                </select>
+
+                            </div>
+
+                            <!-- GIÁ + SỐ LƯỢNG -->
+
+                            <div class="row">
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Giá bán
+
+                                        <span>*</span>
+
+                                    </label>
+
+                                    <div class="price-input">
+
+                                        <input type="text" id="price" name="price" placeholder="Nhập giá">
+
+                                        <span>đ</span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Số lượng tồn kho
+
+                                        <span>*</span>
+
+                                    </label>
+
+                                    <input type="number" id="quantity" name="quantity" min="0"
+                                        placeholder="Nhập số lượng">
+
+                                </div>
+
+                            </div>
+
+                            <!-- MÔ TẢ -->
+
+                            <div class="form-group">
+
+                                <label>
+
+                                    Mô tả sản phẩm
+
+                                </label>
+
+                                <textarea id="description" name="description" rows="6"
+                                    placeholder="Nhập mô tả sản phẩm..."></textarea>
+
+                            </div>
+
+                            <!-- CHẤT LIỆU -->
+
+                            <div class="form-group">
+
+                                <label>
+
+                                    Chất liệu
+
+                                </label>
+
+                                <input type="text" id="material" name="material" placeholder="Ví dụ: Vàng 18K">
+
+                            </div>
+
+                        </div>
+
+                        <!-- ======================
+                                RIGHT
+                        ======================= -->
+
+                        <div class="form-right">
+
+                            <div class="form-group">
+
+                                <label>
+
+                                    Ảnh sản phẩm
+
+                                    <span>*</span>
+
+                                </label>
+
+                                <div class="upload-box">
+
+                                    <input type="file" id="productImages" name="productImages" multiple accept="image/*"
+                                        hidden>
+
+                                    <div class="preview-list" id="previewList">
+
+                                        <!-- JS render -->
+
+                                    </div>
+
+                                    <label for="productImages" class="upload-item">
+
+                                        <i class="fa-solid fa-plus"></i>
+
+                                        <span>Thêm ảnh</span>
+
+                                    </label>
+
+                                </div>
+
+                                <small>
+
+                                    Hỗ trợ JPG, PNG, WEBP (tối đa 2MB/ảnh)
+
+                                </small>
+
+                            </div>
+
+                            <!-- TRẠNG THÁI -->
+
+                            <div class="form-group">
+
+                                <label>
+
+                                    Trạng thái
+
+                                </label>
+
+                                <div class="status-group">
+
+                                    <label>
+
+                                        <input type="radio" name="status" value="selling" checked>
+
+                                        Đang bán
+
+                                    </label>
+
+                                    <label>
+
+                                        <input type="radio" name="status" value="stop">
+
+                                        Ngừng bán
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ===========================
+                            BUTTONS
+                    ============================ -->
+
+                    <div class="form-actions">
+
+                        <button type="button" id="btnBack" class="btn btn-outline">
+
+                            Quay lại
+
+                        </button>
+
+                        <div class="action-right">
+
+                            <button type="button" id="btnDelete" class="btn btn-danger">
+
+                                Xóa sản phẩm
+
+                            </button>
+
+                            <button type="reset" id="btnCancel" class="btn btn-outline">
+
+                                Hủy
+
+                            </button>
+
+                            <button type="submit" id="btnSave" class="btn btn-primary">
+
+                                Lưu sản phẩm
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="../js/product-form.js"></script>
+
+</body>
+
+</html>

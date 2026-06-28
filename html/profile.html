@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ cá nhân</title>
+
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+
+        <div class="logo">
+            <h2>Jewelry Store</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="../html/index.html">Trang chủ</a>
+            <a href="../html/products.html" class="active">Sản phẩm</a>
+            <a href="../html/contact.html">Liên hệ</a>
+        </nav>
+
+        <div class="right">
+
+            <div class="search">
+                <input type="text" id="searchInput" name="keyword" placeholder="Tìm kiếm sản phẩm...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <a href="../html/cart.html">
+                <i class="fa-solid fa-cart-shopping icon"></i>
+            </a>
+
+            <a href="../html/profile.html">
+                <i class="fa-regular fa-user icon"></i>
+            </a>
+
+        </div>
+
+    </header>
+
+    <!-- ================= BREADCRUMB ================= -->
+
+    <div class="breadcrumb">
+        Trang chủ &gt; Hồ sơ cá nhân
+    </div>
+
+    <!-- ================= PROFILE ================= -->
+
+    <div class="profile-container">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <div class="user-box">
+
+                <i class="fa-regular fa-circle-user avatar"></i>
+
+                <!-- Backend render -->
+                <h3 id="sidebarUserName">
+                    Phan Thanh Hằng
+                </h3>
+
+                <p id="sidebarUserEmail">
+                    thanhhang23905@gmail.com
+                </p>
+
+            </div>
+
+            <ul>
+
+                <li class="active">
+                    <a href="profile.html">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Thông tin cá nhân</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="history.html">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span>Lịch sử mua hàng</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="address.html">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Địa chỉ của tôi</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="change-password.html">
+                        <i class="fa-solid fa-key"></i>
+                        <span>Đổi mật khẩu</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="wishlist.html">
+                        <i class="fa-regular fa-heart"></i>
+                        <span>Yêu thích</span>
+                    </a>
+                </li>
+
+                <li id="logoutBtn">
+                    <a href="#">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Đăng xuất</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </aside>
+        <!-- ================= CONTENT ================= -->
+        <main class="content">
+
+            <!-- ================= THÔNG TIN TÀI KHOẢN ================= -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h2>Thông tin tài khoản</h2>
+
+                    <button class="edit-btn" id="editProfileBtn">
+                        <i class="fa-solid fa-pen"></i>
+                        Chỉnh sửa
+                    </button>
+
+                </div>
+
+                <div class="info-grid">
+
+                    <div>Họ và tên:</div>
+                    <div id="userName">
+                        Phan Thanh Hằng
+                    </div>
+
+                    <div>Email:</div>
+                    <div id="userEmail">
+                        thanhhang23905@gmail.com
+                    </div>
+
+                    <div>Số điện thoại:</div>
+                    <div id="userPhone">
+                        0364665798
+                    </div>
+
+                    <div>Ngày tham gia:</div>
+                    <div id="joinDate">
+                        09/09/2026
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= ĐƠN HÀNG GẦN ĐÂY ================= -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h2>Đơn hàng gần đây</h2>
+
+                    <a href="history.html" id="viewAllOrders">
+                        Xem tất cả đơn hàng
+                    </a>
+
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+
+                    </thead>
+
+                    <!-- Backend render -->
+                    <tbody id="orderTable">
+
+                        <tr data-id="8">
+
+                            <td>DH008</td>
+
+                            <td>23/09/2026</td>
+
+                            <td>730.000đ</td>
+
+                            <td>
+                                <span class="status success">
+                                    Đã giao hàng
+                                </span>
+                            </td>
+
+                            <td>
+                                <a href="#" class="detail-btn" data-id="8">
+                                    Xem chi tiết
+                                </a>
+                            </td>
+
+                        </tr>
+
+                        <tr data-id="7">
+
+                            <td>DH007</td>
+
+                            <td>15/06/2026</td>
+
+                            <td>870.000đ</td>
+
+                            <td>
+                                <span class="status processing">
+                                    Đang xử lý
+                                </span>
+                            </td>
+
+                            <td>
+                                <a href="#" class="detail-btn" data-id="7">
+                                    Xem chi tiết
+                                </a>
+                            </td>
+
+                        </tr>
+
+                        <tr data-id="6">
+
+                            <td>DH006</td>
+
+                            <td>12/06/2026</td>
+
+                            <td>670.000đ</td>
+
+                            <td>
+                                <span class="status cancel">
+                                    Đã hủy
+                                </span>
+                            </td>
+
+                            <td>
+                                <a href="#" class="detail-btn" data-id="6">
+                                    Xem chi tiết
+                                </a>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <!-- ================= ĐỊA CHỈ CỦA TÔI ================= -->
+
+            <div class="address-section">
+
+                <div class="address-header">
+
+                    <h2>Địa chỉ của tôi</h2>
+
+                    <button class="add-address" id="addAddressBtn">
+                        + Thêm địa chỉ mới
+                    </button>
+
+                </div>
+
+                <!-- Backend render -->
+                <div class="address-list" id="addressList">
+
+                    <!-- Địa chỉ 1 -->
+                    <div class="address-card active-address" data-id="1">
+
+                        <div class="address-top">
+
+                            <div>
+                                <input type="radio" name="address" checked>
+
+                                <span>Địa chỉ mặc định</span>
+                            </div>
+
+                            <i class="fa-solid fa-ellipsis-vertical menu-btn"></i>
+
+                        </div>
+
+                        <h4 class="receiver-name">
+                            Phan Thanh Hằng
+                        </h4>
+
+                        <p class="receiver-phone">
+                            0364665798
+                        </p>
+
+                        <p class="receiver-address">
+                            789 Đại Từ, Đại Kim, Hoàng Mai, Hà Nội
+                        </p>
+
+                    </div>
+
+                    <!-- Địa chỉ 2 -->
+                    <div class="address-card" data-id="2">
+
+                        <div class="address-top">
+
+                            <div>
+                                <input type="radio" name="address">
+
+                                <span>Địa chỉ công ty</span>
+                            </div>
+
+                            <i class="fa-solid fa-ellipsis-vertical menu-btn"></i>
+
+                        </div>
+
+                        <h4 class="receiver-name">
+                            Phan Thanh Hằng
+                        </h4>
+
+                        <p class="receiver-phone">
+                            0364665798
+                        </p>
+
+                        <p class="receiver-address">
+                            689 Trương Định, Thịnh Liệt, Hoàng Mai, Hà Nội
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-truck"></i>
+
+            <div>
+                <h4>Miễn phí vận chuyển</h4>
+                <p>Cho đơn hàng từ 500.000đ</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <div>
+                <h4>Chính sách bảo hành</h4>
+                <p>Miễn phí làm sáng và đánh bóng</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-rotate"></i>
+
+            <div>
+                <h4>Đổi trả dễ dàng</h4>
+                <p>Trong vòng 7 ngày</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-regular fa-comments"></i>
+
+            <div>
+                <h4>Hỗ trợ tư vấn</h4>
+                <p>Tư vấn mọi lúc</p>
+            </div>
+        </div>
+
+    </footer>
+
+    <script src="../js/profile.js"></script>
+
+</body>
+
+</html>

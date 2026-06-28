@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Jewelry Store</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- =========================
+                SIDEBAR
+        ========================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="logo">
+
+                <h1>Jewelry Store</h1>
+
+                <p>ADMIN PANEL</p>
+
+            </div>
+
+            <hr>
+
+            <ul class="sidebar-menu">
+
+                <li class="active">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="product-management.html">
+                        <i class="fa-solid fa-cube"></i>
+                        Quản lý sản phẩm
+                    </a>
+                </li>
+
+                <li>
+                    <a href="category-management.html">
+                        <i class="fa-solid fa-table-list"></i>
+                        Danh mục
+                    </a>
+                </li>
+
+                <li>
+                    <a href="order-management.html">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Quản lý đơn hàng
+                    </a>
+                </li>
+
+                <li>
+                    <a href="customer-management.html">
+                        <i class="fa-solid fa-user-group"></i>
+                        Quản lý khách hàng
+                    </a>
+                </li>
+
+                <li>
+                    <a href="statistics.html">
+                        <i class="fa-solid fa-chart-line"></i>
+                        Thống kê
+                    </a>
+                </li>
+
+                <li id="logoutBtn">
+                    <a href="#">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="sidebar-user">
+
+                <div class="avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="user-info">
+
+                    <h3 id="adminName">
+                        Admin
+                    </h3>
+
+                    <span>
+                        Quản trị viên
+                    </span>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </div>
+
+        </aside>
+
+        <!-- =========================
+                MAIN
+        ========================== -->
+
+        <main class="main-content">
+
+            <!-- HEADER -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button class="menu-btn" id="menuBtn">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <h2>Dashboard</h2>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+
+                    <div class="current-date">
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <span id="currentDate">
+                            28/12/2026
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =========================
+                    STATISTIC CARDS
+            ========================== -->
+
+            <section class="stats">
+
+                <div class="stat-card">
+
+                    <div class="icon product-icon">
+                        <i class="fa-solid fa-box"></i>
+                    </div>
+
+                    <div class="stat-info">
+
+                        <h3>Tổng sản phẩm</h3>
+
+                        <h2 id="totalProducts">120</h2>
+
+                        <p>
+                            <span class="increase">↑12%</span>
+                            so với tháng trước
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="icon order-icon">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+
+                    <div class="stat-info">
+
+                        <h3>Tổng đơn hàng</h3>
+
+                        <h2 id="totalOrders">85</h2>
+
+                        <p>
+                            <span class="increase">↑8%</span>
+                            so với tháng trước
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="icon customer-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div class="stat-info">
+
+                        <h3>Tổng khách hàng</h3>
+
+                        <h2 id="totalCustomers">60</h2>
+
+                        <p>
+                            <span class="increase">↑15%</span>
+                            so với tháng trước
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="icon revenue-icon">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
+
+                    <div class="stat-info">
+
+                        <h3>Tổng doanh thu</h3>
+
+                        <h2 id="totalRevenue">15.000.000đ</h2>
+
+                        <p>
+                            <span class="increase">↑20%</span>
+                            so với tháng trước
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =========================
+                    CONTENT
+            ========================== -->
+
+            <section class="dashboard-content">
+
+                <!-- ĐƠN HÀNG -->
+
+                <div class="orders-box">
+
+                    <div class="box-header">
+
+                        <h2>Đơn hàng mới nhất</h2>
+
+                        <a href="order-management.html" id="viewAllOrders">
+                            Xem tất cả
+                        </a>
+
+                    </div>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Mã đơn hàng</th>
+                                <th>Ngày đặt</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="latestOrders">
+
+                            <tr>
+
+                                <td>#DH006</td>
+                                <td>30/11/2026 19:30</td>
+                                <td>870.000</td>
+
+                                <td>
+                                    <span class="status processing">
+                                        Đang xử lý
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>#DH005</td>
+                                <td>22/11/2026 10:20</td>
+                                <td>870.000</td>
+
+                                <td>
+                                    <span class="status shipping">
+                                        Đang vận chuyển
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>#DH004</td>
+                                <td>20/10/2026 19:30</td>
+                                <td>670.000</td>
+
+                                <td>
+                                    <span class="status success">
+                                        Đã giao hàng
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>#DH003</td>
+                                <td>12/10/2026 15:23</td>
+                                <td>550.000</td>
+
+                                <td>
+                                    <span class="status success">
+                                        Đã giao hàng
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>#DH002</td>
+                                <td>15/10/2026 14:30</td>
+                                <td>730.000</td>
+
+                                <td>
+                                    <span class="status success">
+                                        Đã giao hàng
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>#DH001</td>
+                                <td>12/10/2026 14:30</td>
+                                <td>730.000</td>
+
+                                <td>
+                                    <span class="status cancel">
+                                        Đã hủy
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- BEST SELLER -->
+
+                <div class="best-seller">
+
+                    <div class="box-header">
+
+                        <h2>Sản phẩm bán chạy</h2>
+
+                        <a href="product-management.html" id="viewAllProducts">
+                            Xem tất cả
+                        </a>
+
+                    </div>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Sản phẩm</th>
+
+                                <th>Đã bán</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="bestSeller">
+
+                            <tr>
+                                <td>
+                                    <img src="../image/image 24.png" alt="">
+                                    Nhẫn bạc đính đá
+                                </td>
+                                <td>45</td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <img src="../image/image 25.png" alt="">
+                                    Vòng tay bạc PT
+                                </td>
+                                <td>30</td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <img src="../image/image 5.png" alt="">
+                                    Bông tai bạc ngôi sao
+                                </td>
+                                <td>25</td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <img src="../image/image_23_2.png" alt="">
+                                    Vòng bạc thiên nga xanh
+                                </td>
+                                <td>20</td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <img src="../image/image 2.png" alt="">
+                                    Dây chuyền bạc 102
+                                </td>
+                                <td>18</td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <img src="../image/image 26.png" alt="">
+                                    Nhẫn kim cương thiết kế
+                                </td>
+                                <td>15</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <!-- FOOTER -->
+
+            <footer class="footer" id="footer">
+
+                <p>
+                    © 2026 Jewelry Store. All rights reserved.
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+    <script src="../js/dashboard.js"></script>
+
+</body>
+
+</html>

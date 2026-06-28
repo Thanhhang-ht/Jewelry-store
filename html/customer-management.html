@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý khách hàng | Jewelry Store</title>
+
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <!-- Customer CSS -->
+    <link rel="stylesheet" href="../css/customer-management.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h1>Jewelry Store</h1>
+
+                <p>ADMIN PANEL</p>
+
+            </div>
+
+            <hr>
+
+            <ul class="sidebar-menu">
+
+                <li>
+
+                    <a href="dashboard.html">
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="product-management.html">
+
+                        <i class="fa-solid fa-cube"></i>
+
+                        Quản lý sản phẩm
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="category-management.html">
+
+                        <i class="fa-solid fa-table-list"></i>
+
+                        Danh mục
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="order-management.html">
+
+                        <i class="fa-solid fa-bag-shopping"></i>
+
+                        Quản lý đơn hàng
+
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="customer-management.html">
+
+                        <i class="fa-solid fa-user-group"></i>
+
+                        Quản lý khách hàng
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="statistics.html">
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        Thống kê
+
+                    </a>
+
+                </li>
+
+                <li id="logoutBtn">
+
+                    <a href="#">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        Đăng xuất
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+            <div class="sidebar-user">
+
+                <div class="avatar">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <div class="user-info">
+
+                    <h3 id="adminName">
+
+                        Admin
+
+                    </h3>
+
+                    <span>
+
+                        Quản trị viên
+
+                    </span>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </div>
+
+        </aside>
+
+        <!-- MAIN -->
+
+        <main class="main-content">
+
+            <!-- HEADER -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button class="menu-btn">
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+                    <h2>
+
+                        Quản lý khách hàng
+
+                    </h2>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="search-box">
+
+                        <input type="text" id="searchCustomer" placeholder="Tìm kiếm tên khách hàng, SĐT, email">
+
+                        <button>
+
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                        </button>
+
+                    </div>
+
+                    <button class="notification-btn">
+
+                        <i class="fa-regular fa-bell"></i>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+            <!-- CUSTOMER CONTENT -->
+
+            <section class="customer-content">
+                <!-- STATISTIC CARDS -->
+
+                <section class="stats customer-stats">
+
+                    <!-- Tổng khách hàng -->
+
+                    <div class="stat-card">
+
+                        <div class="icon customer-icon">
+
+                            <i class="fa-solid fa-user"></i>
+
+                        </div>
+
+                        <div class="stat-info">
+
+                            <h3>Tổng khách hàng</h3>
+
+                            <h2 id="totalCustomers">60</h2>
+
+                            <p>Tất cả khách hàng</p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Khách hàng mới -->
+
+                    <div class="stat-card">
+
+                        <div class="icon new-customer-icon">
+
+                            <i class="fa-solid fa-user-plus"></i>
+
+                        </div>
+
+                        <div class="stat-info">
+
+                            <h3>Khách hàng mới</h3>
+
+                            <h2 id="newCustomers">5</h2>
+
+                            <p>
+
+                                <span class="increase">
+
+                                    ↑8%
+
+                                </span>
+
+                                so với tháng trước
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Tổng đơn hàng -->
+
+                    <div class="stat-card">
+
+                        <div class="icon order-icon">
+
+                            <i class="fa-solid fa-box"></i>
+
+                        </div>
+
+                        <div class="stat-info">
+
+                            <h3>Tổng số đơn hàng</h3>
+
+                            <h2 id="totalOrders">120</h2>
+
+                            <p>Tất cả đơn hàng</p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Tổng doanh thu -->
+
+                    <div class="stat-card">
+
+                        <div class="icon revenue-icon">
+
+                            <i class="fa-solid fa-sack-dollar"></i>
+
+                        </div>
+
+                        <div class="stat-info">
+
+                            <h3>Tổng doanh thu</h3>
+
+                            <h2 id="totalRevenue">
+
+                                46.000.000
+
+                            </h2>
+
+                            <p>Tổng doanh thu</p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- CUSTOMER TABLE -->
+
+                <div class="customer-container">
+
+                    <div class="table-wrapper">
+
+                        <table class="customer-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>STT</th>
+
+                                    <th>Khách hàng</th>
+
+                                    <th>SĐT</th>
+
+                                    <th>Email</th>
+
+                                    <th>Ngày đăng ký</th>
+
+                                    <th>Số đơn</th>
+
+                                    <th>Tổng chi tiêu</th>
+
+                                    <th>Thao tác</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="customerTableBody">
+                                <tr>
+
+                                    <td>1</td>
+
+                                    <td>Phan Thanh Hằng</td>
+
+                                    <td>0365954848</td>
+
+                                    <td>
+
+                                        <a href="mailto:thanhhang23905@gmail.com">
+
+                                            thanhhang23905@gmail.com
+
+                                        </a>
+
+                                    </td>
+
+                                    <td>20/06/2026</td>
+
+                                    <td>9</td>
+
+                                    <td>5.900.000</td>
+
+                                    <td>
+
+                                        <button class="delete-btn">
+
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>2</td>
+
+                                    <td>Thái Lê Minh Hiếu</td>
+
+                                    <td>0324789989</td>
+
+                                    <td>
+
+                                        <a href="mailto:hieule114@gmail.com">
+
+                                            hieule114@gmail.com
+
+                                        </a>
+
+                                    </td>
+
+                                    <td>19/06/2026</td>
+
+                                    <td>8</td>
+
+                                    <td>5.300.000</td>
+
+                                    <td>
+
+                                        <button class="delete-btn">
+
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>3</td>
+
+                                    <td>Lê Nguyễn Bảo Ngọc</td>
+
+                                    <td>0924685989</td>
+
+                                    <td>
+
+                                        <a href="mailto:lengocnguyen@gmail.com">
+
+                                            lengocnguyen@gmail.com
+
+                                        </a>
+
+                                    </td>
+
+                                    <td>19/06/2026</td>
+
+                                    <td>8</td>
+
+                                    <td>5.000.000</td>
+
+                                    <td>
+
+                                        <button class="delete-btn">
+
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>4</td>
+
+                                    <td>Trần Huy Hoàng</td>
+
+                                    <td>0726685284</td>
+
+                                    <td>
+
+                                        <a href="mailto:hoangtran@gmail.com">
+
+                                            hoangtran@gmail.com
+
+                                        </a>
+
+                                    </td>
+
+                                    <td>19/06/2026</td>
+
+                                    <td>10</td>
+
+                                    <td>6.700.000</td>
+
+                                    <td>
+
+                                        <button class="delete-btn">
+
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>5</td>
+
+                                    <td>Trần Anh Tuấn</td>
+
+                                    <td>0728885294</td>
+
+                                    <td>
+
+                                        <a href="mailto:anhtuan@gmail.com">
+
+                                            anhtuan@gmail.com
+
+                                        </a>
+                                    </td>
+                                    <td>18/06/2026</td>
+                                    <td>6</td>
+                                    <td>3.800.000</td>
+                                    <td>
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Phan Đình Bảo</td>
+                                    <td>0725815494</td>
+                                    <td>
+                                        <a href="mailto:phanbao@gmail.com">
+                                            phanbao@gmail.com
+                                        </a>
+                                    </td>
+                                    <td>16/06/2026</td>
+                                    <td>9</td>
+                                    <td>5.600.000</td>
+                                    <td>
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Phan Thái Sang</td>
+                                    <td>0325815594</td>
+                                    <td>
+                                        <a href="mailto:thsang15@gmail.com">
+                                            thsang15@gmail.com
+                                        </a>
+                                    </td>
+                                    <td>16/06/2026</td>
+                                    <td>5</td>
+                                    <td>3.600.000</td>
+                                    <td>
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Trần Bích Ngọc</td>
+                                    <td>0915616584</td>
+                                    <td>
+                                        <a href="mailto:bichngoctran@gmail.com">
+                                            bichngoctran@gmail.com
+                                        </a>
+                                    </td>
+                                    <td>15/02/2026</td>
+                                    <td>2</td>
+                                    <td>1.000.000</td>
+                                    <td>
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- PAGINATION -->
+                    <div class="pagination">
+                        <button class="page-btn">
+                            &lt;
+                        </button>
+                        <button class="page-btn active">
+                            1
+                        </button>
+                        <button class="page-btn">
+                            2
+                        </button>
+                        <button class="page-btn">
+                            3
+                        </button>
+                        <span class="page-dots">
+                            ...
+                        </span>
+                        <button class="page-btn">
+                            7
+                        </button>
+                        <button class="page-btn">
+                            &gt;
+                        </button>
+                    </div>
+                </div>
+                <!-- FOOTER -->
+                <footer class="footer">
+                    <p>
+                        © 2026 Jewelry Store. All rights reserved.
+                    </p>
+                </footer>
+            </section>
+        </main>
+    </div>
+    <!-- JAVASCRIPT -->
+    <script src="../js/customer-management.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,482 @@
+/* =========================
+   RESET CSS
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #edf0f5;
+}
+
+/* =========================
+       HEADER
+    ========================= */
+
+/* HEADER */
+
+header {
+  background: white;
+  border: 1px solid #0a4fb8;
+  border-radius: 12px;
+  padding: 20px 35px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+div h2 {
+  font-size: 28px;
+  font-family: "Ibarra Real Nova";
+  font-style: bold;
+}
+.logo {
+  font-size: 22px;
+  color: #0a4fb8;
+  font-weight: bold;
+}
+
+.logo {
+  color: #0c4fb5;
+}
+
+.menu {
+  display: flex;
+  gap: 40px;
+}
+
+.menu a {
+  position: relative;
+  text-decoration: none;
+  color: #0c4fb5;
+  font-weight: 600;
+  padding: 6px 0;
+  transition: 0.3s ease;
+}
+
+/* hiệu ứng hover nổi nhẹ */
+.menu a:hover {
+  color: #083a85;
+  transform: translateY(-2px);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+.menu a:hover {
+  background: rgba(12, 79, 181, 0.08);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* trạng thái active (nếu cần) */
+.menu a.active {
+  color: #083a85;
+}
+
+.menu a.active::after {
+  width: 100%;
+}
+
+.menu a:hover {
+  color: #083a85;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  width: 250px;
+  padding: 10px;
+  border: 1px solid #0c4fb5;
+  border-radius: 8px;
+}
+
+.search i {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  color: #0c4fb5;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #0c4fb5;
+}
+/* Icon giỏ hàng, tài khoản */
+
+.icon {
+  font-size: 34px;
+  cursor: pointer;
+}
+
+/* BREADCRUMB */
+
+.breadcrumb {
+  margin: 25px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #666;
+}
+
+/* LAYOUT */
+
+.profile-container {
+  display: flex;
+  gap: 30px;
+  padding: 0 40px 40px;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 350px;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.user-box {
+  text-align: center;
+  padding: 30px;
+}
+
+.avatar {
+  font-size: 80px;
+  color: #0c4fb5;
+}
+
+.user-box h3 {
+  margin: 15px 0 8px;
+}
+
+.user-box p {
+  color: #555;
+}
+
+.sidebar ul {
+  font-family: Arial, Helvetica, sans-serif;
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 18px 30px;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.sidebar li i {
+  width: 40px;
+}
+
+.sidebar li:hover {
+  background: #f1f5ff;
+}
+
+.active {
+  background: #eef4ff;
+  color: #0c4fb5;
+}
+/* Link trong sidebar */
+
+.sidebar li a {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  text-decoration: none;
+  color: inherit;
+
+  width: 100%;
+  height: 100%;
+}
+
+/* Trang đang được chọn */
+
+.sidebar li.active {
+  background: #eef4ff;
+  color: #0c4fb5;
+
+  border-left: 5px solid #0c4fb5;
+}
+
+/* Hover */
+
+.sidebar li:hover {
+  background: #f1f5ff;
+}
+
+/* CONTENT */
+
+.content {
+  flex: 1;
+}
+
+.card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.card-header h2 {
+  margin: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+
+  color: #111;
+}
+.card-header a {
+  text-decoration: none;
+
+  color: #0c4fb5;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  padding: 10px 18px;
+
+  border: 1px solid #0c4fb5;
+  border-radius: 10px;
+
+  transition: all 0.3s ease;
+}
+
+.card-header a:hover {
+  background: #0c4fb5;
+  color: white;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 4px 12px rgba(12, 79, 181, 0.25);
+}
+
+.edit-btn,
+.add-address {
+  border: none;
+  background: none;
+  color: #0c4fb5;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.detail-btn {
+  text-decoration: none;
+
+  color: #0c4fb5;
+  font-weight: 600;
+
+  padding: 8px 15px;
+
+  border: 1px solid #0c4fb5;
+  border-radius: 8px;
+
+  transition: all 0.3s ease;
+}
+
+.detail-btn:hover {
+  background: #0c4fb5;
+  color: white;
+}
+
+/* INFO */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 15px;
+  font-size: 22px;
+}
+
+/* TABLE */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+th {
+  background: #eef3fb;
+  font-weight: 700;
+}
+
+th,
+td {
+  padding: 16px 20px;
+  text-align: left;
+}
+
+th:nth-child(4),
+td:nth-child(4),
+th:nth-child(5),
+td:nth-child(5) {
+  text-align: center;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  height: 30px;
+  border-radius: 20px;
+}
+
+.success {
+  background: #d7f4dd;
+  color: #148c3b;
+}
+
+.processing {
+  background: #d7ebff;
+  color: #0075ff;
+}
+
+.cancel {
+  background: #ffe0e0;
+  color: red;
+}
+
+/* ADDRESS */
+
+.address-section {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.address-header h2 {
+  font-size: 30px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.add-address {
+  border: none;
+  background: none;
+  color: #0c4fb5;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.address-list {
+  display: flex;
+  gap: 30px;
+}
+
+.address-card {
+  flex: 1;
+  border: 1.5px solid #0c4fb5;
+  border-radius: 12px;
+  padding: 18px 22px;
+  transition: 0.3s;
+}
+
+.address-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.address-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.address-top span {
+  color: #0c4fb5;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.address-top input {
+  margin-right: 8px;
+  transform: scale(1.2);
+}
+
+.address-top i {
+  font-size: 22px;
+  color: #333;
+  cursor: pointer;
+}
+
+.address-card h4 {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.address-card p {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.active-address {
+  border: 2px solid #0c4fb5;
+}
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  background: #003f9f;
+  color: white;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  padding: 25px 40px;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.footer-item i {
+  font-size: 40px;
+}
+
+.footer-item h4 {
+  margin-bottom: 5px;
+}

@@ -1,0 +1,868 @@
+/* ===================================
+   RESET
+=================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #f5f7fb;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* ===================================
+   LAYOUT
+=================================== */
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ===================================
+   SIDEBAR
+=================================== */
+
+.sidebar {
+  width: 270px;
+  background: #1d3d73;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  overflow-y: auto;
+}
+
+.sidebar .logo {
+  padding: 35px 25px 25px;
+  text-align: center;
+}
+
+.sidebar .logo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.sidebar .logo p {
+  font-size: 14px;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+.sidebar hr {
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 20px 20px;
+}
+
+/* ===================================
+   MENU
+=================================== */
+
+.sidebar-menu {
+  flex: 1;
+}
+
+.sidebar-menu li {
+  margin: 6px 15px;
+}
+
+.sidebar-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 15px 18px;
+
+  border-radius: 12px;
+
+  transition: 0.25s;
+}
+
+.sidebar-menu li a i {
+  width: 24px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.sidebar-menu li:hover a {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-menu li.active a {
+  background: white;
+  color: #1d3d73;
+  font-weight: 700;
+}
+
+.sidebar-menu li:last-child {
+  margin-top: 30px;
+}
+
+/* ===================================
+   USER
+=================================== */
+
+.sidebar-user {
+  padding: 20px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  color: #1d3d73;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 22px;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-info h3 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.user-info span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.sidebar-user .fa-chevron-down {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* ===================================
+   MAIN
+=================================== */
+
+.main-content {
+  margin-left: 270px;
+
+  width: calc(100% - 270px);
+
+  padding: 30px;
+}
+
+/* ===================================
+   TOPBAR
+=================================== */
+
+.topbar {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 18px 25px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+
+  margin-bottom: 30px;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.menu-btn {
+  width: 45px;
+  height: 45px;
+
+  border-radius: 12px;
+
+  background: #eef4ff;
+
+  color: #1d3d73;
+
+  font-size: 18px;
+
+  transition: 0.3s;
+}
+
+.menu-btn:hover {
+  background: #1d3d73;
+  color: white;
+}
+
+.topbar-left h2 {
+  font-size: 28px;
+  color: #1d3d73;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.notification-btn {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  background: #eef4ff;
+
+  color: #1d3d73;
+
+  font-size: 20px;
+
+  transition: 0.3s;
+}
+
+.notification-btn:hover {
+  background: #1d3d73;
+  color: white;
+}
+
+.current-date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #f5f7fb;
+
+  padding: 12px 18px;
+
+  border-radius: 12px;
+
+  color: #666;
+
+  font-size: 15px;
+}
+/* ===================================
+   STATISTIC CARDS
+=================================== */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  margin-bottom: 35px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+
+  transition: 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ===================================
+   ICON
+=================================== */
+
+.icon {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 30px;
+
+  flex-shrink: 0;
+}
+
+.product-icon {
+  background: #e8f2ff;
+  color: #1976d2;
+}
+
+.order-icon {
+  background: #fff4e5;
+  color: #fb8c00;
+}
+
+.customer-icon {
+  background: #e8f5e9;
+  color: #43a047;
+}
+
+.revenue-icon {
+  background: #f3e8ff;
+  color: #8e24aa;
+}
+
+/* ===================================
+   CARD CONTENT
+=================================== */
+
+.stat-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-info h3 {
+  font-size: 15px;
+  color: #777;
+  font-weight: 500;
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+.stat-info h2 {
+  font-size: 25px;
+  color: #1d3d73;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.stat-card {
+  height: 150px;
+  padding: 24px;
+}
+
+.stat-info p {
+  font-size: 14px;
+  color: #777;
+}
+
+.increase {
+  color: #2e7d32;
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+#totalRevenue {
+  font-size: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* ===================================
+   ANIMATION
+=================================== */
+
+.stat-card:hover .icon {
+  transform: scale(1.08);
+
+  transition: 0.3s;
+}
+
+.stat-card:hover h2 {
+  color: #0c5adb;
+
+  transition: 0.3s;
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media (max-width: 1400px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 20px;
+  }
+
+  .icon {
+    width: 60px;
+    height: 60px;
+
+    font-size: 26px;
+  }
+
+  .stat-info h2 {
+    font-size: 26px;
+  }
+}
+/* ===================================
+   DASHBOARD CONTENT
+=================================== */
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+/* ===================================
+   BOX
+=================================== */
+
+.orders-box,
+.best-seller {
+  background: #fff;
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* ===================================
+   BOX HEADER
+=================================== */
+
+.box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.box-header h2 {
+  font-size: 22px;
+
+  color: #1d3d73;
+
+  font-weight: 700;
+}
+
+.box-header a {
+  color: #0c5adb;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.box-header a:hover {
+  color: #083c97;
+}
+
+/* ===================================
+   TABLE
+=================================== */
+
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f6f8fb;
+}
+
+thead th {
+  padding: 15px;
+
+  text-align: left;
+
+  font-size: 15px;
+
+  color: #666;
+
+  font-weight: 600;
+}
+
+tbody td {
+  padding: 18px 15px;
+
+  border-bottom: 1px solid #eee;
+
+  font-size: 15px;
+}
+
+tbody tr {
+  transition: 0.25s;
+}
+
+tbody tr:hover {
+  background: #f8fbff;
+}
+
+/* ===================================
+   STATUS
+=================================== */
+
+.status {
+  display: inline-block;
+
+  padding: 7px 14px;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.processing {
+  background: #fff4dd;
+
+  color: #f59e0b;
+}
+
+.shipping {
+  background: #e7f0ff;
+
+  color: #2563eb;
+}
+
+.success {
+  background: #e8f8ef;
+
+  color: #16a34a;
+}
+
+.cancel {
+  background: #fdeaea;
+
+  color: #dc2626;
+}
+
+/* ===================================
+   BEST SELLER
+=================================== */
+
+.best-seller td:first-child {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.best-seller img {
+  width: 55px;
+  height: 55px;
+
+  object-fit: cover;
+
+  border-radius: 12px;
+
+  border: 1px solid #eee;
+
+  flex-shrink: 0;
+}
+
+/* ===================================
+   FOOTER
+=================================== */
+
+.footer {
+  text-align: center;
+
+  color: #777;
+
+  padding: 20px 0;
+
+  font-size: 15px;
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media (max-width: 1200px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+
+    width: 100%;
+
+    padding: 20px;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .topbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .orders-box,
+  .best-seller {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 700px;
+  }
+}
+/* ===================================
+   UTILITIES
+=================================== */
+
+.text-success {
+  color: #16a34a;
+}
+
+.text-warning {
+  color: #f59e0b;
+}
+
+.text-danger {
+  color: #dc2626;
+}
+
+.text-primary {
+  color: #0c5adb;
+}
+
+.bg-success {
+  background: #e8f8ef;
+}
+
+.bg-warning {
+  background: #fff4dd;
+}
+
+.bg-danger {
+  background: #fdeaea;
+}
+
+.bg-primary {
+  background: #e8f0ff;
+}
+
+/* ===================================
+   LOADING
+=================================== */
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 60px;
+
+  color: #888;
+
+  font-size: 18px;
+}
+
+.loading i {
+  margin-right: 12px;
+
+  font-size: 22px;
+
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===================================
+   EMPTY DATA
+=================================== */
+
+.empty-data {
+  text-align: center;
+
+  padding: 60px 20px;
+
+  color: #777;
+}
+
+.empty-data i {
+  font-size: 70px;
+
+  margin-bottom: 15px;
+
+  color: #bdbdbd;
+}
+
+.empty-data h3 {
+  font-size: 24px;
+
+  margin-bottom: 10px;
+}
+
+.empty-data p {
+  font-size: 15px;
+}
+
+/* ===================================
+   SCROLLBAR
+=================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #edf2f7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0c5adb;
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #083c97;
+}
+
+/* ===================================
+   BUTTON EFFECT
+=================================== */
+
+button {
+  transition: 0.25s;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* ===================================
+   LINK EFFECT
+=================================== */
+
+a {
+  transition: 0.25s;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* ===================================
+   CARD EFFECT
+=================================== */
+
+.orders-box,
+.best-seller,
+.stat-card {
+  transition: 0.3s;
+}
+
+.orders-box:hover,
+.best-seller:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ===================================
+   IMAGE EFFECT
+=================================== */
+
+.best-seller img {
+  transition: 0.3s;
+}
+
+.best-seller tr:hover img {
+  transform: scale(1.08);
+}
+
+/* ===================================
+   TABLE HOVER
+=================================== */
+
+tbody tr {
+  cursor: pointer;
+}
+
+/* ===================================
+   FADE ANIMATION
+=================================== */
+
+.fade-in {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}

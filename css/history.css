@@ -1,0 +1,291 @@
+/* =========================
+   BREADCRUMB
+========================= */
+
+.breadcrumb {
+  margin: 25px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #6b6b6b;
+}
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.history-container {
+  display: flex;
+  gap: 35px;
+  padding: 0 35px 40px;
+  align-items: flex-start;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 350px;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.user-box {
+  text-align: center;
+  padding: 30px;
+}
+
+.avatar {
+  font-size: 80px;
+  color: #0c4fb5;
+}
+
+.user-box h3 {
+  margin: 15px 0 8px;
+}
+
+.user-box p {
+  color: #555;
+}
+
+.sidebar ul {
+  font-family: Arial, Helvetica, sans-serif;
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 18px 30px;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.sidebar li i {
+  width: 40px;
+}
+
+.sidebar li:hover {
+  background: #f1f5ff;
+}
+
+.sidebar li.active {
+  background: #eef4ff;
+  color: #0c4fb5;
+  border-left: 5px solid #0c4fb5;
+  font-weight: 700;
+}
+.sidebar li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  text-decoration: none;
+  color: #222;
+
+  width: 100%;
+}
+
+.sidebar li.active a {
+  color: #0c4fb5;
+  font-weight: 700;
+}
+
+.sidebar li.active i {
+  color: #0c4fb5;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.history-content {
+  flex: 1;
+
+  background: white;
+  border-radius: 15px;
+
+  padding: 25px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+}
+
+.history-content h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 25px;
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #dfe6f1;
+}
+
+thead th {
+  padding: 18px;
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+thead th:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+thead th:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+tbody td {
+  padding: 20px;
+  text-align: center;
+  font-size: 17px;
+
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+  display: inline-block;
+
+  min-width: 130px;
+
+  padding: 7px 18px;
+
+  border-radius: 20px;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.processing {
+  background: #d7ecff;
+  color: #0078ff;
+}
+
+.shipping {
+  background: #fff1b6;
+  color: #ff9f00;
+}
+
+.success {
+  background: #d8f4d8;
+  color: #16a34a;
+}
+
+.cancel {
+  background: #ffdede;
+  color: #ff4d4f;
+}
+
+/* =========================
+   ACTION BUTTON
+========================= */
+
+.detail-btn {
+  text-decoration: none;
+
+  color: #0c4fb5;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  padding: 8px 14px;
+
+  border-radius: 8px;
+
+  transition: all 0.3s ease;
+}
+
+.detail-btn:hover {
+  background: #edf4ff;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 35px;
+}
+
+.pagination button {
+  width: 44px;
+  height: 44px;
+
+  border: 1px solid #0c4fb5;
+  border-radius: 12px;
+
+  background: white;
+
+  color: #000;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+  background: #0c4fb5;
+  color: white;
+}
+
+.pagination button.active {
+  background: #0c4fb5;
+  color: white;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .history-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .history-content {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 800px;
+  }
+
+  .sidebar li span {
+    font-size: 16px;
+  }
+}

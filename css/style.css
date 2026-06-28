@@ -1,0 +1,444 @@
+/* =========================
+   RESET CSS
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #edf0f5;
+}
+
+/* =========================
+       HEADER
+    ========================= */
+
+/* HEADER */
+
+header {
+  background: white;
+  border: 1px solid #0a4fb8;
+  border-radius: 12px;
+  padding: 20px 35px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+div h2 {
+  font-size: 28px;
+  font-family: "Ibarra Real Nova";
+  font-style: bold;
+}
+.logo {
+  font-size: 22px;
+  color: #0a4fb8;
+  font-weight: bold;
+}
+
+.logo {
+  color: #0c4fb5;
+}
+
+.menu {
+  display: flex;
+  gap: 40px;
+}
+
+.menu a {
+  position: relative;
+  text-decoration: none;
+  color: #0c4fb5;
+  font-weight: 600;
+  padding: 6px 0;
+  transition: 0.3s ease;
+}
+
+/* hiệu ứng hover nổi nhẹ */
+.menu a:hover {
+  color: #083a85;
+  transform: translateY(-2px);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+.menu a:hover {
+  background: rgba(12, 79, 181, 0.08);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* trạng thái active (nếu cần) */
+.menu a.active {
+  color: #083a85;
+}
+
+.menu a.active::after {
+  width: 100%;
+}
+
+.menu a:hover {
+  color: #083a85;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  width: 250px;
+  padding: 10px;
+  border: 1px solid #0c4fb5;
+  border-radius: 8px;
+}
+
+.search i {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  color: #0c4fb5;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #0c4fb5;
+}
+/* Icon giỏ hàng, tài khoản */
+
+.icon {
+  font-size: 34px;
+  cursor: pointer;
+}
+
+/* BANNER */
+
+.banner {
+  width: 95%;
+  height: 500px;
+
+  margin: 20px auto;
+
+  border-radius: 20px;
+
+  background: url("../image/Banner.png");
+  background-size: cover;
+  background-position: center;
+
+  position: relative;
+}
+
+.text {
+  position: absolute;
+  left: 60px;
+  top: 150px;
+
+  color: white;
+}
+
+.text h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 48px;
+}
+
+.text p {
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  font-style: italic;
+}
+
+/* DANH MỤC */
+
+.cate {
+  margin-top: 70px;
+  text-align: center;
+}
+
+.cate h2 {
+  color: #0c4fb5;
+  margin-bottom: 40px;
+}
+
+.cate-list {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.cate-item {
+  width: 220px;
+  height: 260px;
+
+  background: white;
+  border-radius: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.3s;
+}
+
+.cate-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cate-item img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+
+  margin-bottom: 20px;
+}
+
+.cate-item h3 {
+  color: #003a8c;
+  margin-bottom: 15px;
+  font-size: 25px;
+}
+
+.cate-item a {
+  text-decoration: none;
+  color: #749ee1;
+  font-weight: 600;
+}
+
+/* SẢN PHẨM */
+
+.product {
+  width: 90%;
+  margin: 80px auto;
+}
+
+.product h2 {
+  text-align: center;
+  color: #0c4fb5;
+  margin-bottom: 40px;
+}
+
+.pro-list {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.pro-item {
+  width: 250px;
+
+  background: white;
+  border-radius: 15px;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: 0.3s;
+}
+
+.pro-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pro-img {
+  position: relative;
+}
+
+.pro-img img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.love {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.pro-info {
+  padding: 15px;
+  min-height: 90px;
+}
+
+.pro-info h4 {
+  margin-bottom: 10px;
+}
+
+.pro-info p {
+  color: #0c4fb5;
+  font-weight: bold;
+}
+
+.pro-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px;
+  margin-top: auto;
+}
+
+.pro-btn button {
+  height: 40px;
+  border: 1px solid #0c4fb5;
+
+  border-radius: 10px;
+
+  background: #f8f8f8;
+  font-size: 15px;
+  font-weight: 600;
+  color: #666;
+
+  background: white;
+
+  cursor: pointer;
+}
+.pro-btn button:hover {
+  background: #0c4fb5;
+  color: white;
+}
+
+.pro-btn button:first-child {
+  width: 150px;
+}
+
+.cart-btn {
+  width: 40px;
+}
+
+.cart-btn i {
+  color: #0c4fb5;
+}
+.cart-btn:hover {
+  background: #0c4fb5;
+}
+
+.cart-btn:hover i {
+  color: white;
+}
+
+/* AI */
+
+.ai {
+  width: 90%;
+  margin: 60px auto;
+
+  padding: 40px;
+
+  background: #edf4ff;
+  border-radius: 15px;
+
+  display: flex;
+  align-items: center;
+}
+
+.robot {
+  font-size: 100px;
+  color: #0c4fb5;
+}
+
+.ai-text {
+  flex: 1;
+  margin-left: 40px;
+}
+
+.ai-text h2 {
+  color: #0c4fb5;
+  margin-bottom: 20px;
+}
+
+.chat {
+  display: flex;
+  gap: 10px;
+}
+
+.chat input {
+  flex: 1;
+
+  padding: 15px;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.chat button {
+  padding: 15px 25px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #0c4fb5;
+  color: white;
+
+  cursor: pointer;
+}
+
+/* FOOTER */
+
+footer {
+  background: #003f9f;
+  color: white;
+
+  margin-top: 80px;
+
+  padding: 50px;
+}
+
+.footer-box {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.footer-box h2,
+.footer-box h3 {
+  margin-bottom: 15px;
+}
+
+.footer-box p {
+  margin-bottom: 8px;
+}
+
+footer hr {
+  margin: 30px 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.copy {
+  text-align: center;
+}
+
+div h2 {
+  font-size: 28px;
+  font-family: "Ibarra Real Nova";
+  font-style: bold;
+}
+
+#note {
+  font-weight: 200;
+  font-size: 15px;
+  line-height: 1.5;
+}

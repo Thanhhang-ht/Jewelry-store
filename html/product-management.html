@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý sản phẩm - Jewelry Store</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <link rel="stylesheet" href="../css/product-management.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- ==========================
+                SIDEBAR
+        =========================== -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h1>Jewelry Store</h1>
+
+                <p>ADMIN PANEL</p>
+
+            </div>
+
+            <hr>
+
+            <ul class="sidebar-menu">
+
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="product-management.html">
+                        <i class="fa-solid fa-cube"></i>
+                        Quản lý sản phẩm
+                    </a>
+                </li>
+
+                <li>
+                    <a href="category-management.html">
+                        <i class="fa-solid fa-table-list"></i>
+                        Danh mục
+                    </a>
+                </li>
+
+                <li>
+                    <a href="order-management.html">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Quản lý đơn hàng
+                    </a>
+                </li>
+
+                <li>
+                    <a href="customer-management.html">
+                        <i class="fa-solid fa-user-group"></i>
+                        Quản lý khách hàng
+                    </a>
+                </li>
+
+                <li>
+                    <a href="statistics.html">
+                        <i class="fa-solid fa-chart-line"></i>
+                        Thống kê
+                    </a>
+                </li>
+
+                <li id="logoutBtn">
+                    <a href="#">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="sidebar-user">
+
+                <div class="avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="user-info">
+
+                    <h3>Admin</h3>
+
+                    <span>Quản trị viên</span>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </div>
+
+        </aside>
+
+        <!-- ==========================
+                MAIN
+        =========================== -->
+
+        <main class="main-content">
+
+            <!-- HEADER -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button class="menu-btn">
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+                    <h2>Quản lý sản phẩm</h2>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <button class="notification-btn">
+
+                        <i class="fa-regular fa-bell"></i>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+            <!-- ==========================
+                PRODUCT CONTAINER
+            =========================== -->
+
+            <section class="product-container">
+                <!-- ==========================
+                        TOOLBAR
+                =========================== -->
+
+                <div class="product-toolbar">
+
+                    <!-- Left -->
+
+                    <div class="toolbar-left">
+
+                        <a href="../html/product-form.html?mode=add" class="add-btn">
+                            <i class="fa-solid fa-plus"></i>
+                            Thêm sản phẩm
+                        </a>
+
+                    </div>
+
+                    <!-- Right -->
+
+                    <div class="toolbar-right">
+
+                        <!-- Danh mục -->
+
+                        <div class="category-select">
+
+                            <select id="categoryFilter">
+
+                                <option value="all">
+                                    Tất cả danh mục
+                                </option>
+
+                                <option value="Nhẫn">
+                                    Nhẫn
+                                </option>
+
+                                <option value="Dây chuyền">
+                                    Dây chuyền
+                                </option>
+
+                                <option value="Vòng tay">
+                                    Vòng tay
+                                </option>
+
+                                <option value="Bông tai">
+                                    Bông tai
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- Search -->
+
+                        <div class="search-box">
+
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+
+                            <button id="searchBtn">
+
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                            </button>
+
+                        </div>
+
+                        <!-- Filter -->
+
+                        <button class="filter-btn">
+
+                            <i class="fa-solid fa-sliders"></i>
+
+                            Bộ lọc
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- ==========================
+                        TABLE
+                =========================== -->
+
+                <div class="table-wrapper">
+
+                    <table class="product-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+
+                                    <input type="checkbox" id="checkAll">
+
+                                </th>
+
+                                <th>Sản phẩm</th>
+
+                                <th>Danh mục</th>
+
+                                <th>Giá bán</th>
+
+                                <th>Tồn kho</th>
+
+                                <th>Trạng thái</th>
+
+                                <th>Ngày tạo</th>
+
+                                <th>Thao tác</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="productTableBody">
+                            <tr>
+
+                                <td>
+                                    <input type="checkbox">
+                                </td>
+
+                                <td>
+
+                                    <div class="product-info">
+
+                                        <img src="../image/image 14.png" alt="">
+
+                                        <div>
+
+                                            <h4>Dây chuyền bạc nữ</h4>
+
+                                            <span>SP001</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Dây chuyền</td>
+
+                                <td>670.000đ</td>
+
+                                <td>50</td>
+
+                                <td>
+
+                                    <span class="status selling">
+                                        Đang bán
+                                    </span>
+
+                                </td>
+
+                                <td>20/09/2026</td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="../html/product-form.html?mode=edit" class="edit-btn">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+                                        <button class="view-btn">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td><input type="checkbox"></td>
+
+                                <td>
+
+                                    <div class="product-info">
+
+                                        <img src="../image/image 19.png" alt="">
+
+                                        <div>
+
+                                            <h4>Dây chuyền đính đá</h4>
+
+                                            <span>SP002</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Dây chuyền</td>
+
+                                <td>550.000đ</td>
+
+                                <td>45</td>
+
+                                <td>
+
+                                    <span class="status selling">
+                                        Đang bán
+                                    </span>
+
+                                </td>
+
+                                <td>20/09/2026</td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="../html/product-form.html?mode=edit" class="edit-btn">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+                                        <button class="view-btn">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td><input type="checkbox"></td>
+
+                                <td>
+
+                                    <div class="product-info">
+
+                                        <img src="../image/image 13.png" alt="">
+
+                                        <div>
+
+                                            <h4>Bông tai cao cấp</h4>
+
+                                            <span>SP003</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Bông tai</td>
+
+                                <td>750.000đ</td>
+
+                                <td>42</td>
+
+                                <td>
+
+                                    <span class="status selling">
+                                        Đang bán
+                                    </span>
+
+                                </td>
+
+                                <td>17/09/2026</td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="../html/product-form.html?mode=edit" class="edit-btn">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+                                        <button class="view-btn">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td><input type="checkbox"></td>
+
+                                <td>
+
+                                    <div class="product-info">
+
+                                        <img src="../image/image 26.png" alt="">
+
+                                        <div>
+
+                                            <h4>Nhẫn kim cương thiết kế</h4>
+
+                                            <span>SP004</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Nhẫn</td>
+
+                                <td>950.000đ</td>
+
+                                <td>10</td>
+
+                                <td>
+
+                                    <span class="status selling">
+                                        Đang bán
+                                    </span>
+
+                                </td>
+
+                                <td>16/09/2026</td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="../html/product-form.html?mode=edit" class="edit-btn">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+                                        <button class="view-btn">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td><input type="checkbox"></td>
+
+                                <td>
+
+                                    <div class="product-info">
+
+                                        <img src="../image/image 10.png" alt="">
+
+                                        <div>
+
+                                            <h4>Vòng tay kim cương cao cấp</h4>
+
+                                            <span>SP005</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Vòng tay</td>
+
+                                <td>870.000đ</td>
+
+                                <td>15</td>
+
+                                <td>
+
+                                    <span class="status out-stock">
+                                        Hết hàng
+                                    </span>
+
+                                </td>
+
+                                <td>16/09/2026</td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="../html/product-form.html?mode=edit" class="edit-btn">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+                                        <button class="view-btn">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td><input type="checkbox"></td>
+
+                                <td>
+
+                                    <div class="product-info">
+
+                                        <img src="../image/image_23_2.png" alt="">
+
+                                        <div>
+
+                                            <h4>Vòng bạc thiên nga xanh</h4>
+
+                                            <span>SP006</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Dây chuyền</td>
+
+                                <td>570.000đ</td>
+
+                                <td>30</td>
+
+                                <td>
+
+                                    <span class="status selling">
+                                        Đang bán
+                                    </span>
+
+                                </td>
+
+                                <td>12/09/2026</td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="../html/product-form.html?mode=edit" class="edit-btn">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+                                        <button class="view-btn">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td><input type="checkbox"></td>
+
+                                <td>
+
+                                    <div class="product-info">
+
+                                        <img src="../image/image 6.png" alt="">
+
+                                        <div>
+
+                                            <h4>Nhẫn bạc đính đá</h4>
+
+                                            <span>SP007</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Nhẫn</td>
+
+                                <td>460.000đ</td>
+
+                                <td>30</td>
+
+                                <td>
+
+                                    <span class="status selling">
+                                        Đang bán
+                                    </span>
+
+                                </td>
+
+                                <td>10/09/2026</td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="../html/product-form.html?mode=edit" class="edit-btn">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+                                        <button class="view-btn">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+
+                                        <button class="delete-btn">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- ==========================
+                        PAGINATION
+                =========================== -->
+
+                <div class="pagination">
+
+                    <button class="page-btn">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+
+                    <button class="page-btn active">
+                        1
+                    </button>
+
+                    <button class="page-btn">
+                        2
+                    </button>
+
+                    <button class="page-btn">
+                        3
+                    </button>
+
+                    <span class="page-dots">
+                        ...
+                    </span>
+
+                    <button class="page-btn">
+                        7
+                    </button>
+
+                    <button class="page-btn">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                    <div class="page-size">
+
+                        <select id="pageSize">
+
+                            <option value="10">
+                                10/Trang
+                            </option>
+
+                            <option value="20">
+                                20/Trang
+                            </option>
+
+                            <option value="50">
+                                50/Trang
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ==========================
+                    FOOTER
+            =========================== -->
+
+            <footer class="footer">
+
+                <p>
+                    © 2026 Jewelry Store. All rights reserved.
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- ==========================
+            JAVASCRIPT
+    =========================== -->
+
+    <script src="../js/product-management.js"></script>
+
+</body>
+
+</html>

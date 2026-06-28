@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm</title>
+
+    <link rel="stylesheet" href="../css/product-detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="logo">
+            <h2>Jewelry Store</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="index.html">Trang chủ</a>
+            <a href="products.html" class="active">Sản phẩm</a>
+            <a href="#">Liên hệ</a>
+        </nav>
+
+        <div class="right">
+
+            <div class="search">
+                <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <a href="../html/cart.html">
+                <i class="fa-solid fa-cart-shopping icon"></i>
+            </a>
+            <a href="../html/profile.html">
+                <i class="fa-regular fa-user icon"></i>
+            </a>
+
+        </div>
+
+    </header>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        Trang chủ > Sản phẩm > <span id="productName">Dây chuyền bạc nữ</span>
+    </div>
+
+    <!-- PRODUCT DETAIL -->
+    <section class="detail-container">
+
+        <!-- GALLERY -->
+        <div class="gallery">
+
+            <div class="thumbs">
+                <img src="../image/image 15.png" class="thumb active">
+                <img src="../image/image 16.png" class="thumb">
+                <img src="../image/image 17.png" class="thumb">
+            </div>
+
+            <div class="main-image">
+                <img id="mainImg" src="../image/Rectangle 82.png">
+            </div>
+
+        </div>
+
+        <!-- INFO -->
+        <div class="product-info">
+
+            <h1 id="title">Dây chuyền bạc nữ</h1>
+
+            <div class="price" id="price">
+                670.000đ
+            </div>
+
+            <hr>
+
+            <div class="info-row">
+                <strong>Chất liệu:</strong>
+                <span>Bạc 925</span>
+            </div>
+
+            <div class="info-row">
+                <strong>Màu sắc:</strong>
+                <span>Bạc trắng</span>
+            </div>
+
+            <div class="description">
+                <strong>Mô tả:</strong>
+                <p>
+                    Thiết kế chữ V thanh lịch với viên đá trung tâm nổi bật,
+                    mang đến vẻ đẹp sang trọng và tinh tế.
+                    Phù hợp cho đi làm, dự tiệc hoặc làm quà tặng.
+                </p>
+            </div>
+
+            <!-- QUANTITY -->
+            <div class="quantity-box">
+
+                <span>Số lượng:</span>
+
+                <button id="minus">-</button>
+
+                <input type="text" id="quantity" value="1" readonly>
+
+                <button id="plus">+</button>
+
+                <span class="stock">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Còn hàng
+                </span>
+
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="btn-group">
+
+                <button class="add-cart" id="addCartBtn">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Thêm vào giỏ hàng
+                </button>
+
+                <button class="buy-now" id="buyNowBtn">
+                    Mua ngay
+                </button>
+
+                <button class="favorite" id="favoriteBtn">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- RELATED PRODUCTS -->
+    <section class="related">
+
+        <h2>SẢN PHẨM LIÊN QUAN</h2>
+
+        <div class="product-list">
+
+            <div class="card">
+                <img src="../image/image 18.png">
+                <div class="content">
+                    <h3>Nhẫn kim cương thiết kế</h3>
+                    <p class="price-card">950.000đ</p>
+                    <div class="action">
+                        <a href="product-detail.html" class="detail-btn">Xem chi tiết</a>
+                        <i class="fa-regular fa-heart love"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 19.png">
+                <div class="content">
+                    <h3>Dây chuyền đính đá</h3>
+                    <p class="price-card">550.000đ</p>
+                    <div class="action">
+                        <a href="product-detail.html" class="detail-btn">Xem chi tiết</a>
+                        <i class="fa-regular fa-heart love"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 20.png">
+                <div class="content">
+                    <h3>Bông tai nữ bạc</h3>
+                    <p class="price-card">500.000đ</p>
+                    <div class="action">
+                        <a href="product-detail.html" class="detail-btn">Xem chi tiết</a>
+                        <i class="fa-regular fa-heart love"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 21.png">
+                <div class="content">
+                    <h3>Vòng bạc đá</h3>
+                    <p class="price-card">540.000đ</p>
+                    <div class="action">
+                        <a href="product-detail.html" class="detail-btn">Xem chi tiết</a>
+                        <i class="fa-regular fa-heart love"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-truck"></i>
+            <div>
+                <h4>Miễn phí vận chuyển</h4>
+                <p>Cho đơn hàng từ 500.000đ</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <div>
+                <h4>Chính sách bảo hành</h4>
+                <p>Miễn phí làm sáng và đánh bóng</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-rotate"></i>
+            <div>
+                <h4>Đổi trả dễ dàng</h4>
+                <p>Trong vòng 7 ngày</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-regular fa-comments"></i>
+            <div>
+                <h4>Hỗ trợ tư vấn</h4>
+                <p>Tư vấn mọi lúc</p>
+            </div>
+        </div>
+
+    </footer>
+
+    <script src="../js/product-detail.js"></script>
+
+</body>
+
+</html>

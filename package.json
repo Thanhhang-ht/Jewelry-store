@@ -1,0 +1,30 @@
+{
+  "name": "jewelry-store",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "project"
+  ],
+  "homepage": "https://github.com/Thanhhang-ht/Myproject#readme",
+  "bugs": {
+    "url": "https://github.com/Thanhhang-ht/Myproject/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thanhhang-ht/Myproject.git"
+  },
+  "license": "ISC",
+  "author": "thanhhang",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start":"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

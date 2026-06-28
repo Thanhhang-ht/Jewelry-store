@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lịch sử mua hàng | Jewelry Store</title>
+
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/history.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- ================= HEADER ================= -->
+    <header>
+        <div class="logo">
+            <h2>Jewelry Store</h2>
+        </div>
+        <nav class="menu">
+            <a href="../html/index.html">
+                Trang chủ
+            </a>
+
+            <a href="../html/products.html">
+                Sản phẩm
+            </a>
+
+            <a href="#">
+                Liên hệ
+            </a>
+
+        </nav>
+
+        <div class="right">
+            <div class="search">
+                <input type="text" id="searchInput" name="keyword" placeholder="Tìm kiếm sản phẩm...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <a href="cart.html">
+                <i class="fa-solid fa-cart-shopping icon"></i>
+            </a>
+
+            <a href="profile.html">
+                <i class="fa-regular fa-user icon"></i>
+            </a>
+
+        </div>
+
+    </header>
+
+    <!-- ================= BREADCRUMB ================= -->
+    <div class="breadcrumb">
+        Trang chủ > Tài khoản > Lịch sử mua hàng
+    </div>
+
+    <div class="history-container">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <div class="user-box">
+
+                <i class="fa-regular fa-circle-user avatar"></i>
+
+                <h3 id="sidebarUserName">
+                    Phan Thanh Hằng
+                </h3>
+
+                <p id="sidebarUserEmail">
+                    thanhhang23905@gmail.com
+                </p>
+
+            </div>
+
+            <ul>
+
+                <li>
+
+                    <a href="profile.html">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        Thông tin cá nhân
+
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="history.html">
+
+                        <i class="fa-solid fa-bag-shopping"></i>
+
+                        Lịch sử mua hàng
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="address.html">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        Địa chỉ của tôi
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="change-password.html">
+
+                        <i class="fa-solid fa-key"></i>
+
+                        Đổi mật khẩu
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="wishlist.html">
+
+                        <i class="fa-regular fa-heart"></i>
+
+                        Yêu thích
+
+                    </a>
+
+                </li>
+
+                <li id="logoutBtn">
+
+                    <a href="#">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        Đăng xuất
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </aside>
+        <!-- ================= CONTENT ================= -->
+
+        <main class="history-content">
+
+            <h2 id="historyTitle">
+                Lịch sử mua hàng
+            </h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Mã đơn hàng</th>
+
+                        <th>Ngày đặt</th>
+
+                        <th>Tổng tiền</th>
+
+                        <th>Trạng thái</th>
+
+                        <th>Thao tác</th>
+
+                    </tr>
+
+                </thead>
+
+                <!-- Backend render -->
+                <tbody id="orderTable">
+
+                    <!-- Ví dụ dữ liệu mẫu -->
+
+                    <tr data-id="8">
+
+                        <td>DH008</td>
+
+                        <td>23/09/2026</td>
+
+                        <td>730.000đ</td>
+
+                        <td>
+                            <span class="status success">
+                                Đã giao hàng
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <a href="#" class="detail-btn" data-id="8">
+
+                                Xem chi tiết
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    <tr data-id="7">
+
+                        <td>DH007</td>
+
+                        <td>15/06/2026</td>
+
+                        <td>870.000đ</td>
+
+                        <td>
+
+                            <span class="status processing">
+
+                                Đang xử lý
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <a href="#" class="detail-btn" data-id="7">
+
+                                Xem chi tiết
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    <tr data-id="6">
+
+                        <td>DH006</td>
+
+                        <td>12/06/2026</td>
+
+                        <td>670.000đ</td>
+
+                        <td>
+
+                            <span class="status cancel">
+
+                                Đã hủy
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <a href="#" class="detail-btn" data-id="6">
+
+                                Xem chi tiết
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <!-- JS render phân trang -->
+            <div class="pagination" id="pagination">
+
+            </div>
+
+        </main>
+        </main>
+
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-item">
+
+            <i class="fa-solid fa-truck"></i>
+
+            <div>
+
+                <h4>Miễn phí vận chuyển</h4>
+
+                <p>Cho đơn hàng từ 500.000đ</p>
+
+            </div>
+
+        </div>
+
+        <div class="footer-item">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <div>
+
+                <h4>Chính sách bảo hành</h4>
+
+                <p>Miễn phí làm sáng và đánh bóng</p>
+
+            </div>
+
+        </div>
+
+        <div class="footer-item">
+
+            <i class="fa-solid fa-rotate"></i>
+
+            <div>
+
+                <h4>Đổi trả dễ dàng</h4>
+
+                <p>Trong vòng 7 ngày</p>
+
+            </div>
+
+        </div>
+
+        <div class="footer-item">
+
+            <i class="fa-regular fa-comments"></i>
+
+            <div>
+
+                <h4>Hỗ trợ tư vấn</h4>
+
+                <p>Tư vấn mọi lúc</p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="../js/history.js"></script>
+
+</body>
+
+</html>

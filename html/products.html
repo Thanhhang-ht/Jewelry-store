@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewelry Store</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/products.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="logo">
+            <h2>Jewelry Store</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="../html/index.html">Trang chủ</a>
+            <a href="../html/products.html" class="active">Sản phẩm</a>
+            <a href="#">Liên hệ</a>
+        </nav>
+
+        <div class="right">
+
+            <div class="search">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <a href="../html/cart.html">
+                <i class="fa-solid fa-cart-shopping icon"></i>
+            </a>
+            <a href="../html/profile.html">
+                <i class="fa-regular fa-user icon"></i>
+            </a>
+
+        </div>
+
+    </header>
+
+    <!-- BREADCRUMB -->
+    <section class="breadcrumb">
+        Trang chủ > <span>Sản phẩm</span>
+    </section>
+
+    <!-- TITLE -->
+    <section class="product-page">
+
+        <h1>Sản phẩm</h1>
+
+        <!-- CATEGORY -->
+        <div class="category-list">
+
+            <button class="active">Tất cả</button>
+            <button>Nhẫn</button>
+            <button>Dây chuyền</button>
+            <button>Vòng tay</button>
+            <button>Bông tai</button>
+
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="products" id="productList">
+
+            <!-- <div class="card">
+                <img src="../image/image 6.png" alt="">
+                <div class="content">
+                    <h3>Nhẫn bạc đính đá</h3>
+                    <p class="price">460.000đ</p>
+
+                    <div class="action">
+
+                        <a href="product-detail.html" class="detail-btn">
+                            Xem chi tiết
+                        </a>
+
+                        <i class="fa-regular fa-heart love"></i>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image_7.png" alt="">
+                <div class="content">
+                    <h3>Nhẫn bạc cao cấp</h3>
+                    <p class="price">540.000đ</p>
+
+                    <div class="action">
+
+                        <a href="product-detail.html" class="detail-btn">
+                            Xem chi tiết
+                        </a>
+
+                        <i class="fa-regular fa-heart love"></i>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 9.png" alt="">
+                <div class="content">
+                    <h3>Dây chuyền bạc nữ</h3>
+                    <p class="price">670.000đ</p>
+
+                    <div class="action">
+
+                        <a href="product-detail.html" class="detail-btn">
+                            Xem chi tiết
+                        </a>
+
+                        <i class="fa-regular fa-heart love"></i>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 14.png" alt="">
+                <div class="content">
+                    <h3>Dây chuyền bạc cao cấp</h3>
+                    <p class="price">730.000đ</p>
+
+                    <div class="action">
+
+                        <a href="product-detail.html" class="detail-btn">
+                            Xem chi tiết
+                        </a>
+
+                        <i class="fa-regular fa-heart love"></i>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 10.png" alt="">
+                <div class="content">
+                    <h3>Vòng tay kim cương cao cấp</h3>
+                    <p class="price">870.000đ</p>
+
+                    <div class="action">
+
+                        <a href="product-detail.html" class="detail-btn">
+                            Xem chi tiết
+                        </a>
+
+                        <i class="fa-regular fa-heart love"></i>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 11.png" alt="">
+                <div class="content">
+                    <h3>Vòng tay bạc cao cấp</h3>
+                    <p class="price">570.000đ</p>
+
+                    <div class="action">
+
+                        <a href="product-detail.html" class="detail-btn">
+                            Xem chi tiết
+                        </a>
+
+                        <i class="fa-regular fa-heart love"></i>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image_12.png" alt="">
+                <div class="content">
+                    <h3>Bông tai bạc</h3>
+                    <p class="price">430.000đ</p>
+
+                    <div class="action">
+
+                        <a href="product-detail.html" class="detail-btn">
+                            Xem chi tiết
+                        </a>
+
+                        <i class="fa-regular fa-heart love"></i>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../image/image 13.png" alt="">
+                <div class="content">
+                    <h3>Bông tai cao cấp</h3>
+                    <p class="price">750.000đ</p>
+
+                    <div class="action">
+
+                        <a href="product-detail.html" class="detail-btn">
+                            Xem chi tiết
+                        </a>
+
+                        <i class="fa-regular fa-heart love"></i>
+
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+            <button>&lt;</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>&gt;</button>
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-truck"></i>
+            <div>
+                <h4>Miễn phí vận chuyển</h4>
+                <p>Cho đơn hàng từ 500.000đ</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <div>
+                <h4>Chính sách bảo hành</h4>
+                <p>Miễn phí làm sáng và đánh bóng</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-solid fa-rotate"></i>
+            <div>
+                <h4>Đổi trả dễ dàng</h4>
+                <p>Trong vòng 7 ngày</p>
+            </div>
+        </div>
+
+        <div class="footer-item">
+            <i class="fa-regular fa-comments"></i>
+            <div>
+                <h4>Hỗ trợ tư vấn</h4>
+                <p>Tư vấn mọi lúc</p>
+            </div>
+        </div>
+
+    </footer>
+
+    <script src="../js/products.js"></script>
+
+</body>
+
+</html>

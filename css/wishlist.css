@@ -1,0 +1,373 @@
+/* =========================
+     BREADCRUMB
+  ========================= */
+
+.breadcrumb {
+  margin: 25px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #6b6b6b;
+}
+
+/* =========================
+     MAIN LAYOUT
+  ========================= */
+
+.wishlist-container {
+  display: flex;
+  gap: 35px;
+  padding: 0 35px 40px;
+  align-items: flex-start;
+}
+
+/* =========================
+     SIDEBAR
+  ========================= */
+
+.sidebar {
+  width: 350px;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.user-box {
+  text-align: center;
+  padding: 30px;
+}
+
+.avatar {
+  font-size: 80px;
+  color: #0c4fb5;
+}
+
+.user-box h3 {
+  margin: 15px 0 8px;
+}
+
+.user-box p {
+  color: #555;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 18px 30px;
+}
+
+.sidebar li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  text-decoration: none;
+  color: inherit;
+
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.sidebar li i {
+  width: 35px;
+}
+
+.sidebar li:hover {
+  background: #f1f5ff;
+}
+
+.sidebar li.active {
+  background: #eef4ff;
+  color: #0c4fb5;
+  border-left: 5px solid #0c4fb5;
+  font-weight: 700;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.wishlist-content {
+  flex: 1;
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+     HEADER
+  ========================= */
+
+.wishlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.wishlist-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.clear-btn {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #ff4d4f;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.clear-btn:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+     DANH SÁCH SẢN PHẨM
+  ========================= */
+
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+/* =========================
+     CARD SẢN PHẨM
+  ========================= */
+
+.product-card {
+  position: relative;
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card h4 {
+  padding: 15px 15px 10px;
+  font-size: 15px;
+  font-weight: 700;
+  min-height: 65px;
+  line-height: 1.4;
+}
+
+.price {
+  padding: 0 15px;
+  color: #0c4fb5;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 15px;
+}
+
+.cart-btn {
+  flex: 1;
+  height: 45px;
+  border: 1px solid #0c4fb5;
+  border-radius: 10px;
+  background: white;
+  color: #0c4fb5;
+
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cart-btn:hover {
+  background: #0c4fb5;
+  color: white;
+}
+
+.heart-btn {
+  width: 45px;
+  height: 45px;
+
+  flex-shrink: 0;
+
+  border: 1px solid #ff4d4f;
+  border-radius: 10px;
+
+  background: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.heart-btn i {
+  font-size: 15px;
+  color: #ff4d4f;
+}
+
+.heart-btn:hover {
+  background: #ff4d4f;
+}
+
+.heart-btn:hover i {
+  color: white;
+}
+/* =========================
+     NÚT XÓA GÓC PHẢI
+  ========================= */
+
+.remove-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.remove-btn:hover {
+  background: #ff4d4f;
+  color: white;
+}
+
+/* =========================
+     EMPTY WISHLIST
+  ========================= */
+
+.empty-wishlist {
+  display: none;
+  text-align: center;
+  padding: 70px 20px;
+}
+
+.empty-wishlist i {
+  font-size: 90px;
+  color: #0c4fb5;
+  margin-bottom: 20px;
+}
+
+.empty-wishlist h3 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.empty-wishlist p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+#shopNowBtn {
+  background: #0c4fb5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#shopNowBtn:hover {
+  background: #083a85;
+}
+
+/* =========================
+     PHÂN TRANG
+  ========================= */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 35px;
+}
+
+.pagination button {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #0c4fb5;
+  border-radius: 10px;
+  background: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pagination button:hover {
+  background: #0c4fb5;
+  color: white;
+}
+
+.pagination button.active {
+  background: #0c4fb5;
+  color: white;
+}
+
+/* =========================
+     RESPONSIVE
+  ========================= */
+
+@media (max-width: 1200px) {
+  .wishlist-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wishlist-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  footer {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

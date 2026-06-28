@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết đơn hàng</title>
+
+
+    <link rel="stylesheet" href="../css/order-detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        Trang chủ > Tài khoản > Lịch sử mua hàng > Chi tiết đơn hàng
+    </div>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="user-box">
+
+                <i class="fa-regular fa-circle-user avatar"></i>
+
+                <h3>Phan Thanh Hằng</h3>
+
+                <p>thanhhang23905@gmail.com</p>
+
+            </div>
+
+            <ul>
+
+                <li>
+                    <a href="profile.html">
+                        <i class="fa-regular fa-user"></i>
+                        Thông tin cá nhân
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="history.html">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        Lịch sử mua hàng
+                    </a>
+                </li>
+
+                <li>
+                    <a href="address.html">
+                        <i class="fa-solid fa-location-dot"></i>
+                        Địa chỉ của tôi
+                    </a>
+                </li>
+
+                <li>
+                    <a href="change-password.html">
+                        <i class="fa-solid fa-key"></i>
+                        Đổi mật khẩu
+                    </a>
+                </li>
+
+                <li>
+                    <a href="wishlist.html">
+                        <i class="fa-regular fa-heart"></i>
+                        Yêu thích
+                    </a>
+                </li>
+
+                <li id="logoutBtn">
+                    <a href="#">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+
+            </ul>
+
+        </aside>
+
+        <!-- Content -->
+        <main class="content">
+
+            <h2>
+                Chi tiết đơn hàng
+                <span id="orderId">#DH004</span>
+            </h2>
+
+            <!-- Thông tin đơn -->
+            <div class="order-info">
+
+                <div class="order-info-item">
+                    <h4>Ngày đặt hàng</h4>
+                    <p>20/08/2026 19:30</p>
+                </div>
+
+                <div class="order-info-item">
+                    <h4>Trạng thái</h4>
+                    <span class="status success">
+                        Đã giao hàng
+                    </span>
+                </div>
+
+                <div class="order-info-item">
+                    <h4>Thanh toán</h4>
+                    <p>COD</p>
+                </div>
+
+                <div class="order-info-item">
+                    <h4>Tổng tiền</h4>
+                    <p>730.000đ</p>
+                </div>
+
+            </div>
+
+            <!-- Sản phẩm -->
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td class="product">
+
+                            <img src="../image/image_14_1.png" alt="">
+
+                            <div>
+                                Dây chuyền bạc nữ
+                            </div>
+
+                        </td>
+
+                        <td>670.000đ</td>
+                        <td>1</td>
+                        <td>670.000đ</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <!-- Thông tin giao hàng -->
+            <div class="bottom">
+
+                <div class="box">
+
+                    <h3>THÔNG TIN GIAO HÀNG</h3>
+
+                    <p>Phan Thanh Hằng</p>
+                    <p>0364665798</p>
+                    <p>789 Đại Từ, Đại Kim, Hoàng Mai, Hà Nội</p>
+
+                </div>
+
+                <div class="box">
+
+                    <h3>GHI CHÚ ĐƠN HÀNG</h3>
+
+                    <p>Không có ghi chú</p>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="../js/order-detail.js"></script>
+
+</body>
+
+</html>

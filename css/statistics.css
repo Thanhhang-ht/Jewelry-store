@@ -1,0 +1,535 @@
+/* ===================================
+   FILTER
+=================================== */
+
+.statistics-filter {
+  display: flex;
+
+  align-items: flex-end;
+
+  gap: 20px;
+
+  margin-bottom: 30px;
+
+  flex-wrap: wrap;
+}
+
+.date-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.date-group label {
+  font-size: 14px;
+
+  color: #666;
+
+  font-weight: 600;
+}
+
+.date-group input {
+  width: 180px;
+
+  height: 46px;
+
+  border: 1px solid #d9dee8;
+
+  border-radius: 10px;
+
+  padding: 0 15px;
+
+  font-size: 15px;
+
+  transition: 0.3s;
+
+  background: #fff;
+}
+
+.date-group input:focus {
+  outline: none;
+
+  border-color: #0b5ed7;
+
+  box-shadow: 0 0 0 3px rgba(11, 94, 215, 0.08);
+}
+
+.line {
+  font-size: 26px;
+
+  color: #999;
+
+  padding-bottom: 10px;
+}
+
+/* ===================================
+   BUTTON
+=================================== */
+
+.btn-statistic {
+  height: 46px;
+
+  padding: 0 24px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #0b5ed7;
+
+  color: #fff;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.btn-statistic:hover {
+  background: #084298;
+
+  transform: translateY(-2px);
+}
+
+/* ===================================
+   CHART CARD
+=================================== */
+
+.chart-card {
+  background: #fff;
+
+  border-radius: 18px;
+
+  padding: 30px;
+
+  margin-top: 30px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.chart-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 25px;
+}
+
+.chart-header h2 {
+  font-size: 22px;
+
+  color: #1d3d73;
+
+  font-weight: 700;
+}
+
+.chart-body {
+  position: relative;
+
+  height: 420px;
+}
+
+.chart-body canvas {
+  width: 100% !important;
+
+  height: 100% !important;
+}
+/* ===================================
+   SUMMARY CARDS
+=================================== */
+
+.summary-cards {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 25px;
+
+  margin-top: 30px;
+}
+
+.summary-card {
+  background: #fff;
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  min-height: 150px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+
+  transition: 0.3s;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ===================================
+   ICON
+=================================== */
+
+.summary-icon {
+  width: 70px;
+
+  height: 70px;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 30px;
+
+  flex-shrink: 0;
+}
+
+/* Doanh thu cao nhất */
+
+.highest {
+  background: #e8f5e9;
+
+  color: #43a047;
+}
+
+/* Doanh thu thấp nhất */
+
+.lowest {
+  background: #ffebee;
+
+  color: #e53935;
+}
+
+/* Trung bình */
+
+.average {
+  background: #e3f2fd;
+
+  color: #1976d2;
+}
+
+/* ===================================
+   CONTENT
+=================================== */
+
+.summary-info {
+  flex: 1;
+}
+
+.summary-info h3 {
+  font-size: 15px;
+
+  font-weight: 500;
+
+  color: #777;
+
+  margin-bottom: 10px;
+
+  white-space: nowrap;
+}
+
+.summary-info h2 {
+  font-size: 28px;
+
+  font-weight: 700;
+
+  color: #1d3d73;
+
+  margin-bottom: 10px;
+}
+
+.summary-info p {
+  font-size: 14px;
+
+  color: #777;
+}
+
+/* ===================================
+   REVENUE TEXT
+=================================== */
+
+#highestRevenue,
+#lowestRevenue,
+#averageRevenue {
+  white-space: nowrap;
+
+  font-size: 24px;
+}
+
+/* ===================================
+   HOVER
+=================================== */
+
+.summary-card:hover .summary-icon {
+  transform: scale(1.08);
+
+  transition: 0.3s;
+}
+
+.summary-card:hover h2 {
+  color: #0b5ed7;
+
+  transition: 0.3s;
+}
+/* ===================================
+   UPDATE TIME
+=================================== */
+
+.update-box {
+  margin-top: 30px;
+
+  background: #fff;
+
+  border-radius: 16px;
+
+  padding: 18px 25px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.update-box span {
+  font-size: 15px;
+
+  color: #666;
+}
+
+.update-box strong {
+  font-size: 16px;
+
+  color: #1d3d73;
+
+  font-weight: 700;
+}
+
+/* ===================================
+   FOOTER
+=================================== */
+
+.footer {
+  margin-top: 35px;
+
+  padding: 22px 0;
+
+  text-align: center;
+
+  border-top: 1px solid #e9edf5;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+/* ===================================
+   CARD HOVER
+=================================== */
+
+.chart-card,
+.summary-card,
+.update-box {
+  transition: 0.3s;
+}
+
+.chart-card:hover,
+.update-box:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ===================================
+   CHART
+=================================== */
+
+canvas {
+  user-select: none;
+}
+
+/* ===================================
+   ANIMATION
+=================================== */
+
+.summary-card:hover .summary-icon {
+  transform: scale(1.08);
+
+  transition: 0.3s;
+}
+
+.summary-card:hover h2 {
+  color: #0b5ed7;
+}
+
+.chart-card:hover h2 {
+  color: #0b5ed7;
+
+  transition: 0.3s;
+}
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media (max-width: 1400px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .statistics-filter {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 15px;
+  }
+
+  .date-group {
+    width: 100%;
+  }
+
+  .date-group input {
+    width: 100%;
+  }
+
+  .line {
+    display: none;
+  }
+
+  .btn-statistic {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .chart-card {
+    padding: 20px;
+  }
+
+  .chart-body {
+    height: 360px;
+  }
+
+  .update-box {
+    flex-direction: column;
+
+    gap: 10px;
+
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+  .chart-header h2 {
+    font-size: 20px;
+  }
+
+  .chart-body {
+    height: 300px;
+  }
+
+  .summary-card {
+    min-height: 130px;
+
+    padding: 20px;
+  }
+
+  .summary-icon {
+    width: 60px;
+
+    height: 60px;
+
+    font-size: 26px;
+  }
+
+  .summary-info h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 576px) {
+  .main-content {
+    padding: 20px 15px;
+  }
+
+  .chart-card {
+    padding: 15px;
+  }
+
+  .chart-body {
+    height: 260px;
+  }
+
+  .summary-card {
+    flex-direction: column;
+
+    text-align: center;
+
+    gap: 15px;
+  }
+
+  .summary-info h3 {
+    white-space: normal;
+  }
+
+  #highestRevenue,
+  #lowestRevenue,
+  #averageRevenue {
+    font-size: 20px;
+  }
+
+  .update-box {
+    padding: 15px;
+  }
+
+  .footer {
+    font-size: 13px;
+  }
+}

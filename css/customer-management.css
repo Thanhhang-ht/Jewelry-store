@@ -1,0 +1,686 @@
+/* ===================================
+   CUSTOMER CONTENT
+=================================== */
+
+.customer-content {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 30px;
+}
+
+/* ===================================
+   SEARCH BOX
+=================================== */
+
+.search-box {
+  width: 360px;
+
+  height: 46px;
+
+  background: #fff;
+
+  border: 1px solid #d9dee8;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  transition: 0.3s;
+}
+
+.search-box:focus-within {
+  border-color: #0b5ed7;
+
+  box-shadow: 0 0 0 3px rgba(11, 94, 215, 0.08);
+}
+
+.search-box input {
+  flex: 1;
+
+  border: none;
+
+  outline: none;
+
+  padding: 0 18px;
+
+  font-size: 15px;
+
+  background: transparent;
+}
+
+.search-box button {
+  width: 55px;
+
+  height: 100%;
+
+  background: white;
+
+  color: #0b5ed7;
+
+  transition: 0.3s;
+}
+
+.search-box button:hover {
+  background: #0b5ed7;
+
+  color: white;
+}
+
+/* ===================================
+   CUSTOMER CONTAINER
+=================================== */
+
+.customer-container {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 30px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ===================================
+   TABLE WRAPPER
+=================================== */
+
+.table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+/* ===================================
+   CUSTOMER TABLE
+=================================== */
+
+.customer-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 1100px;
+}
+
+.customer-table thead {
+  background: #f8f9fc;
+}
+
+.customer-table th {
+  padding: 18px 16px;
+
+  text-align: left;
+
+  color: #555;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  border-bottom: 1px solid #eceff5;
+}
+
+.customer-table td {
+  padding: 18px 16px;
+
+  border-bottom: 1px solid #f1f3f7;
+
+  font-size: 15px;
+
+  color: #444;
+
+  vertical-align: middle;
+}
+
+.customer-table tbody tr {
+  transition: 0.25s;
+}
+
+.customer-table tbody tr:hover {
+  background: #f8fbff;
+}
+/* ===================================
+   STATISTIC CARDS
+=================================== */
+
+.customer-stats {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 25px;
+
+  margin-bottom: 10px;
+}
+
+.customer-stats .stat-card {
+  background: #fff;
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  height: 150px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+
+  transition: 0.3s;
+}
+
+.customer-stats .stat-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ===================================
+   ICON
+=================================== */
+
+.customer-stats .icon {
+  width: 70px;
+
+  height: 70px;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 30px;
+
+  flex-shrink: 0;
+}
+
+/* Tổng khách hàng */
+
+.customer-icon {
+  background: #e8f5e9;
+
+  color: #43a047;
+}
+
+/* Khách hàng mới */
+
+.new-customer-icon {
+  background: #e3f2fd;
+
+  color: #1976d2;
+}
+
+/* Tổng đơn */
+
+.order-icon {
+  background: #fff4e5;
+
+  color: #fb8c00;
+}
+
+/* Doanh thu */
+
+.revenue-icon {
+  background: #f3e8ff;
+
+  color: #8e24aa;
+}
+
+/* ===================================
+   CONTENT
+=================================== */
+
+.customer-stats .stat-info {
+  flex: 1;
+}
+
+.customer-stats .stat-info h3 {
+  font-size: 15px;
+
+  font-weight: 500;
+
+  color: #777;
+
+  margin-bottom: 10px;
+
+  white-space: nowrap;
+}
+
+.customer-stats .stat-info h2 {
+  font-size: 28px;
+
+  font-weight: 700;
+
+  color: #1d3d73;
+
+  margin-bottom: 10px;
+}
+
+.customer-stats .stat-info p {
+  font-size: 14px;
+
+  color: #777;
+}
+
+.customer-stats .increase {
+  color: #2e7d32;
+
+  font-weight: 700;
+
+  margin-right: 5px;
+}
+
+/* ===================================
+   REVENUE
+=================================== */
+
+#totalRevenue {
+  font-size: 23px;
+
+  white-space: nowrap;
+}
+
+/* ===================================
+   HOVER
+=================================== */
+
+.customer-stats .stat-card:hover .icon {
+  transform: scale(1.08);
+
+  transition: 0.3s;
+}
+
+.customer-stats .stat-card:hover h2 {
+  color: #0b5ed7;
+}
+/* ===================================
+   CUSTOMER TABLE
+=================================== */
+
+.customer-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 1200px;
+}
+
+.customer-table thead {
+  background: #f8f9fc;
+}
+
+.customer-table th {
+  padding: 18px 15px;
+
+  text-align: left;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  color: #4a5568;
+
+  border-bottom: 1px solid #e9edf5;
+}
+
+.customer-table td {
+  padding: 18px 15px;
+
+  font-size: 15px;
+
+  color: #444;
+
+  border-bottom: 1px solid #edf0f5;
+
+  vertical-align: middle;
+}
+
+.customer-table tbody tr {
+  transition: 0.25s;
+}
+
+.customer-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+/* ===================================
+   STT
+=================================== */
+
+.customer-table td:first-child {
+  width: 70px;
+
+  text-align: center;
+
+  font-weight: 600;
+
+  color: #666;
+}
+
+/* ===================================
+   CUSTOMER NAME
+=================================== */
+
+.customer-table td:nth-child(2) {
+  font-weight: 600;
+
+  color: #1d3557;
+}
+
+/* ===================================
+   PHONE
+=================================== */
+
+.customer-table td:nth-child(3) {
+  white-space: nowrap;
+}
+
+/* ===================================
+   EMAIL
+=================================== */
+
+.customer-table td:nth-child(4) a {
+  color: #0b5ed7;
+
+  text-decoration: none;
+
+  transition: 0.25s;
+}
+
+.customer-table td:nth-child(4) a:hover {
+  text-decoration: underline;
+}
+
+/* ===================================
+   DATE
+=================================== */
+
+.customer-table td:nth-child(5) {
+  white-space: nowrap;
+
+  color: #666;
+}
+
+/* ===================================
+   ORDER
+=================================== */
+
+.customer-table td:nth-child(6) {
+  text-align: center;
+
+  font-weight: 700;
+
+  color: #fb8c00;
+}
+
+/* ===================================
+   TOTAL SPENDING
+=================================== */
+
+.customer-table td:nth-child(7) {
+  font-weight: 700;
+
+  color: #2e7d32;
+
+  white-space: nowrap;
+}
+
+/* ===================================
+   ACTION
+=================================== */
+
+.customer-table td:last-child {
+  text-align: center;
+}
+
+/* ===================================
+   DELETE BUTTON
+=================================== */
+
+.delete-btn {
+  width: 40px;
+
+  height: 40px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #ffecec;
+
+  color: #e53935;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.delete-btn i {
+  font-size: 16px;
+}
+
+.delete-btn:hover {
+  background: #e53935;
+
+  color: white;
+
+  transform: translateY(-2px);
+}
+
+/* ===================================
+   TABLE SCROLLBAR
+=================================== */
+
+.table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: #edf0f5;
+
+  border-radius: 20px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #c8d3e5;
+
+  border-radius: 20px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #0b5ed7;
+}
+/* ===================================
+   PAGINATION
+=================================== */
+
+.pagination {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 35px;
+
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  min-width: 42px;
+
+  height: 42px;
+
+  padding: 0 15px;
+
+  border: 1px solid #d9dee8;
+
+  border-radius: 10px;
+
+  background: #fff;
+
+  color: #555;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+.page-btn:hover {
+  background: #0b5ed7;
+
+  border-color: #0b5ed7;
+
+  color: #fff;
+}
+
+.page-btn.active {
+  background: #0b5ed7;
+
+  border-color: #0b5ed7;
+
+  color: #fff;
+}
+
+.page-dots {
+  padding: 0 8px;
+
+  color: #999;
+
+  font-size: 18px;
+}
+
+/* ===================================
+   FOOTER
+=================================== */
+
+.footer {
+  margin-top: 35px;
+
+  padding: 22px 0;
+
+  border-top: 1px solid #e9edf5;
+
+  text-align: center;
+
+  font-size: 14px;
+
+  color: #777;
+}
+
+/* ===================================
+   ANIMATION
+=================================== */
+
+.customer-table tbody tr {
+  transition: 0.25s;
+}
+
+.customer-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+.customer-table tbody tr:hover td {
+  color: #222;
+}
+
+.customer-table tbody tr:hover .delete-btn {
+  transform: scale(1.05);
+}
+
+.stat-card {
+  transition: 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media (max-width: 1400px) {
+  .customer-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .search-box {
+    width: 100%;
+  }
+
+  .customer-container {
+    padding: 20px;
+  }
+
+  .customer-table {
+    min-width: 1000px;
+  }
+}
+
+@media (max-width: 768px) {
+  .customer-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-container {
+    padding: 15px;
+  }
+
+  .pagination {
+    gap: 8px;
+  }
+
+  .page-btn {
+    min-width: 38px;
+
+    height: 38px;
+
+    font-size: 14px;
+  }
+
+  .footer {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-box {
+    height: 42px;
+  }
+
+  .search-box input {
+    font-size: 14px;
+  }
+
+  .customer-table {
+    min-width: 900px;
+  }
+}

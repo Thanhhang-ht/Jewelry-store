@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý danh mục - Jewelry Store</title>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <link rel="stylesheet" href="../css/category-management.css">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- ==========================
+                SIDEBAR
+        =========================== -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <h1>Jewelry Store</h1>
+
+                <p>ADMIN PANEL</p>
+
+            </div>
+
+            <hr>
+
+            <ul class="sidebar-menu">
+
+                <li>
+
+                    <a href="dashboard.html">
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="product-management.html">
+
+                        <i class="fa-solid fa-cube"></i>
+
+                        Quản lý sản phẩm
+
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="category-management.html">
+
+                        <i class="fa-solid fa-table-list"></i>
+
+                        Danh mục
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="order-management.html">
+
+                        <i class="fa-solid fa-bag-shopping"></i>
+
+                        Quản lý đơn hàng
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="customer-management.html">
+
+                        <i class="fa-solid fa-user-group"></i>
+
+                        Quản lý khách hàng
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="statistics.html">
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        Thống kê
+
+                    </a>
+
+                </li>
+
+                <li id="logoutBtn">
+
+                    <a href="#">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        Đăng xuất
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+            <div class="sidebar-user">
+
+                <div class="avatar">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <div class="user-info">
+
+                    <h3 id="adminName">Admin</h3>
+
+                    <span>Quản trị viên</span>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </div>
+
+        </aside>
+
+        <!-- ==========================
+                MAIN CONTENT
+        =========================== -->
+
+        <main class="main-content">
+
+            <!-- ==========================
+                    HEADER
+            =========================== -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button class="menu-btn">
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+                    <h2>Quản lý danh mục</h2>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <button class="notification-btn">
+
+                        <i class="fa-regular fa-bell"></i>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+            <!-- ==========================
+                    CATEGORY CONTAINER
+            =========================== -->
+            <section class="category-container">
+
+                <!-- ==========================
+                        TOOLBAR
+                =========================== -->
+
+                <div class="category-toolbar">
+
+                    <!-- LEFT -->
+
+                    <div class="toolbar-left">
+
+                        <a href="category-form.html?mode=add" class="add-btn">
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            Thêm danh mục
+
+                        </a>
+
+                    </div>
+
+                    <!-- RIGHT -->
+
+                    <div class="toolbar-right">
+
+                        <div class="search-box">
+
+                            <input type="text" id="searchCategory" placeholder="Tìm kiếm danh mục...">
+
+                            <button id="searchBtn">
+
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                            </button>
+
+                        </div>
+
+                        <button class="filter-btn">
+
+                            <i class="fa-solid fa-sliders"></i>
+
+                            Bộ lọc
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- ==========================
+                        TABLE
+                =========================== -->
+
+                <div class="table-wrapper">
+
+                    <table class="category-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+
+                                    <input type="checkbox" id="checkAll">
+
+                                </th>
+
+                                <th>Danh mục</th>
+
+                                <th>Mô tả</th>
+
+                                <th>Số sản phẩm</th>
+
+                                <th>Trạng thái</th>
+
+                                <th>Thao tác</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="categoryTableBody">
+
+                            <!-- ROW 1 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <input type="checkbox" class="category-checkbox">
+
+                                </td>
+
+                                <td>
+
+                                    <div class="category-info">
+
+                                        <img src="../image/image 26.png" alt="">
+
+                                        <div>
+
+                                            <h4>Nhẫn</h4>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Nhẫn vàng, bạc và kim cương.</td>
+
+                                <td>15</td>
+
+                                <td>
+
+                                    <span class="status active">
+
+                                        Đang hoạt động
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="category-form.html?mode=edit" class="edit-btn">
+
+                                            <i class="fa-solid fa-pen"></i>
+
+                                        </a>
+
+                                        <button class="delete-btn">
+
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <!-- ROW 2 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <input type="checkbox" class="category-checkbox">
+
+                                </td>
+
+                                <td>
+
+                                    <div class="category-info">
+
+                                        <img src="../image/image 14.png" alt="">
+
+                                        <div>
+
+                                            <h4>Dây chuyền</h4>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Dây chuyền bạc, vàng cao cấp.</td>
+
+                                <td>10</td>
+
+                                <td>
+
+                                    <span class="status active">
+
+                                        Đang hoạt động
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="category-form.html?mode=edit" class="edit-btn">
+
+                                            <i class="fa-solid fa-pen"></i>
+
+                                        </a>
+
+                                        <button class="delete-btn">
+
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <!-- ROW 3 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <input type="checkbox" class="category-checkbox">
+
+                                </td>
+
+                                <td>
+
+                                    <div class="category-info">
+
+                                        <img src="../image/image 10.png" alt="">
+
+                                        <div>
+
+                                            <h4>Vòng tay</h4>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Vòng tay bạc và vàng.</td>
+
+                                <td>20</td>
+
+                                <td>
+
+                                    <span class="status active">
+
+                                        Đang hoạt động
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="category-form.html?mode=edit" class="edit-btn">
+
+                                            <i class="fa-solid fa-pen"></i>
+
+                                        </a>
+
+                                        <button class="delete-btn">
+
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <!-- ROW 4 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <input type="checkbox" class="category-checkbox">
+
+                                </td>
+
+                                <td>
+
+                                    <div class="category-info">
+
+                                        <img src="../image/image 13.png" alt="">
+
+                                        <div>
+
+                                            <h4>Bông tai</h4>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Bông tai bạc đính đá.</td>
+
+                                <td>14</td>
+
+                                <td>
+
+                                    <span class="status active">
+
+                                        Đang hoạt động
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="category-form.html?mode=edit" class="edit-btn">
+
+                                            <i class="fa-solid fa-pen"></i>
+
+                                        </a>
+
+                                        <button class="delete-btn">
+
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <!-- ROW 5 -->
+
+                            <tr>
+
+                                <td>
+
+                                    <input type="checkbox" class="category-checkbox">
+
+                                </td>
+
+                                <td>
+
+                                    <div class="category-info">
+
+                                        <img src="../image/image_23_2.png" alt="">
+
+                                        <div>
+
+                                            <h4>Mặt dây chuyền</h4>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>Mặt dây chuyền phong thủy.</td>
+
+                                <td>9</td>
+
+                                <td>
+
+                                    <span class="status hidden">
+
+                                        Đã ẩn
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a href="category-form.html?mode=edit" class="edit-btn">
+
+                                            <i class="fa-solid fa-pen"></i>
+
+                                        </a>
+
+                                        <button class="delete-btn">
+
+                                            <i class="fa-regular fa-trash-can"></i>
+
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- ==========================
+                        PAGINATION
+                =========================== -->
+
+                <div class="pagination">
+
+                    <button class="page-btn">
+
+                        <i class="fa-solid fa-chevron-left"></i>
+
+                    </button>
+
+                    <button class="page-btn active">
+
+                        1
+
+                    </button>
+
+                    <button class="page-btn">
+
+                        2
+
+                    </button>
+
+                    <button class="page-btn">
+
+                        3
+
+                    </button>
+
+                    <button class="page-btn">
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                    </button>
+
+                    <div class="page-size">
+
+                        <select id="pageSize">
+
+                            <option>10/Trang</option>
+
+                            <option>20/Trang</option>
+
+                            <option>50/Trang</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+            <!-- ==========================
+                    FOOTER
+            =========================== -->
+
+            <footer class="footer">
+
+                <p>
+
+                    © 2026 Jewelry Store. All rights reserved.
+
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- ==========================
+            JAVASCRIPT
+    =========================== -->
+
+    <script src="../js/category-management.js"></script>
+
+</body>
+
+</html>

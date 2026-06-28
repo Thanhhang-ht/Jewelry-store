@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sản phẩm yêu thích | Jewelry Store</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/products.css">
+    <link rel="stylesheet" href="../css/wishlist.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- ================= HEADER ================= -->
+    <header>
+
+        <div class="logo">
+            <h2>Jewelry Store</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="index.html">
+                Trang chủ
+            </a>
+
+            <a href="products.html">
+                Sản phẩm
+            </a>
+
+            <a href="#">
+                Liên hệ
+            </a>
+
+        </nav>
+
+        <div class="right">
+            <div class="search">
+                <input type="text" id="searchInput" name="keyword" placeholder="Tìm kiếm sản phẩm...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <a href="cart.html">
+                <i class="fa-solid fa-cart-shopping icon"></i>
+            </a>
+
+            <a href="profile.html">
+                <i class="fa-regular fa-user icon"></i>
+            </a>
+
+        </div>
+
+    </header>
+
+    <!-- ================= BREADCRUMB ================= -->
+
+    <div class="breadcrumb">
+        Trang chủ > Tài khoản > Sản phẩm yêu thích
+    </div>
+
+    <div class="wishlist-container">
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar">
+            <div class="user-box">
+                <i class="fa-regular fa-circle-user avatar"></i>
+
+                <h3 id="sidebarUserName">
+                    Phan Thanh Hằng
+                </h3>
+
+                <p id="sidebarUserEmail">
+                    thanhhang23905@gmail.com
+                </p>
+
+            </div>
+
+            <ul>
+                <li>
+                    <a href="profile.html">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Thông tin cá nhân</span>
+                    </a>
+
+                </li>
+
+                <li>
+                    <a href="history.html">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span>Lịch sử mua hàng</span>
+                    </a>
+
+                </li>
+
+                <li>
+                    <a href="address.html">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Địa chỉ của tôi</span>
+                    </a>
+
+                </li>
+
+                <li>
+                    <a href="change-password.html">
+                        <i class="fa-solid fa-key"></i>
+                        <span>Đổi mật khẩu</span>
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="wishlist.html">
+                        <i class="fa-regular fa-heart"></i>
+                        <span>Yêu thích</span>
+                    </a>
+
+                </li>
+
+                <li id="logoutBtn">
+
+                    <a href="#">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        <span>Đăng xuất</span>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </aside>
+        <!-- ================= CONTENT ================= -->
+
+        <main class="wishlist-content">
+
+            <div class="wishlist-header">
+
+                <h2 id="wishlistTitle">
+
+                    DANH SÁCH YÊU THÍCH
+                    (<span id="wishlistCount">0</span>)
+
+                </h2>
+
+                <button id="clearWishlistBtn" class="clear-btn" type="button">
+
+                    Xóa tất cả
+
+                </button>
+
+            </div>
+
+            <!-- ================= DANH SÁCH SẢN PHẨM ================= -->
+
+            <div id="wishlistProducts" class="wishlist-grid">
+
+                <!--
+                            Backend render tại đây.
+        
+                            Ví dụ:
+        
+                            <div
+                                class="wishlist-item"
+                                data-id="15">
+        
+                                ...
+        
+                            </div>
+                        -->
+
+            </div>
+
+            <!-- ================= PHÂN TRANG ================= -->
+
+            <div id="pagination" class="pagination">
+
+            </div>
+
+            <!-- ================= EMPTY ================= -->
+
+            <div id="emptyWishlist" class="empty-wishlist">
+
+                <i class="fa-regular fa-heart"></i>
+
+                <h3>
+
+                    Chưa có sản phẩm yêu thích
+
+                </h3>
+
+                <p>
+
+                    Hãy thêm những sản phẩm bạn yêu thích
+                    để dễ dàng theo dõi và mua sắm sau này.
+
+                </p>
+
+                <button id="shopNowBtn" type="button">
+
+                    Mua sắm ngay
+
+                </button>
+
+            </div>
+
+        </main>
+        </main>
+
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-item">
+
+            <i class="fa-solid fa-truck"></i>
+
+            <div>
+
+                <h4>Miễn phí vận chuyển</h4>
+
+                <p>Cho đơn hàng từ 500.000đ</p>
+
+            </div>
+
+        </div>
+
+        <div class="footer-item">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <div>
+                <h4>Chính sách bảo hành</h4>
+                <p>Miễn phí làm sáng và đánh bóng</p>
+            </div>
+
+        </div>
+
+        <div class="footer-item">
+
+            <i class="fa-solid fa-rotate"></i>
+            <div>
+                <h4>Đổi trả dễ dàng</h4>
+                <p>Trong vòng 7 ngày</p>
+            </div>
+
+        </div>
+
+        <div class="footer-item">
+
+            <i class="fa-regular fa-comments"></i>
+            <div>
+                <h4>Hỗ trợ tư vấn</h4>
+                <p>Tư vấn mọi lúc</p>
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="../js/wishlist.js"></script>
+
+</body>
+
+</html>

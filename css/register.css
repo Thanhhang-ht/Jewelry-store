@@ -1,0 +1,318 @@
+/* =========================
+   RESET CSS
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #edf0f5;
+}
+
+/* =========================
+       HEADER
+    ========================= */
+
+/* HEADER */
+
+header {
+  background: white;
+  border: 1px solid #0a4fb8;
+  border-radius: 12px;
+  padding: 20px 35px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+div h2 {
+  font-size: 28px;
+  font-family: "Ibarra Real Nova";
+  font-style: bold;
+}
+.logo {
+  font-size: 22px;
+  color: #0a4fb8;
+  font-weight: bold;
+}
+
+.logo {
+  color: #0c4fb5;
+}
+
+.menu {
+  display: flex;
+  gap: 40px;
+}
+
+.menu a {
+  position: relative;
+  text-decoration: none;
+  color: #0c4fb5;
+  font-weight: 600;
+  padding: 6px 0;
+  transition: 0.3s ease;
+}
+
+/* hiệu ứng hover nổi nhẹ */
+.menu a:hover {
+  color: #083a85;
+  transform: translateY(-2px);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+.menu a:hover {
+  background: rgba(12, 79, 181, 0.08);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* trạng thái active (nếu cần) */
+.menu a.active {
+  color: #083a85;
+}
+
+.menu a.active::after {
+  width: 100%;
+}
+
+.menu a:hover {
+  color: #083a85;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  width: 250px;
+  padding: 10px;
+  border: 1px solid #0c4fb5;
+  border-radius: 8px;
+}
+
+.search i {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  color: #0c4fb5;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #0c4fb5;
+}
+/* Icon giỏ hàng, tài khoản */
+
+.icon {
+  font-size: 34px;
+  cursor: pointer;
+}
+.user-menu {
+  position: absolute;
+  right: 35px;
+  top: 70px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: none;
+  flex-direction: column;
+  min-width: 150px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.user-menu a {
+  padding: 12px;
+  text-decoration: none;
+  color: #0c4fb5;
+  font-weight: 600;
+}
+
+.user-menu a:hover {
+  background: #f2f6ff;
+}
+/* REGISTER */
+
+.register-container {
+  width: 1250px;
+
+  margin: 40px auto;
+
+  background: white;
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  display: flex;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.register-left {
+  flex: 1;
+  padding: 40px 50px;
+}
+
+.register-left h1 {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.welcome {
+  color: #777;
+  margin-bottom: 25px;
+}
+
+.welcome span {
+  color: #0c4fb5;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.required {
+  color: #ff4d4f;
+}
+
+.form-group input {
+  width: 100%;
+  height: 54px;
+
+  border: 1px solid #0c4fb5;
+  border-radius: 12px;
+
+  padding: 0 18px;
+}
+
+.password-box {
+  position: relative;
+}
+
+.password-box i {
+  position: absolute;
+  right: 18px;
+  top: 17px;
+
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.register-btn {
+  width: 300px;
+  height: 55px;
+
+  display: block;
+  margin: 30px auto;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #0c4fb5;
+  color: white;
+
+  font-size: 22px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  background: #083a85;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 35px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #ccc;
+}
+
+.divider span {
+  margin: 0 20px;
+  color: #999;
+  font-weight: 600;
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.social button {
+  width: 240px;
+  height: 65px;
+
+  border: 1px solid #0c4fb5;
+  border-radius: 12px;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.google img {
+  width: 40px;
+}
+
+.facebook i {
+  color: #1877f2;
+  font-size: 42px;
+}
+
+.register-right {
+  width: 500px;
+}
+
+.register-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.copyright {
+  text-align: center;
+  color: #5c7fc0;
+  margin-bottom: 20px;
+}

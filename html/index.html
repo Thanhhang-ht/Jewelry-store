@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewelry Store</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="logo">
+            <h2>Jewelry Store</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="../html/index.html">Trang chủ</a>
+            <a href="../html/products.html" class="active">Sản phẩm</a>
+            <a href="#">Liên hệ</a>
+        </nav>
+
+        <div class="right">
+
+            <div class="search">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <a href="../html/cart.html">
+                <i class="fa-solid fa-cart-shopping icon"></i>
+            </a>
+
+            <a href="../html/profile.html">
+                <i class="fa-regular fa-user icon"></i>
+            </a>
+
+        </div>
+
+    </header>
+
+    <!-- BANNER -->
+    <section class="banner">
+        <div class="text">
+            <h1>JEWELRY<br>COLLECTION 2026</h1>
+            <p>Tinh tế trong từng chi tiết</p>
+        </div>
+    </section>
+
+    <!-- DANH MỤC -->
+    <section class="cate">
+
+        <h2>DANH MỤC SẢN PHẨM</h2>
+
+        <div class="cate-list">
+
+            <div class="cate-item">
+                <img src="../image/emojione-monotone_ring.png">
+                <h3>Nhẫn</h3>
+                <a href="../html/products.html">Xem ngay</a>
+            </div>
+
+            <div class="cate-item">
+                <img src="../image/Vector.png">
+                <h3>Dây chuyền</h3>
+                <a href="../html/products.html">Xem ngay</a>
+            </div>
+
+            <div class="cate-item">
+                <img src="../image/game-icons_gem-chain.png">
+                <h3>Vòng tay</h3>
+                <a href="../html/products.html">Xem ngay</a>
+            </div>
+
+            <div class="cate-item">
+                <img src="../image/game-icons_drop-earrings.png">
+                <h3>Bông tai</h3>
+                <a href="../html/products.html">Xem ngay</a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SẢN PHẨM (BACKEND READY) -->
+    <section class="product">
+
+        <h2>SẢN PHẨM NỔI BẬT</h2>
+
+        <!-- CONTAINER ĐỂ JS/Backend RENDER -->
+        <div class="pro-list" id="productList">
+            <!-- Product sẽ được render bằng JS / API -->
+        </div>
+
+    </section>
+
+    <!-- AI -->
+    <section class="ai">
+
+        <div class="robot">
+            <i class="fa-solid fa-robot"></i>
+        </div>
+
+        <div class="ai-text">
+
+            <h2>AI TƯ VẤN TRANG SỨC</h2>
+
+            <div class="chat">
+                <input type="text" id="msg" placeholder="Hãy chia sẻ nhu cầu của bạn...">
+
+                <button onclick="chatAI()">
+                    Bắt đầu tư vấn
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-box">
+
+            <div>
+                <h2>Jewelry Store</h2>
+                <p id="note">
+                    Trang sức tinh tế, chất lượng cao<br>
+                    và thiết kế độc đáo dành riêng cho bạn
+                </p>
+            </div>
+
+            <div>
+                <h3>THÔNG TIN</h3>
+                <p>Về chúng tôi</p>
+                <p>Cam kết chất lượng</p>
+            </div>
+
+            <div>
+                <h3>DỊCH VỤ</h3>
+                <p>Bảo hành</p>
+                <p>Đổi trả</p>
+                <p>Vận chuyển</p>
+            </div>
+
+            <div>
+                <h3>CHÍNH SÁCH</h3>
+                <p>Bảo mật</p>
+                <p>Kiểm hàng</p>
+                <p>Thanh toán</p>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <p class="copy">
+            © 2026 Jewelry Store, All rights reserved
+        </p>
+
+    </footer>
+
+    <!-- JS -->
+    <script src="../js/main.js"></script>
+
+</body>
+
+</html>
