@@ -1,6 +1,4 @@
-/* =========================
-   RESET CSS
-========================= */
+/* RESET CSS */
 
 * {
   margin: 0;
@@ -12,10 +10,6 @@
 body {
   background: #edf0f5;
 }
-
-/* =========================
-       HEADER
-    ========================= */
 
 /* HEADER */
 
@@ -123,9 +117,7 @@ div h2 {
   font-size: 34px;
   cursor: pointer;
 }
-/* =========================
-   BREADCRUMB
-========================= */
+/* BREADCRUMB */
 
 .breadcrumb {
   width: 95%;
@@ -148,16 +140,14 @@ div h2 {
 }
 .page-title {
   width: 95%;
-  margin: 5px auto 25px; /* đẩy lên + căn giống breadcrumb */
-  padding-left: 10px; /* xích sang phải nhẹ */
+  margin: 5px auto 25px; 
+  padding-left: 10px; 
 
   font-size: 32px;
   font-weight: 700;
   color: #000000;
 }
-/* =========================
-   LAYOUT
-========================= */
+/* LAYOUT */
 
 .checkout-wrapper {
   display: flex;
@@ -184,9 +174,7 @@ div h2 {
   top: 20px;
 }
 
-/* =========================
-   BOX
-========================= */
+/* BOX */
 
 .box {
   background: white;
@@ -224,9 +212,7 @@ div h2 {
   font-weight: bold;
 }
 
-/* =========================
-   FORM
-========================= */
+/* FORM */
 
 .form-row {
   display: flex;
@@ -272,11 +258,7 @@ div h2 {
   resize: none;
   height: 85px;
 }
-
-/* =========================
-   COUPON
-========================= */
-
+/* COUPON */
 .coupon-list {
   display: flex;
   gap: 18px;
@@ -328,9 +310,7 @@ div h2 {
   font-weight: bold;
 }
 
-/* =========================
-   PAYMENT
-========================= */
+/* PAYMENT */
 
 .payment-method {
   display: flex;
@@ -357,9 +337,7 @@ div h2 {
   font-weight: 400;
 }
 
-/* =========================
-   ORDER SUMMARY
-========================= */
+/* ORDER SUMMARY */
 
 .order-summary h2 {
   margin-bottom: 25px;
@@ -424,9 +402,7 @@ div h2 {
   font-weight: bold;
 }
 
-/* =========================
-   BUTTON
-========================= */
+/* BUTTON */
 
 .order-btn {
   width: 100%;
@@ -474,9 +450,7 @@ div h2 {
   background: #083a85;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 footer {
   background: #003f9f;
@@ -501,10 +475,7 @@ footer {
 .footer-item h4 {
   margin-bottom: 5px;
 }
-
-/* =========================
-   RESPONSIVE
-========================= */
+/* RESPONSIVE */
 
 @media (max-width: 1200px) {
   .checkout-wrapper {

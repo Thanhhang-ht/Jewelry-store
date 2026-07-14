@@ -1,6 +1,4 @@
-/* ===================================
-   RESET
-=================================== */
+/* RESET */
 
 * {
   margin: 0;
@@ -30,18 +28,14 @@ button {
   background: none;
 }
 
-/* ===================================
-   LAYOUT
-=================================== */
+/* LAYOUT */
 
 .dashboard-container {
   display: flex;
   min-height: 100vh;
 }
 
-/* ===================================
-   SIDEBAR
-=================================== */
+/* SIDEBAR */
 
 .sidebar {
   width: 270px;
@@ -84,9 +78,7 @@ button {
   margin: 0 20px 20px;
 }
 
-/* ===================================
-   MENU
-=================================== */
+/* MENU */
 
 .sidebar-menu {
   flex: 1;
@@ -127,10 +119,7 @@ button {
 .sidebar-menu li:last-child {
   margin-top: 30px;
 }
-
-/* ===================================
-   USER
-=================================== */
+/* USER */
 
 .sidebar-user {
   padding: 20px;
@@ -178,9 +167,7 @@ button {
   opacity: 0.8;
 }
 
-/* ===================================
-   MAIN
-=================================== */
+/* MAIN */
 
 .main-content {
   margin-left: 270px;
@@ -190,9 +177,7 @@ button {
   padding: 30px;
 }
 
-/* ===================================
-   TOPBAR
-=================================== */
+/* TOPBAR */
 
 .topbar {
   background: white;
@@ -282,9 +267,7 @@ button {
 
   font-size: 15px;
 }
-/* ===================================
-   STATISTIC CARDS
-=================================== */
+/* STATISTIC CARDS */
 
 .stats {
   display: grid;
@@ -312,9 +295,7 @@ button {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* ===================================
-   ICON
-=================================== */
+/* ICON */
 
 .icon {
   width: 70px;
@@ -351,9 +332,7 @@ button {
   color: #8e24aa;
 }
 
-/* ===================================
-   CARD CONTENT
-=================================== */
+/* CARD CONTENT */
 
 .stat-info {
   flex: 1;
@@ -397,9 +376,7 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* ===================================
-   ANIMATION
-=================================== */
+/* ANIMATION */
 
 .stat-card:hover .icon {
   transform: scale(1.08);
@@ -413,9 +390,7 @@ button {
   transition: 0.3s;
 }
 
-/* ===================================
-   RESPONSIVE
-=================================== */
+/* RESPONSIVE */
 
 @media (max-width: 1400px) {
   .stats {
@@ -443,9 +418,7 @@ button {
     font-size: 26px;
   }
 }
-/* ===================================
-   DASHBOARD CONTENT
-=================================== */
+/* DASHBOARD CONTENT */
 
 .dashboard-content {
   display: grid;
@@ -454,9 +427,7 @@ button {
   margin-bottom: 30px;
 }
 
-/* ===================================
-   BOX
-=================================== */
+/* BOX */
 
 .orders-box,
 .best-seller {
@@ -469,9 +440,7 @@ button {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
 }
 
-/* ===================================
-   BOX HEADER
-=================================== */
+/* BOX HEADER */
 
 .box-header {
   display: flex;
@@ -501,9 +470,7 @@ button {
   color: #083c97;
 }
 
-/* ===================================
-   TABLE
-=================================== */
+/* TABLE */
 
 table {
   width: 100%;
@@ -543,9 +510,7 @@ tbody tr:hover {
   background: #f8fbff;
 }
 
-/* ===================================
-   STATUS
-=================================== */
+/* STATUS */
 
 .status {
   display: inline-block;
@@ -583,9 +548,7 @@ tbody tr:hover {
   color: #dc2626;
 }
 
-/* ===================================
-   BEST SELLER
-=================================== */
+/* BEST SELLER */
 
 .best-seller td:first-child {
   display: flex;
@@ -606,9 +569,7 @@ tbody tr:hover {
   flex-shrink: 0;
 }
 
-/* ===================================
-   FOOTER
-=================================== */
+/* FOOTER */
 
 .footer {
   text-align: center;
@@ -620,9 +581,7 @@ tbody tr:hover {
   font-size: 15px;
 }
 
-/* ===================================
-   RESPONSIVE
-=================================== */
+/* RESPONSIVE */
 
 @media (max-width: 1200px) {
   .dashboard-content {
@@ -663,9 +622,7 @@ tbody tr:hover {
     min-width: 700px;
   }
 }
-/* ===================================
-   UTILITIES
-=================================== */
+/* UTILITIES */
 
 .text-success {
   color: #16a34a;
@@ -699,9 +656,7 @@ tbody tr:hover {
   background: #e8f0ff;
 }
 
-/* ===================================
-   LOADING
-=================================== */
+/* LOADING */
 
 .loading {
   display: flex;
@@ -733,9 +688,7 @@ tbody tr:hover {
   }
 }
 
-/* ===================================
-   EMPTY DATA
-=================================== */
+/* EMPTY DATA */
 
 .empty-data {
   text-align: center;
@@ -763,9 +716,7 @@ tbody tr:hover {
   font-size: 15px;
 }
 
-/* ===================================
-   SCROLLBAR
-=================================== */
+/* SCROLLBAR */
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -786,9 +737,7 @@ tbody tr:hover {
   background: #083c97;
 }
 
-/* ===================================
-   BUTTON EFFECT
-=================================== */
+/* BUTTON EFFECT */
 
 button {
   transition: 0.25s;
@@ -798,9 +747,7 @@ button:active {
   transform: scale(0.96);
 }
 
-/* ===================================
-   LINK EFFECT
-=================================== */
+/* LINK EFFECT */
 
 a {
   transition: 0.25s;
@@ -810,9 +757,7 @@ a:hover {
   text-decoration: none;
 }
 
-/* ===================================
-   CARD EFFECT
-=================================== */
+/* CARD EFFECT */
 
 .orders-box,
 .best-seller,
@@ -824,10 +769,7 @@ a:hover {
 .best-seller:hover {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
-
-/* ===================================
-   IMAGE EFFECT
-=================================== */
+/* IMAGE EFFECT */
 
 .best-seller img {
   transition: 0.3s;
@@ -837,17 +779,13 @@ a:hover {
   transform: scale(1.08);
 }
 
-/* ===================================
-   TABLE HOVER
-=================================== */
+/* TABLE HOVER */
 
 tbody tr {
   cursor: pointer;
 }
 
-/* ===================================
-   FADE ANIMATION
-=================================== */
+/* FADE ANIMATION */
 
 .fade-in {
   animation: fadeIn 0.4s ease;

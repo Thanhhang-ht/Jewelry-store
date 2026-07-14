@@ -1,27 +1,14 @@
-// ===========================
-// ORDER ROUTES (Placeholder)
-// ===========================
 const express = require('express');
 const router = express.Router();
+const orderController = require('../controllers/orderController');
+const { protect, adminOnly } = require('../middleware/authMiddleware');
 
-// GET /api/orders
-router.get('/', (req, res) => {
-  res.json({ message: 'Danh sách đơn hàng (sẽ kết nối DB sau)', data: [] });
-});
+// PUBLIC - Khách đặt hàng
+router.post('/', orderController.createOrder);
 
-// GET /api/orders/:id
-router.get('/:id', (req, res) => {
-  res.json({ message: `Đơn hàng ID: ${req.params.id}`, data: null });
-});
-
-// POST /api/orders — Tạo đơn hàng mới
-router.post('/', (req, res) => {
-  res.json({ message: 'Tạo đơn hàng thành công', data: req.body });
-});
-
-// PUT /api/orders/:id — Cập nhật trạng thái đơn hàng
-router.put('/:id', (req, res) => {
-  res.json({ message: `Cập nhật đơn hàng ID: ${req.params.id}`, data: req.body });
-});
+// ADMIN - Quản lý đơn hàng
+router.get('/', protect, adminOnly, orderController.getAllOrders);
+router.get('/:id', protect, adminOnly, orderController.getOrderById);
+router.put('/:id/status', protect, adminOnly, orderController.updateOrderStatus);
 
 module.exports = router;

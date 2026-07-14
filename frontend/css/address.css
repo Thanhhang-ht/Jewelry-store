@@ -1,14 +1,10 @@
-/* =========================
-   ADDRESS CONTENT
-========================= */
+/* ADDRESS CONTENT */
 
 .content {
   flex: 1;
 }
 
-/* =========================
-   ADDRESS SECTION
-========================= */
+/* ADDRESS SECTION */
 
 .address-section {
   background: #fff;
@@ -20,9 +16,7 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .address-header {
   display: flex;
@@ -64,9 +58,7 @@
   background: #083a85;
 }
 
-/* =========================
-   ADDRESS LIST
-========================= */
+/* ADDRESS LIST */
 
 .address-list {
   display: grid;
@@ -76,9 +68,7 @@
   gap: 25px;
 }
 
-/* =========================
-   ADDRESS CARD
-========================= */
+/* ADDRESS CARD */
 
 .address-card {
   border: 2px solid #d9d9d9;
@@ -102,9 +92,7 @@
   border-color: #0c4fb5;
 }
 
-/* =========================
-   TOP
-========================= */
+/* TOP */
 
 .address-top {
   display: flex;
@@ -132,9 +120,7 @@
   transform: scale(1.2);
 }
 
-/* =========================
-   INFO
-========================= */
+/* INFO */
 
 .receiver-name {
   font-size: 24px;
@@ -158,9 +144,7 @@
   line-height: 1.6;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+/* BUTTONS */
 
 .address-actions {
   display: flex;
@@ -211,9 +195,7 @@
   background: #d92d20;
 }
 
-/* =========================
-   EMPTY
-========================= */
+/* EMPTY */
 
 .empty-address {
   text-align: center;
@@ -243,9 +225,7 @@
   margin-bottom: 30px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* RESPONSIVE */
 
 @media (max-width: 992px) {
   .address-list {
@@ -266,9 +246,7 @@
     font-size: 22px;
   }
 }
-/* =========================
-   MODAL
-========================= */
+/* MODAL */
 
 .modal {
   position: fixed;

@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Thêm/Sửa danh mục - Jewelry Store</title>
+    <title>Thêm/Sửa mã giảm giá - Jewelry Store</title>
 
     <!-- CSS -->
 
@@ -69,7 +69,7 @@
 
                 <li class="active">
 
-                    <a href="category-management.html">
+                    <a href="coupon-management.html">
 
                         <i class="fa-solid fa-table-list"></i>
 
@@ -198,125 +198,16 @@
             =========================== -->
             <section class="category-form-container">
 
-                <form id="categoryForm" class="category-form">
+                <form id="couponForm" class="category-form">
 
                     <!-- ==========================
                             LEFT
                     =========================== -->
 
-                    <div class="form-left">
-
-                        <h3>Thông tin danh mục</h3>
-
-                        <!-- Tên danh mục -->
-
-                        <div class="form-group">
-
-                            <label for="categoryName">
-
-                                Tên danh mục <span>*</span>
-
-                            </label>
-
-                            <input type="text" id="categoryName" name="categoryName" placeholder="Nhập tên danh mục..."
-                                required>
-
-                        </div>
-
-                        <!-- Mô tả -->
-
-                        <div class="form-group">
-
-                            <label for="description">
-
-                                Mô tả
-
-                            </label>
-
-                            <textarea id="description" name="description" rows="6"
-                                placeholder="Nhập mô tả..."></textarea>
-
-                        </div>
-
-                        <!-- Trạng thái -->
-
-                        <div class="form-group">
-
-                            <label>
-
-                                Trạng thái
-
-                            </label>
-
-                            <div class="radio-group">
-
-                                <label class="radio-item">
-
-                                    <input type="radio" name="status" value="active" checked>
-
-                                    Đang hoạt động
-
-                                </label>
-
-                                <label class="radio-item">
-
-                                    <input type="radio" name="status" value="hidden">
-
-                                    Đã ẩn
-
-                                </label>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- ==========================
-                            RIGHT
-                    =========================== -->
-
-                    <div class="form-right">
-
-                        <div class="form-group">
-
-                            <label>
-
-                                Ảnh danh mục <span>*</span>
-
-                            </label>
-
-                            <div class="upload-wrapper">
-
-                                <input type="file" id="categoryImage" accept="image/*" hidden>
-
-                                <div class="image-preview" id="imagePreview">
-
-                                    <img id="previewImg" src="" alt="" style="display:none;">
-
-                                    <label for="categoryImage" class="upload-box" id="uploadBox">
-
-                                        <i class="fa-solid fa-plus"></i>
-
-                                        <span>Thêm ảnh</span>
-
-                                    </label>
-
-                                </div>
-
-                                <small>
-
-                                    Hỗ trợ JPG, PNG, WEBP (tối đa 2MB)
-
-                                </small>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </form>
+                    <form id="couponForm" class="category-form">
+    <div class="form-left"></div>
+    <div class="form-right"></div>
+</form>
 
                 <!-- ==========================
                         BUTTONS
@@ -324,7 +215,7 @@
 
                 <div class="form-actions">
 
-                    <a href="category-management.html" class="back-btn">
+                    <a href="coupon-management.html" class="back-btn">
 
                         Quay lại
 
@@ -344,9 +235,9 @@
 
                         </button>
 
-                        <button type="submit" form="categoryForm" class="save-btn">
+                        <button type="submit" form="couponForm" class="save-btn">
 
-                            Lưu danh mục
+                            Lưu mã giảm giá
 
                         </button>
 
@@ -378,7 +269,7 @@
     =========================== -->
 
     <script src="../js/db.js"></script>
-    <script src="../js/category-form.js"></script>
+    <script src="../js/coupon-form.js"></script>
 
 </body>
 

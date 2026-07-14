@@ -1,6 +1,4 @@
-/* =========================
-   RESET CSS
-========================= */
+/* RESET CSS */
 
 * {
   margin: 0;
@@ -12,10 +10,6 @@
 body {
   background: #edf0f5;
 }
-
-/* =========================
-       HEADER
-    ========================= */
 
 /* HEADER */
 
@@ -124,9 +118,7 @@ div h2 {
   cursor: pointer;
 }
 
-/* =====================================
-     BREADCRUMB
-  ===================================== */
+/* BREADCRUMB */
 .breadcrumb {
   margin: 25px 40px;
 
@@ -136,17 +128,13 @@ div h2 {
   color: #666;
 }
 
-/* =====================================
-     TIÊU ĐỀ TRANG GIỎ HÀNG
-  ===================================== */
+/* TIÊU ĐỀ TRANG GIỎ HÀNG */
 .page-title {
   margin: 0 40px 25px;
   font-size: 35px;
 }
 
-/* =====================================
-     KHUNG CHỨA GIỎ HÀNG + ĐƠN HÀNG
-  ===================================== */
+/* KHUNG CHỨA GIỎ HÀNG + ĐƠN HÀNG */
 .cart-wrapper {
   display: flex;
   gap: 25px;
@@ -156,9 +144,7 @@ div h2 {
   align-items: flex-start;
 }
 
-/* =====================================
-     BẢNG GIỎ HÀNG
-  ===================================== */
+/* BẢNG GIỎ HÀNG */
 .cart-container {
   flex: 1;
 
@@ -202,17 +188,13 @@ div h2 {
   border-bottom: 1px solid #ddd;
 }
 
-/* =====================================
-     CHECKBOX CHỌN SẢN PHẨM
-  ===================================== */
+/* CHECKBOX CHỌN SẢN PHẨM*/
 .check {
   text-align: center;
   font-size: 28px;
 }
 
-/* =====================================
-     THÔNG TIN SẢN PHẨM
-  ===================================== */
+/* THÔNG TIN SẢN PHẨM */
 .product {
   display: flex;
   align-items: center;
@@ -239,18 +221,14 @@ div h2 {
   color: #555;
 }
 
-/* =====================================
-     ĐƠN GIÁ + THÀNH TIỀN
-  ===================================== */
+/* ĐƠN GIÁ + THÀNH TIỀN */
 .price,
 .total {
   font-weight: bold;
   font-size: 18px;
 }
 
-/* =====================================
-     TĂNG GIẢM SỐ LƯỢNG
-  ===================================== */
+/* Tăng giảm số lượng */
 .quantity {
   display: flex;
   gap: 10px;
@@ -273,16 +251,12 @@ div h2 {
   background: white;
 }
 
-/* =====================================
-     ICON XOÁ SẢN PHẨM
-  ===================================== */
+/* ICON XOÁ SẢN PHẨM */
 .delete {
   text-align: center;
   font-size: 32px;
 }
-/* =========================
-   NÚT TIẾP TỤC MUA SẮM
-========================= */
+/* NÚT TIẾP TỤC MUA SẮM */
 
 .continue-btn,
 .update-btn {
@@ -330,9 +304,7 @@ div h2 {
   box-shadow: 0 0 10px rgba(12, 79, 181, 0.4);
 }
 
-/* =====================================
-     PHẦN CUỐI GIỎ HÀNG
-  ===================================== */
+/* PHẦN CUỐI GIỎ HÀNG */
 .cart-footer {
   padding-top: 20px;
 }
@@ -354,9 +326,7 @@ div h2 {
   align-items: center;
 }
 
-/* =====================================
-     NÚT TIẾP TỤC MUA SẮM & CẬP NHẬT
-  ===================================== */
+/* NÚT TIẾP TỤC MUA SẮM & CẬP NHẬT */
 .continue-btn,
 .update-btn {
   width: 280px;
@@ -374,9 +344,7 @@ div h2 {
   cursor: pointer;
 }
 
-/* =====================================
-     PHÂN TRANG
-  ===================================== */
+/* PHÂN TRANG */
 .pagination {
   display: flex;
   gap: 12px;
@@ -398,9 +366,7 @@ div h2 {
   color: white;
 }
 
-/* =====================================
-     KHUNG THÔNG TIN ĐƠN HÀNG
-  ===================================== */
+/* KHUNG THÔNG TIN ĐƠN HÀNG */
 .order-box {
   width: 360px;
 
@@ -432,9 +398,7 @@ div h2 {
   color: #17a84b;
 }
 
-/* =====================================
-     TỔNG TIỀN
-  ===================================== */
+/* TỔNG TIỀN */
 .total-order {
   display: flex;
   justify-content: space-between;
@@ -445,9 +409,7 @@ div h2 {
   margin: 25px 0;
 }
 
-/* =====================================
-     NÚT THANH TOÁN
-  ===================================== */
+/* NÚT THANH TOÁN */
 .checkout-btn {
   width: 278px;
   height: 52px;
@@ -502,10 +464,8 @@ div h2 {
   padding: 14px;
   padding-left: 30px;
 }
+
 /* Xử lý thẻ card */
-
-/* CARD GỢI Ý */
-
 .card {
   background: #fff;
 
@@ -620,9 +580,7 @@ div h2 {
   justify-content: center;
   gap: 25px;
 }
-/* =========================
-     FOOTER
-  ========================= */
+/* FOOTER */
 
 footer {
   background: #003f9f;

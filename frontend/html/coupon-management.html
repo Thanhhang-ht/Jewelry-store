@@ -7,13 +7,13 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Quản lý danh mục - Jewelry Store</title>
+    <title>Quản lý mã giảm giá - Jewelry Store</title>
 
     <!-- CSS -->
 
     <link rel="stylesheet" href="../css/dashboard.css">
 
-    <link rel="stylesheet" href="../css/category-management.css">
+    <link rel="stylesheet" href="../css/coupon-management.css">
 
     <!-- Font Awesome -->
 
@@ -69,11 +69,11 @@
 
                 <li class="active">
 
-                    <a href="category-management.html">
+                    <a href="coupon-management.html">
 
                         <i class="fa-solid fa-table-list"></i>
 
-                        Danh mục
+                        Mã giảm giá
 
                     </a>
 
@@ -173,7 +173,7 @@
 
                     </button>
 
-                    <h2>Quản lý danh mục</h2>
+                    <h2>Quản lý mã giảm giá</h2>
 
                 </div>
 
@@ -192,23 +192,23 @@
             <!-- ==========================
                     CATEGORY CONTAINER
             =========================== -->
-            <section class="category-container">
+            <section class="coupon-container">
 
                 <!-- ==========================
                         TOOLBAR
                 =========================== -->
 
-                <div class="category-toolbar">
+                <div class="coupon-toolbar">
 
                     <!-- LEFT -->
 
                     <div class="toolbar-left">
 
-                        <a href="category-form.html?mode=add" class="add-btn">
+                        <a href="coupon-form.html?mode=add" class="add-btn">
 
                             <i class="fa-solid fa-plus"></i>
 
-                            Thêm danh mục
+                            Thêm mã giảm giá
 
                         </a>
 
@@ -220,7 +220,7 @@
 
                         <div class="search-box">
 
-                            <input type="text" id="searchCategory" placeholder="Tìm kiếm danh mục...">
+                            <input type="text" id="searchCoupon" placeholder="Tìm kiếm danh mục...">
 
                             <button id="searchBtn">
 
@@ -248,7 +248,7 @@
 
                 <div class="table-wrapper">
 
-                    <table class="category-table">
+                    <table class="coupon-table">
 
                         <thead>
 
@@ -260,11 +260,11 @@
 
                                 </th>
 
-                                <th>Danh mục</th>
+                                <th>Mã giảm giá</th>
 
-                                <th>Mô tả</th>
+                                <th>Giá trị</th>
 
-                                <th>Số sản phẩm</th>
+                                <th>Loại giảm</th>
 
                                 <th>Trạng thái</th>
 
@@ -274,7 +274,7 @@
 
                         </thead>
 
-                        <tbody id="categoryTableBody">
+                        <tbody id="couponTableBody">
 
                             <!-- ROW 1 -->
 
@@ -282,7 +282,7 @@
 
                                 <td>
 
-                                    <input type="checkbox" class="category-checkbox">
+                                    <input type="checkbox" class="coupon-checkbox">
 
                                 </td>
 
@@ -320,7 +320,7 @@
 
                                     <div class="action-buttons">
 
-                                        <a href="category-form.html?mode=edit" class="edit-btn">
+                                        <a href="coupon-form.html?mode=edit" class="edit-btn">
 
                                             <i class="fa-solid fa-pen"></i>
 
@@ -344,7 +344,7 @@
 
                                 <td>
 
-                                    <input type="checkbox" class="category-checkbox">
+                                    <input type="checkbox" class="coupon-checkbox">
 
                                 </td>
 
@@ -382,7 +382,7 @@
 
                                     <div class="action-buttons">
 
-                                        <a href="category-form.html?mode=edit" class="edit-btn">
+                                        <a href="coupon-form.html?mode=edit" class="edit-btn">
 
                                             <i class="fa-solid fa-pen"></i>
 
@@ -406,7 +406,7 @@
 
                                 <td>
 
-                                    <input type="checkbox" class="category-checkbox">
+                                    <input type="checkbox" class="coupon-checkbox">
 
                                 </td>
 
@@ -444,7 +444,7 @@
 
                                     <div class="action-buttons">
 
-                                        <a href="category-form.html?mode=edit" class="edit-btn">
+                                        <a href="coupon-form.html?mode=edit" class="edit-btn">
 
                                             <i class="fa-solid fa-pen"></i>
 
@@ -468,7 +468,7 @@
 
                                 <td>
 
-                                    <input type="checkbox" class="category-checkbox">
+                                    <input type="checkbox" class="coupon-checkbox">
 
                                 </td>
 
@@ -506,7 +506,7 @@
 
                                     <div class="action-buttons">
 
-                                        <a href="category-form.html?mode=edit" class="edit-btn">
+                                        <a href="coupon-form.html?mode=edit" class="edit-btn">
 
                                             <i class="fa-solid fa-pen"></i>
 
@@ -530,7 +530,7 @@
 
                                 <td>
 
-                                    <input type="checkbox" class="category-checkbox">
+                                    <input type="checkbox" class="coupon-checkbox">
 
                                 </td>
 
@@ -568,7 +568,7 @@
 
                                     <div class="action-buttons">
 
-                                        <a href="category-form.html?mode=edit" class="edit-btn">
+                                        <a href="coupon-form.html?mode=edit" class="edit-btn">
 
                                             <i class="fa-solid fa-pen"></i>
 
@@ -668,7 +668,7 @@
     =========================== -->
 
     <script src="../js/db.js"></script>
-    <script src="../js/category-management.js"></script>
+    <script src="../js/coupon-management.js"></script>
 
 </body>
 

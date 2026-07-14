@@ -191,6 +191,11 @@ const DEFAULT_CUSTOMERS = [
   { id: 5, name: "Trần Anh Tuấn", phone: "0728885294", email: "anhtuan@gmail.com", registerDate: "18/06/2026", totalOrders: 6, totalSpent: 3800000 }
 ];
 
+const DEFAULT_COUPONS = [
+  { id: 1, code: "GIAM10", discount_type: "percent", discount_value: 10, min_order_value: 400000, max_discount_value: 100000, start_date: "2026-01-01", end_date: "2026-12-31", usage_limit: 100, used_count: 5, status: "active" },
+  { id: 2, code: "WELCOME50", discount_type: "fixed", discount_value: 50000, min_order_value: 300000, max_discount_value: 50000, start_date: "2026-01-01", end_date: "2026-12-31", usage_limit: 200, used_count: 10, status: "active" }
+];
+
 // Helper database functions
 const DB = {
   getProducts() {
@@ -237,6 +242,15 @@ const DB = {
   },
   saveCustomers(customers) {
     localStorage.setItem("customers", JSON.stringify(customers));
+  },
+  getCoupons() {
+    if (!localStorage.getItem("coupons")) {
+      localStorage.setItem("coupons", JSON.stringify(DEFAULT_COUPONS));
+    }
+    return JSON.parse(localStorage.getItem("coupons"));
+  },
+  saveCoupons(coupons) {
+    localStorage.setItem("coupons", JSON.stringify(coupons));
   }
 };
 
@@ -246,3 +260,4 @@ DB.getCategories();
 DB.getOrders();
 DB.getCart();
 DB.getCustomers();
+DB.getCoupons();

@@ -1,32 +1,15 @@
-// ===========================
-// PRODUCT ROUTES (Placeholder)
-// ===========================
 const express = require('express');
 const router = express.Router();
+const productController = require('../controllers/productController');
+const { protect, adminOnly } = require('../middleware/authMiddleware');
 
-// GET /api/products — Lấy tất cả sản phẩm
-router.get('/', (req, res) => {
-  res.json({ message: 'Danh sách sản phẩm (sẽ kết nối DB sau)', data: [] });
-});
+// PUBLIC - Ai cũng xem được
+router.get('/', productController.getAllProducts);
+router.get('/:id', productController.getProductById);
 
-// GET /api/products/:id — Lấy sản phẩm theo ID
-router.get('/:id', (req, res) => {
-  res.json({ message: `Sản phẩm ID: ${req.params.id}`, data: null });
-});
-
-// POST /api/products — Thêm sản phẩm mới
-router.post('/', (req, res) => {
-  res.json({ message: 'Thêm sản phẩm thành công', data: req.body });
-});
-
-// PUT /api/products/:id — Cập nhật sản phẩm
-router.put('/:id', (req, res) => {
-  res.json({ message: `Cập nhật sản phẩm ID: ${req.params.id}`, data: req.body });
-});
-
-// DELETE /api/products/:id — Xóa sản phẩm
-router.delete('/:id', (req, res) => {
-  res.json({ message: `Xóa sản phẩm ID: ${req.params.id}` });
-});
+// ADMIN - Chỉ admin mới thao tác được
+router.post('/', protect, adminOnly, productController.createProduct);
+router.put('/:id', protect, adminOnly, productController.updateProduct);
+router.delete('/:id', protect, adminOnly, productController.deleteProduct);
 
 module.exports = router;

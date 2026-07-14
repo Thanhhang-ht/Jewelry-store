@@ -53,7 +53,51 @@ function initCheckout() {
     .join("");
 
   document.getElementById("subtotal").innerText = formatMoney(subtotal);
+  renderCheckoutCoupons();
   updateTotal();
+}
+
+function renderCheckoutCoupons() {
+  const container = document.querySelector(".coupon-list");
+  if (!container) return;
+
+  const coupons = DB.getCoupons();
+  const activeCoupons = coupons.filter(c => c.status === "active");
+
+  let html = activeCoupons.map(c => {
+    const descText = c.discount_type === "percent" ? `Giảm ${c.discount_value}% đơn hàng` : `Giảm ${Number(c.discount_value).toLocaleString()}đ`;
+    const minText = `Đơn tối thiểu ${Number(c.min_order_value || 0).toLocaleString()}đ`;
+    
+    // Check if order subtotal meets min_order_value
+    const isDisabled = subtotal < c.min_order_value;
+    const disabledAttr = isDisabled ? "disabled" : "";
+    const couponStyle = isDisabled ? "opacity: 0.5; cursor: not-allowed;" : "cursor: pointer;";
+
+    return `
+      <label class="coupon" style="${couponStyle}">
+        <input type="radio" name="coupon" value="${c.code}" data-type="${c.discount_type}" data-value="${c.discount_value}" data-min="${c.min_order_value}" ${disabledAttr}>
+        <h3>${c.code}</h3>
+        <p>${descText}</p>
+        <small>${minText}</small>
+        <span>HSD: ${c.end_date}</span>
+      </label>
+    `;
+  }).join("");
+
+  // Default option
+  html += `
+    <label class="coupon" style="cursor: pointer;">
+        <input type="radio" name="coupon" value="NONE" data-type="none" data-value="0" checked>
+        <h3>Không sử dụng</h3>
+    </label>
+  `;
+
+  container.innerHTML = html;
+
+  // Re-bind change event to dynamic coupons
+  document.querySelectorAll('input[name="coupon"]').forEach((radio) => {
+    radio.addEventListener("change", updateTotal);
+  });
 }
 
 function updateTotal() {
@@ -61,7 +105,6 @@ function updateTotal() {
   if (!coupon) return;
 
   let discount = 0;
-  // Miễn phí ship cho đơn hàng trên 500k hoặc dùng mã FREESHIP
   let shipping = subtotal >= 500000 ? 0 : shippingFee;
 
   const type = coupon.dataset.type;
@@ -75,7 +118,6 @@ function updateTotal() {
     shipping = 0;
   }
 
-  // Đảm bảo giảm giá không vượt quá tạm tính
   if (discount > subtotal) discount = subtotal;
 
   const total = subtotal - discount + shipping;
@@ -91,11 +133,6 @@ function updateTotal() {
 
   document.getElementById("grandTotal").innerText = formatMoney(total);
 }
-
-// Gắn sự kiện khi đổi mã giảm giá
-document.querySelectorAll('input[name="coupon"]').forEach((radio) => {
-  radio.addEventListener("change", updateTotal);
-});
 
 // Tiến hành đặt hàng
 window.placeOrder = function () {
