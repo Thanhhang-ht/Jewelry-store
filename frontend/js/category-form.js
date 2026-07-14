@@ -1,12 +1,8 @@
-// ==========================================
-// CATEGORY FORM PROCESS
-// ==========================================
-
+const API_URL = "http://localhost:3000/api";
 const params = new URLSearchParams(window.location.search);
 const mode = params.get("mode") || "add";
-const editId = parseInt(params.get("id"));
+const editId = params.get("id");
 
-// DOM
 const formTitle = document.getElementById("formTitle");
 const categoryForm = document.getElementById("categoryForm");
 const categoryName = document.getElementById("categoryName");
@@ -14,16 +10,13 @@ const description = document.getElementById("description");
 const imageInput = document.getElementById("categoryImage");
 const previewImg = document.getElementById("previewImg");
 const uploadBox = document.getElementById("uploadBox");
-const deleteBtn = document.getElementById("deleteBtn");
 
 let currentImageBase64 = "";
 
-// INIT
 document.addEventListener("DOMContentLoaded", () => {
   initPage();
 });
 
-// IMAGE PREVIEW & CACHE BASE64
 if (imageInput) {
   imageInput.addEventListener("change", function () {
     const file = this.files[0];
@@ -33,8 +26,8 @@ if (imageInput) {
     reader.onload = function (e) {
       previewImg.src = e.target.result;
       previewImg.style.display = "block";
-      uploadBox.style.display = "none";
-      currentImageBase64 = e.target.result; // Lưu trữ base64 để lưu vào localStorage
+      if (uploadBox) uploadBox.style.display = "none";
+      currentImageBase64 = e.target.result;
     };
     reader.readAsDataURL(file);
   });
@@ -44,113 +37,86 @@ function initPage() {
   if (mode === "add") {
     document.title = "Thêm danh mục";
     if (formTitle) formTitle.textContent = "Thêm danh mục";
-    if (deleteBtn) deleteBtn.style.display = "none";
   } else if (mode === "edit") {
     document.title = "Sửa danh mục";
     if (formTitle) formTitle.textContent = "Sửa danh mục";
-    if (deleteBtn) deleteBtn.style.display = "block";
     loadCategoryData();
   }
 }
 
-function loadCategoryData() {
-  const categories = DB.getCategories();
-  const category = categories.find((c) => c.id === editId);
+async function loadCategoryData() {
+  try {
+    const res = await fetch(`${API_URL}/categories/${editId}`);
+    const result = await res.json();
 
-  if (!category) {
-    alert("Không tìm thấy danh mục!");
-    window.location.href = "category-management.html";
-    return;
+    if (result.success) {
+      const category = result.data;
+      categoryName.value = category.name;
+      description.value = category.description || "";
+      currentImageBase64 = category.image || "";
+
+      if (category.image) {
+        previewImg.src = category.image;
+        previewImg.style.display = "block";
+        if (uploadBox) uploadBox.style.display = "none";
+      }
+
+      const statusSelect = document.getElementById("status");
+      if (statusSelect) {
+          statusSelect.value = category.status;
+      }
+    } else {
+      alert("Không tìm thấy danh mục!");
+      window.location.href = "category-management.html";
+    }
+  } catch (err) {
+    console.error("Lỗi:", err);
   }
-
-  categoryName.value = category.name;
-  description.value = category.description || "";
-  currentImageBase64 = category.image || "";
-
-  if (category.image) {
-    previewImg.src = category.image;
-    previewImg.style.display = "block";
-    uploadBox.style.display = "none";
-  }
-
-  // Set status
-  const statusRadio = document.querySelector(`input[name="status"][value="${category.status}"]`);
-  if (statusRadio) statusRadio.checked = true;
 }
 
-function validateForm() {
-  if (categoryName.value.trim() === "") {
-    alert("Vui lòng nhập tên danh mục!");
-    categoryName.focus();
-    return false;
-  }
-  return true;
-}
-
-// Submit Form (Save or Update in DB)
 if (categoryForm) {
-  categoryForm.addEventListener("submit", function (e) {
+  categoryForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    if (!validateForm()) return;
-
-    const categories = DB.getCategories();
-    const statusVal = document.querySelector("input[name='status']:checked")?.value || "active";
-
-    if (mode === "add") {
-      let maxId = 0;
-      categories.forEach((c) => {
-        if (c.id > maxId) maxId = c.id;
-      });
-      const newId = maxId + 1;
-
-      const newCategory = {
-        id: newId,
-        name: categoryName.value.trim(),
-        description: description.value.trim(),
-        status: statusVal,
-        image: currentImageBase64 || "../image/emojione-monotone_ring.png" // fallback
-      };
-
-      categories.push(newCategory);
-      DB.saveCategories(categories);
-      alert("Thêm danh mục thành công!");
-    } else if (mode === "edit") {
-      const index = categories.findIndex((c) => c.id === editId);
-      if (index !== -1) {
-        categories[index].name = categoryName.value.trim();
-        categories[index].description = description.value.trim();
-        categories[index].status = statusVal;
-        if (currentImageBase64) {
-          categories[index].image = currentImageBase64;
-        }
-        DB.saveCategories(categories);
-        alert("Cập nhật danh mục thành công!");
-      }
+    if (categoryName.value.trim() === "") {
+      alert("Vui lòng nhập tên danh mục!");
+      categoryName.focus();
+      return;
     }
 
-    window.location.href = "category-management.html";
-  });
-}
+    const statusSelect = document.getElementById("status");
+    const statusVal = statusSelect ? statusSelect.value : "active";
 
-// Cancel / Reset
-const cancelBtn = document.querySelector(".cancel-btn");
-if (cancelBtn) {
-  cancelBtn.addEventListener("click", () => {
-    window.location.href = "category-management.html";
-  });
-}
+    const payload = {
+      name: categoryName.value.trim(),
+      description: description.value.trim(),
+      status: statusVal,
+      image: currentImageBase64
+    };
 
-// Delete Category
-if (deleteBtn) {
-  deleteBtn.addEventListener("click", () => {
-    if (!confirm("Bạn có chắc muốn xóa danh mục này?")) return;
-
-    let categories = DB.getCategories();
-    categories = categories.filter((c) => c.id !== editId);
-    DB.saveCategories(categories);
-
-    alert("Đã xóa danh mục thành công!");
-    window.location.href = "category-management.html";
+    try {
+      const url = mode === "add" ? `${API_URL}/categories` : `${API_URL}/categories/${editId}`;
+      const method = mode === "add" ? "POST" : "PUT";
+      
+      const res = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify(payload)
+      });
+      
+      const result = await res.json();
+      if (result.success) {
+        alert(mode === "add" ? "Thêm danh mục thành công!" : "Cập nhật danh mục thành công!");
+        window.location.href = "category-management.html";
+      } else {
+        alert("Lỗi: " + result.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Đã xảy ra lỗi hệ thống!");
+    }
   });
 }

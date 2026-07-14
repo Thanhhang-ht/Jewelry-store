@@ -1,13 +1,12 @@
 // ==========================================
 // CHANGE PASSWORD - Jewelry Store
 // ==========================================
+const API_URL = "http://localhost:3000/api";
 
 // ---------- Hiện / Ẩn mật khẩu ----------
-
 document.querySelectorAll(".toggle-password").forEach((icon) => {
   icon.addEventListener("click", () => {
     const input = icon.previousElementSibling;
-
     if (input.type === "password") {
       input.type = "text";
       icon.classList.replace("fa-eye", "fa-eye-slash");
@@ -19,39 +18,27 @@ document.querySelectorAll(".toggle-password").forEach((icon) => {
 });
 
 // ---------- Đăng xuất ----------
-
 const logoutBtn = document.getElementById("logoutBtn");
-
 if (logoutBtn) {
   logoutBtn.addEventListener("click", (e) => {
     e.preventDefault();
-
     if (!confirm("Bạn có chắc muốn đăng xuất?")) return;
-
-    // Sau này Backend
-    // await fetch("/api/auth/logout",{method:"POST"});
-
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
     window.location.href = "login.html";
   });
 }
 
 // ---------- Form ----------
-
 const form = document.getElementById("passwordForm");
-
 const oldPassword = document.getElementById("oldPassword");
 const newPassword = document.getElementById("newPassword");
 const confirmPassword = document.getElementById("confirmPassword");
-
 const oldError = document.getElementById("oldError");
 const newError = document.getElementById("newError");
 const confirmError = document.getElementById("confirmError");
 
 // ---------- Xóa lỗi ----------
-
 function clearError() {
   oldError.textContent = "";
   newError.textContent = "";
@@ -59,10 +46,8 @@ function clearError() {
 }
 
 // ---------- Validate ----------
-
 function validate() {
   clearError();
-
   let valid = true;
 
   if (oldPassword.value.trim() === "") {
@@ -88,11 +73,7 @@ function validate() {
     valid = false;
   }
 
-  if (
-    oldPassword.value &&
-    newPassword.value &&
-    oldPassword.value === newPassword.value
-  ) {
+  if (oldPassword.value && newPassword.value && oldPassword.value === newPassword.value) {
     newError.textContent = "Mật khẩu mới phải khác mật khẩu hiện tại.";
     valid = false;
   }
@@ -101,7 +82,6 @@ function validate() {
 }
 
 // ---------- Submit ----------
-
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -109,56 +89,38 @@ form.addEventListener("submit", async (e) => {
 
   const data = {
     oldPassword: oldPassword.value.trim(),
-    newPassword: newPassword.value.trim(),
-    confirmPassword: confirmPassword.value.trim(),
+    newPassword: newPassword.value.trim()
   };
 
-  console.log("Request:", data);
-
-  // ======================================
-  // Backend NodeJS
-  // ======================================
-
-  /*
-    try {
-
-        const token = localStorage.getItem("token");
-
-        const response = await fetch(
-            "http://localhost:3000/api/users/change-password",
-            {
-                method: "PUT",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-
-                body: JSON.stringify(data)
-            }
-        );
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            alert(result.message);
-            return;
-        }
-
-        alert(result.message);
-
-        form.reset();
-
-    } catch (error) {
-
-        alert("Không thể kết nối máy chủ.");
-
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Bạn chưa đăng nhập!");
+      window.location.href = "login.html";
+      return;
     }
-    */
 
-  // Demo Frontend
+    const response = await fetch(`${API_URL}/auth/change-password`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
 
-  alert("Đổi mật khẩu thành công!");
+    const result = await response.json();
 
-  form.reset();
+    if (!result.success) {
+      alert(result.message);
+      return;
+    }
+
+    alert(result.message);
+    form.reset();
+
+  } catch (error) {
+    console.error("Lỗi:", error);
+    alert("Không thể kết nối máy chủ.");
+  }
 });

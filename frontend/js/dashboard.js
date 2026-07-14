@@ -56,27 +56,18 @@ async function loadAdminInfo() {
     // BACKEND
     // ==========================
 
-    /*
-    const response = await fetch(`${API_BASE}/admin/profile`, {
-      credentials: "include",
+    const response = await fetch(`${API_BASE}/auth/profile`, {
+      headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
     });
 
     if (!response.ok) {
       throw new Error("Không thể tải thông tin Admin");
     }
 
-    const data = await response.json();
-    */
+    const result = await response.json();
+    const data = result.data;
 
-    // ==========================
-    // DEMO DATA
-    // ==========================
-
-    const data = {
-      fullName: "Admin",
-    };
-
-    adminName.textContent = data.fullName;
+    adminName.textContent = data.fullname || "Admin";
   } catch (error) {
     console.error(error);
   }
@@ -92,28 +83,16 @@ async function loadDashboardStatistics() {
     // BACKEND
     // ==========================
 
-    /*
     const response = await fetch(`${API_BASE}/dashboard/statistics`, {
-      credentials: "include",
+      headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
     });
 
     if (!response.ok) {
       throw new Error("Không thể tải thống kê");
     }
 
-    const data = await response.json();
-    */
-
-    // ==========================
-    // DEMO DATA
-    // ==========================
-
-    const data = {
-      totalProducts: 120,
-      totalOrders: 85,
-      totalCustomers: 60,
-      totalRevenue: 15000000,
-    };
+    const result = await response.json();
+    const data = result.data;
 
     totalProducts.textContent = data.totalProducts;
     totalOrders.textContent = data.totalOrders;
@@ -167,44 +146,16 @@ async function loadLatestOrders() {
       // BACKEND
       // ==========================
   
-      /*
-      const response = await fetch(`${API_BASE}/orders/latest`, {
-        credentials: "include",
-      });
-  
-      if (!response.ok) {
-        throw new Error("Không thể tải đơn hàng");
-      }
-  
-      const orders = await response.json();
-      */
-  
-      // ==========================
-      // DEMO DATA
-      // ==========================
-  
-      const orders = [
-        {
-          orderCode: "DH006",
-          orderDate: "31/11/2026 19:30",
-          totalPrice: 870000,
-          status: "processing",
-        },
-        {
-          orderCode: "DH005",
-          orderDate: "22/11/2026 10:20",
-          totalPrice: 870000,
-          status: "shipping",
-        },
-        {
-          orderCode: "DH004",
-          orderDate: "20/10/2026 19:30",
-          totalPrice: 670000,
-          status: "success",
-        },
-      ];
-  
-      renderOrders(orders);
+    const response = await fetch(`${API_BASE}/dashboard/latest-orders`, {
+      headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+    });
+
+    if (!response.ok) {
+      throw new Error("Không thể tải đơn hàng");
+    }
+
+    const result = await response.json();
+    renderOrders(result.data);
   
     } catch (error) {
       console.error(error);
@@ -253,41 +204,16 @@ async function loadLatestOrders() {
       // BACKEND
       // ==========================
   
-      /*
-      const response = await fetch(`${API_BASE}/products/best-seller`, {
-        credentials: "include",
-      });
-  
-      if (!response.ok) {
-        throw new Error("Không thể tải sản phẩm bán chạy");
-      }
-  
-      const products = await response.json();
-      */
-  
-      // ==========================
-      // DEMO DATA
-      // ==========================
-  
-      const products = [
-        {
-          productName: "Nhẫn bạc đính đá",
-          image: "../image/image 24.png",
-          sold: 45,
-        },
-        {
-          productName: "Vòng tay bạc PT",
-          image: "../image/image 25.png",
-          sold: 30,
-        },
-        {
-          productName: "Bông tai bạc ngôi sao",
-          image: "../image/image 5.png",
-          sold: 25,
-        },
-      ];
-  
-      renderBestSeller(products);
+    const response = await fetch(`${API_BASE}/dashboard/best-sellers`, {
+      headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+    });
+
+    if (!response.ok) {
+      throw new Error("Không thể tải sản phẩm bán chạy");
+    }
+
+    const result = await response.json();
+    renderBestSeller(result.data);
   
     } catch (error) {
       console.error(error);
@@ -334,8 +260,8 @@ if (menuBtn) {
         */
   
         // Xóa token lưu trên trình duyệt
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("admin");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         sessionStorage.clear();
   
         // Chuyển về trang đăng nhập

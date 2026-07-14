@@ -1,42 +1,23 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = "http://localhost:3000/api";
 
-// ======================
-// MOCK DATA (HIỂN THỊ NGAY)
-// Sau này thay bằng fetch API
-// ======================
-let products = [
-  {
-    id: 1,
-    name: "Nhẫn bạc đính đá CZ",
-    price: 610000,
-    image: "../image/image 4.png",
-  },
-  {
-    id: 2,
-    name: "Dây chuyền bạc 102",
-    price: 495000,
-    image: "../image/image 2.png",
-  },
-  {
-    id: 3,
-    name: "Vòng tay bạc PT",
-    price: 510000,
-    image: "../image/image_3.png",
-  },
-  {
-    id: 4,
-    name: "Bông tai bạc ngôi sao",
-    price: 480000,
-    image: "../image/image 5.png",
-  },
-];
+let products = [];
 
-// ======================
-// RENDER PRODUCTS
-// ======================
-function renderProducts(list = products) {
+async function loadLatestProducts() {
+  try {
+    const res = await fetch(`${API_URL}/products`);
+    const result = await res.json();
+    if (result.success) {
+      // Chỉ lấy 4 sản phẩm mới nhất để hiển thị ở trang chủ
+      products = result.data.slice(0, 4);
+      renderProducts(products);
+    }
+  } catch (err) {
+    console.error("Không thể tải sản phẩm:", err);
+  }
+}
+
+function renderProducts(list) {
   const container = document.getElementById("productList");
-
   if (!container) return;
 
   container.innerHTML = list
@@ -45,13 +26,13 @@ function renderProducts(list = products) {
     <div class="pro-item" data-id="${p.id}">
 
       <div class="pro-img">
-        <img src="${p.image}" alt="${p.name}">
+        <img src="${p.image || '../image/image 24.png'}" alt="${p.name}">
         <i class="fa-regular fa-heart love"></i>
       </div>
 
       <div class="pro-info">
         <h4>${p.name}</h4>
-        <p>${Number(p.price).toLocaleString()}đ</p>
+        <p>${Number(p.price).toLocaleString('vi-VN')}đ</p>
       </div>
 
       <div class="pro-btn">
@@ -72,9 +53,6 @@ function renderProducts(list = products) {
   bindEvents();
 }
 
-// ======================
-// EVENT BINDING (IMPORTANT)
-// ======================
 function bindEvents() {
   // ADD TO CART
   document.querySelectorAll(".cart-btn").forEach((btn) => {
@@ -89,7 +67,6 @@ function bindEvents() {
     icon.addEventListener("click", () => {
       icon.classList.toggle("fa-regular");
       icon.classList.toggle("fa-solid");
-
       icon.style.color = icon.classList.contains("fa-solid") ? "red" : "black";
     });
   });
@@ -103,65 +80,36 @@ function bindEvents() {
   });
 }
 
-// ======================
-// CART FUNCTION
-// ======================
 function addToCart(productId) {
-  console.log("Add to cart:", productId);
-
-  // sau này backend:
-  /*
-  fetch(`${API_URL}/cart`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ productId })
-  });
-  */
-
-  alert("Đã thêm vào giỏ hàng");
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  const product = products.find(p => p.id == productId);
+  if (!product) return;
+  
+  const existingItem = cart.find(item => item.id == productId);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+  
+  localStorage.setItem('cart', JSON.stringify(cart));
+  alert(`Đã thêm "${product.name}" vào giỏ hàng!`);
 }
 
-// ======================
-// PRODUCT DETAIL
-// ======================
 function goToDetail(id) {
   window.location.href = `product-detail.html?id=${id}`;
 }
 
-// ======================
-// AI CHAT
-// ======================
 async function chatAI() {
   const msg = document.getElementById("msg").value;
-
   if (!msg.trim()) {
     alert("Vui lòng nhập nội dung");
     return;
   }
-
-  // tạm thời
-  alert("AI đang tư vấn:\n\n" + msg);
-
-  // backend sau này:
-  /*
-  const res = await fetch(`${API_URL}/chat`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ message: msg })
-  });
-
-  const data = await res.json();
-  alert(data.reply);
-  */
+  alert("Tính năng AI hiện đang được bảo trì!");
 }
 
-// ======================
-// INIT PAGE
-// ======================
 window.onload = () => {
-  renderProducts();
+  loadLatestProducts();
 };

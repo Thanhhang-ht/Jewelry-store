@@ -1,12 +1,4 @@
-// ======================================================
-// KHAI BÁO
-// ======================================================
-
-const API = {
-  profile: "/api/profile",
-  orders: "/api/orders",
-  addresses: "/api/addresses",
-};
+const API_URL = "http://localhost:3000/api";
 
 const logoutBtn = document.getElementById("logoutBtn");
 const editBtn = document.getElementById("editProfileBtn");
@@ -16,17 +8,13 @@ const addressList = document.getElementById("addressList");
 // ======================================================
 // ĐĂNG XUẤT
 // ======================================================
-
 if (logoutBtn) {
   logoutBtn.addEventListener("click", (e) => {
     e.preventDefault();
-
     const confirmLogout = confirm("Bạn có muốn đăng xuất không?");
-
     if (confirmLogout) {
-      // Backend sau này:
-      // await fetch("/logout",{method:"POST"});
-
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       window.location.href = "login.html";
     }
   });
@@ -35,352 +23,111 @@ if (logoutBtn) {
 // ======================================================
 // CHỈNH SỬA THÔNG TIN
 // ======================================================
-
 if (editBtn) {
   editBtn.addEventListener("click", () => {
-    alert("Chức năng chỉnh sửa sẽ được kết nối Backend.");
+    alert("Chức năng chỉnh sửa thông tin đang được cập nhật (Tùy chọn tương lai).");
   });
 }
 
 // ======================================================
-// CHỌN ĐỊA CHỈ MẶC ĐỊNH
+// TẠO HTML ĐỊA CHỈ (MOCK)
 // ======================================================
-
-function bindAddressRadio() {
-  const radios = document.querySelectorAll('.address-card input[type="radio"]');
-
-  radios.forEach((radio) => {
-    radio.addEventListener("change", () => {
-      document.querySelectorAll(".address-card").forEach((card) => {
-        card.classList.remove("active-address");
-      });
-
-      radio.closest(".address-card").classList.add("active-address");
-    });
-  });
-}
-
-bindAddressRadio();
-
-// ======================================================
-// TẠO HTML ĐỊA CHỈ
-// ======================================================
-
 function createAddressHTML(address) {
   return `
-
-  <div
-      class="address-card"
-      data-id="${address.id}">
-
+  <div class="address-card" data-id="${address.id}">
       <div class="address-top">
-
           <div>
-
-              <input
-                  type="radio"
-                  name="address">
-
+              <input type="radio" name="address">
               <span>${address.label}</span>
-
           </div>
-
           <i class="fa-solid fa-ellipsis-vertical menu-btn"></i>
-
       </div>
-
-      <h4 class="receiver-name">
-          ${address.name}
-      </h4>
-
-      <p class="receiver-phone">
-          ${address.phone}
-      </p>
-
-      <p class="receiver-address">
-          ${address.address}
-      </p>
-
-  </div>
-
-  `;
+      <h4 class="receiver-name">${address.name}</h4>
+      <p class="receiver-phone">${address.phone}</p>
+      <p class="receiver-address">${address.address}</p>
+  </div>`;
 }
 
-// ======================================================
-// THÊM ĐỊA CHỈ
-// ======================================================
-
-if (addAddressBtn) {
-  addAddressBtn.addEventListener("click", () => {
-    const name = prompt("Nhập họ tên:");
-
-    if (!name) return;
-
-    const phone = prompt("Nhập số điện thoại:");
-
-    if (!phone) return;
-
-    const address = prompt("Nhập địa chỉ:");
-
-    if (!address) return;
-
-    const addressCard = document.createElement("div");
-
-    addressCard.innerHTML = createAddressHTML({
-      id: Date.now(),
-
-      label: "Địa chỉ mới",
-
-      name: name,
-
-      phone: phone,
-
-      address: address,
-    });
-
-    addressList.appendChild(addressCard.firstElementChild);
-
-    bindAddressRadio();
-
-    attachMenuEvents();
-  });
-}
-
-// ======================================================
-// MENU 3 CHẤM
-// ======================================================
-
-function attachMenuEvents() {
-  const menuBtns = document.querySelectorAll(".menu-btn");
-
-  menuBtns.forEach((btn) => {
-    btn.removeEventListener("click", menuClickHandler);
-
-    btn.addEventListener("click", menuClickHandler);
-  });
-}
-
-function menuClickHandler() {
-  const card = this.closest(".address-card");
-
-  const nameEl = card.querySelector(".receiver-name");
-  const phoneEl = card.querySelector(".receiver-phone");
-  const addressEl = card.querySelector(".receiver-address");
-
-  const choice = prompt(
-    `Chọn chức năng
-
-1 - Sửa địa chỉ
-
-2 - Xóa địa chỉ`
-  );
-
-  // =====================
-  // SỬA
-  // =====================
-
-  if (choice === "1") {
-    const newName = prompt("Họ tên:", nameEl.innerText);
-
-    const newPhone = prompt("Số điện thoại:", phoneEl.innerText);
-
-    const newAddress = prompt("Địa chỉ:", addressEl.innerText);
-
-    if (newName) {
-      nameEl.innerText = newName;
-    }
-
-    if (newPhone) {
-      phoneEl.innerText = newPhone;
-    }
-
-    if (newAddress) {
-      addressEl.innerText = newAddress;
-    }
-
-    // Backend:
-    // fetch(API.addresses + "/" + card.dataset.id)
-  }
-
-  // =====================
-  // XÓA
-  // =====================
-  else if (choice === "2") {
-    const confirmDelete = confirm("Bạn có chắc muốn xóa địa chỉ này?");
-
-    if (confirmDelete) {
-      // Backend:
-      // fetch(API.addresses + "/" + card.dataset.id,{
-      //      method:"DELETE"
-      // });
-
-      card.remove();
-    }
-  }
-}
-
-attachMenuEvents();
 // ======================================================
 // XEM TẤT CẢ ĐƠN HÀNG
 // ======================================================
-
 const orderLink = document.getElementById("viewAllOrders");
-
 if (orderLink) {
   orderLink.addEventListener("click", (e) => {
     e.preventDefault();
-
     window.location.href = "history.html";
   });
 }
 
 // ======================================================
-// EVENT DELEGATION
+// LOAD PROFILE TỪ BACKEND
 // ======================================================
-
-document.addEventListener("click", (e) => {
-  // =====================
-  // XEM CHI TIẾT ĐƠN HÀNG
-  // =====================
-
-  if (e.target.classList.contains("detail-btn")) {
-    e.preventDefault();
-
-    const orderId = e.target.dataset.id;
-
-    // Backend sau này:
-    // window.location.href = `order-detail.html?id=${orderId}`;
-
-    window.location.href = "order-detail.html";
+async function loadProfile() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "login.html";
+    return;
   }
-});
 
-// ======================================================
-// LOAD PROFILE
-// ======================================================
+  try {
+    const res = await fetch(`${API_URL}/auth/profile`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    const result = await res.json();
+    
+    if (result.success) {
+      const user = result.data;
+      
+      const sidebarName = document.getElementById("sidebarUserName");
+      const sidebarEmail = document.getElementById("sidebarUserEmail");
+      if (sidebarName) sidebarName.textContent = user.fullname;
+      if (sidebarEmail) sidebarEmail.textContent = user.email;
 
-function loadProfile() {
-  /*
-    Backend:
+      const userName = document.getElementById("userName");
+      const userEmail = document.getElementById("userEmail");
+      const userPhone = document.getElementById("userPhone");
+      const joinDate = document.getElementById("joinDate");
 
-    fetch(API.profile)
-        .then(res => res.json())
-        .then(user => {
-
-            document.getElementById("sidebarUserName").textContent = user.name;
-            document.getElementById("sidebarUserEmail").textContent = user.email;
-
-            document.getElementById("userName").textContent = user.name;
-            document.getElementById("userEmail").textContent = user.email;
-            document.getElementById("userPhone").textContent = user.phone;
-            document.getElementById("joinDate").textContent = user.joinDate;
-
-        });
-
-    */
+      if (userName) userName.textContent = user.fullname;
+      if (userEmail) userEmail.textContent = user.email;
+      if (userPhone) userPhone.textContent = user.phone || "Chưa cập nhật";
+      
+      if (joinDate) {
+        const d = new Date(user.created_at);
+        joinDate.textContent = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+      }
+    } else {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    }
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 // ======================================================
-// LOAD ĐƠN HÀNG
+// RENDER ĐƠN HÀNG (MOCK TẠM TRƯỚC KHI LÀM PHASE 4)
 // ======================================================
-
 function loadOrders() {
-  /*
-    Backend:
-
-    fetch(API.orders)
-        .then(res => res.json())
-        .then(renderOrders);
-
-    */
+  // Sẽ tích hợp ở Phase 4 (History/Orders)
 }
 
 // ======================================================
-// LOAD ĐỊA CHỈ
+// RENDER ĐỊA CHỈ (MOCK)
 // ======================================================
-
 function loadAddresses() {
-  /*
-    Backend:
-
-    fetch(API.addresses)
-        .then(res => res.json())
-        .then(renderAddresses);
-
-    */
-}
-
-// ======================================================
-// RENDER ĐƠN HÀNG
-// ======================================================
-
-function renderOrders(orders) {
-  const orderTable = document.getElementById("orderTable");
-
-  orderTable.innerHTML = "";
-
-  orders.forEach((order) => {
-    orderTable.innerHTML += `
-
-        <tr data-id="${order.id}">
-
-            <td>${order.code}</td>
-
-            <td>${order.date}</td>
-
-            <td>${order.total}</td>
-
-            <td>
-
-                <span class="status ${order.statusClass}">
-                    ${order.status}
-                </span>
-
-            </td>
-
-            <td>
-
-                <a
-                    href="#"
-                    class="detail-btn"
-                    data-id="${order.id}">
-
-                    Xem chi tiết
-
-                </a>
-
-            </td>
-
-        </tr>
-
-        `;
-  });
-}
-
-// ======================================================
-// RENDER ĐỊA CHỈ
-// ======================================================
-
-function renderAddresses(addresses) {
-  addressList.innerHTML = "";
-
-  addresses.forEach((address) => {
-    addressList.innerHTML += createAddressHTML(address);
-  });
-
-  bindAddressRadio();
-
-  attachMenuEvents();
+  if (addressList) {
+    addressList.innerHTML = createAddressHTML({
+        id: 1, label: "Nhà riêng", name: "Nguyễn Văn A", phone: "0123456789", address: "123 Đường ABC, Quận XYZ, TP.HCM"
+    });
+  }
 }
 
 // ======================================================
 // KHỞI TẠO TRANG
 // ======================================================
-
 document.addEventListener("DOMContentLoaded", () => {
   loadProfile();
-
   loadOrders();
-
   loadAddresses();
 });

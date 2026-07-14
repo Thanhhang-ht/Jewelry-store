@@ -23,6 +23,7 @@ const categoryRoutes = require('./src/routes/categoryRoutes');
 const orderRoutes = require('./src/routes/orderRoutes');
 const couponRoutes = require('./src/routes/couponRoutes');
 const customerRoutes = require('./src/routes/customerRoutes');
+const dashboardRoutes = require('./src/routes/dashboardRoutes');
 
 // Định tuyến API
 app.use('/api/auth', authRoutes);
@@ -31,6 +32,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/coupons', couponRoutes);
 app.use('/api/customers', customerRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // HEALTH CHECK
 app.get("/api/health", (req, res) => {

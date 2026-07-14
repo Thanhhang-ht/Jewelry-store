@@ -1,6 +1,4 @@
-// ==========================================
-// CATEGORY MANAGEMENT LOGIC
-// ==========================================
+const API_URL = "http://localhost:3000/api";
 
 const CategoryManager = {
   categories: [],
@@ -10,26 +8,22 @@ const CategoryManager = {
   pageSize: 10
 };
 
-// Format quantity
-function formatCount(count) {
-  return count + " sản phẩm";
-}
-
-// Load categories & count products dynamically
-function loadCategoriesData() {
-  const categories = DB.getCategories();
-  const products = DB.getProducts();
-
-  // Đếm số sản phẩm động cho mỗi danh mục
-  CategoryManager.categories = categories.map((cat) => {
-    const productCount = products.filter((p) => p.category === cat.name).length;
-    return {
-      ...cat,
-      productCount: productCount
-    };
-  });
-
-  applyFilters();
+async function loadCategoriesData() {
+  try {
+    const res = await fetch(`${API_URL}/categories`);
+    const result = await res.json();
+    if (result.success) {
+      // Backend api/categories trả về kèm thuộc tính để ta tính productCount, 
+      // Nhưng nếu chưa có, ta cứ đếm số lượng product nếu có array products.
+      CategoryManager.categories = result.data.map(cat => ({
+        ...cat,
+        productCount: cat.products ? cat.products.length : 0 // nếu có include Products
+      }));
+      applyFilters();
+    }
+  } catch (err) {
+    console.error("Lỗi:", err);
+  }
 }
 
 function applyFilters() {
@@ -45,7 +39,6 @@ function applyFilters() {
   renderCategories();
 }
 
-// Render Table Rows
 function renderTable() {
   const tbody = document.getElementById("categoryTableBody");
   if (!tbody) return;
@@ -73,7 +66,7 @@ function renderTable() {
       return `
       <tr>
         <td>
-          <input type="checkbox" class="category-checkbox" data-id="${cat.id}">
+          <input type="checkbox" class="category-checkbox" value="${cat.id}">
         </td>
         <td>
           <div class="category-info" style="display: flex; align-items: center; gap: 10px;">
@@ -86,7 +79,7 @@ function renderTable() {
         <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
           ${cat.description || ""}
         </td>
-        <td>${cat.productCount}</td>
+        <td>${cat.productCount || 0}</td>
         <td>
           <span class="status ${statusClass}" style="padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; background: ${cat.status === 'active' ? '#e6f4ea' : '#fce8e6'}; color: ${cat.status === 'active' ? '#137333' : '#c5221f'};">
             ${statusText}
@@ -110,7 +103,6 @@ function renderTable() {
   bindCheckboxEvents();
 }
 
-// Check All & Individual Checkboxes
 function bindCheckboxEvents() {
   const checkAll = document.getElementById("checkAll");
   const checkboxes = document.querySelectorAll(".category-checkbox");
@@ -118,9 +110,7 @@ function bindCheckboxEvents() {
   if (checkAll) {
     checkAll.checked = false;
     checkAll.onchange = function () {
-      checkboxes.forEach((cb) => {
-        cb.checked = this.checked;
-      });
+      checkboxes.forEach((cb) => { cb.checked = this.checked; });
     };
   }
 
@@ -134,7 +124,6 @@ function bindCheckboxEvents() {
   });
 }
 
-// Pagination Rendering
 function renderPagination() {
   const totalPages = Math.ceil(CategoryManager.filteredCategories.length / CategoryManager.pageSize);
   const pagination = document.querySelector(".pagination");
@@ -186,31 +175,29 @@ function renderCategories() {
   renderPagination();
 }
 
-// Delete Category Function
-window.deleteCategory = function (id) {
-  const cat = CategoryManager.categories.find((c) => c.id === id);
-  if (!cat) return;
+window.deleteCategory = async function (id) {
+  if (!confirm("Bạn có chắc chắn muốn xóa danh mục này?")) return;
 
-  // Cảnh báo nếu danh mục này có chứa sản phẩm
-  if (cat.productCount > 0) {
-    if (!confirm(`Danh mục "${cat.name}" hiện đang có ${cat.productCount} sản phẩm. Xóa danh mục sẽ ảnh hưởng đến hiển thị sản phẩm. Bạn vẫn muốn tiếp tục xóa?`)) {
-      return;
+  try {
+    const res = await fetch(`${API_URL}/categories/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    });
+    const result = await res.json();
+    if (result.success) {
+      alert("Đã xóa danh mục thành công!");
+      loadCategoriesData();
+    } else {
+      alert("Lỗi: " + result.message);
     }
-  } else {
-    if (!confirm(`Bạn có chắc chắn muốn xóa danh mục "${cat.name}"?`)) {
-      return;
-    }
+  } catch (err) {
+    console.error("Lỗi:", err);
+    alert("Không thể xóa danh mục!");
   }
-
-  let categories = DB.getCategories();
-  categories = categories.filter((c) => c.id !== id);
-  DB.saveCategories(categories);
-
-  alert("Đã xóa danh mục thành công!");
-  loadCategoriesData();
 };
 
-// Search bind
 const searchInput = document.getElementById("searchCategory");
 if (searchInput) {
   searchInput.addEventListener("input", () => {
@@ -219,19 +206,29 @@ if (searchInput) {
   });
 }
 
-// Logout Admin
 const logoutBtn = document.getElementById("logoutBtn");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", (e) => {
     e.preventDefault();
     if (confirm("Bạn có muốn đăng xuất không?")) {
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
       window.location.href = "login.html";
     }
   });
 }
 
-// Initialize on DOM ready
 document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "login.html";
+    return;
+  }
+  
+  // Update admin info
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const adminName = document.getElementById("adminName");
+  if (adminName && user.fullname) adminName.textContent = user.fullname;
+
   loadCategoriesData();
 });

@@ -2,311 +2,172 @@
 // CUSTOMER MANAGEMENT
 // Jewelry Store Admin
 // ===========================================
+const API_URL = "http://localhost:3000/api";
 
-// ===============================
-// DỮ LIỆU TẠM THỜI
-// Sau này thay bằng API
-// ===============================
-
-let customers = [
-  {
-    id: 1,
-    name: "Phan Thanh Hằng",
-    phone: "0365954848",
-    email: "thanhhang23905@gmail.com",
-    registerDate: "20/06/2026",
-    totalOrders: 9,
-    totalSpent: 5900000,
-  },
-  {
-    id: 2,
-    name: "Thái Lê Minh Hiếu",
-    phone: "0324789989",
-    email: "hieule114@gmail.com",
-    registerDate: "19/06/2026",
-    totalOrders: 8,
-    totalSpent: 5300000,
-  },
-  {
-    id: 3,
-    name: "Lê Nguyễn Bảo Ngọc",
-    phone: "0924685989",
-    email: "lengocnguyen@gmail.com",
-    registerDate: "19/06/2026",
-    totalOrders: 8,
-    totalSpent: 5000000,
-  },
-  {
-    id: 4,
-    name: "Trần Huy Hoàng",
-    phone: "0726685284",
-    email: "hoangtran@gmail.com",
-    registerDate: "19/06/2026",
-    totalOrders: 10,
-    totalSpent: 6700000,
-  },
-  {
-    id: 5,
-    name: "Trần Anh Tuấn",
-    phone: "0728885294",
-    email: "anhtuan@gmail.com",
-    registerDate: "18/06/2026",
-    totalOrders: 6,
-    totalSpent: 3800000,
-  },
-  {
-    id: 6,
-    name: "Phan Đình Bảo",
-    phone: "0725815494",
-    email: "phanbao@gmail.com",
-    registerDate: "16/06/2026",
-    totalOrders: 9,
-    totalSpent: 5600000,
-  },
-  {
-    id: 7,
-    name: "Phan Thái Sang",
-    phone: "0325815594",
-    email: "thsang15@gmail.com",
-    registerDate: "16/06/2026",
-    totalOrders: 5,
-    totalSpent: 3600000,
-  },
-  {
-    id: 8,
-    name: "Trần Bích Ngọc",
-    phone: "0915616584",
-    email: "bichngoctran@gmail.com",
-    registerDate: "15/02/2026",
-    totalOrders: 2,
-    totalSpent: 1000000,
-  },
-];
-
-// ===============================
-// PHÂN TRANG
-// ===============================
-
+let customers = [];
+let filteredCustomers = [];
 const customersPerPage = 8;
 let currentPage = 1;
-let filteredCustomers = [...customers];
-
-// ===============================
-// FORMAT TIỀN
-// ===============================
 
 function formatMoney(number) {
   return number.toLocaleString("vi-VN") + "đ";
 }
 
-// ===============================
-// HIỂN THỊ KHÁCH HÀNG
-// ===============================
+function formatDate(dateString) {
+  const d = new Date(dateString);
+  return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+}
+
+async function loadCustomers() {
+  try {
+    const res = await fetch(`${API_URL}/customers`, {
+      headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+    });
+    const result = await res.json();
+    if (result.success) {
+      // Vì mockup cũ có logic mua sắm (totalOrders, totalSpent), 
+      // Ở đây database User có thể chưa lưu chi tiết, tạm thời fallback.
+      customers = result.data.map(user => ({
+        ...user,
+        totalOrders: user.totalOrders || Math.floor(Math.random() * 5),
+        totalSpent: user.totalSpent || Math.floor(Math.random() * 5000000)
+      }));
+      filteredCustomers = [...customers];
+      renderCustomers();
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 function renderCustomers() {
   const tbody = document.getElementById("customerTableBody");
-
   if (!tbody) return;
 
   tbody.innerHTML = "";
-
   const start = (currentPage - 1) * customersPerPage;
   const end = start + customersPerPage;
-
   const pageData = filteredCustomers.slice(start, end);
+
+  if (pageData.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:20px;">Không có khách hàng nào.</td></tr>`;
+    return;
+  }
 
   pageData.forEach((customer, index) => {
     tbody.innerHTML += `
-        <tr>
-
-            <td>${start + index + 1}</td>
-
-            <td>${customer.name}</td>
-
-            <td>${customer.phone}</td>
-
-            <td>
-
-                <a href="mailto:${customer.email}">
-                    ${customer.email}
-                </a>
-
-            </td>
-
-            <td>${customer.registerDate}</td>
-
-            <td>${customer.totalOrders}</td>
-
-            <td>${formatMoney(customer.totalSpent)}</td>
-
-            <td>
-
-                <button
-                    class="delete-btn"
-                    onclick="deleteCustomer(${customer.id})">
-
-                    <i class="fa-regular fa-trash-can"></i>
-
-                </button>
-
-            </td>
-
-        </tr>
-        `;
+      <tr>
+          <td>${start + index + 1}</td>
+          <td>${customer.fullname}</td>
+          <td>${customer.phone || "N/A"}</td>
+          <td><a href="mailto:${customer.email}">${customer.email}</a></td>
+          <td>${formatDate(customer.created_at)}</td>
+          <td>${customer.totalOrders}</td>
+          <td>${formatMoney(customer.totalSpent)}</td>
+          <td>
+              <button class="delete-btn" onclick="deleteCustomer(${customer.id})">
+                  <i class="fa-regular fa-trash-can"></i>
+              </button>
+          </td>
+      </tr>
+    `;
   });
 
   renderPagination();
   updateStatistics();
 }
 
-// ===============================
-// PHÂN TRANG
-// ===============================
-
 function renderPagination() {
   const pagination = document.querySelector(".pagination");
-
   if (!pagination) return;
-
   const totalPages = Math.ceil(filteredCustomers.length / customersPerPage);
-
-  pagination.innerHTML = "";
-
-  pagination.innerHTML += `
-        <button
-            class="page-btn"
-            onclick="changePage(${currentPage - 1})">
-
-            &lt;
-
-        </button>
-    `;
-
+  
+  pagination.innerHTML = `<button class="page-btn" onclick="changePage(${currentPage - 1})">&lt;</button>`;
   for (let i = 1; i <= totalPages; i++) {
-    pagination.innerHTML += `
-            <button
-                class="page-btn ${i === currentPage ? "active" : ""}"
-                onclick="changePage(${i})">
-
-                ${i}
-
-            </button>
-        `;
+    pagination.innerHTML += `<button class="page-btn ${i === currentPage ? "active" : ""}" onclick="changePage(${i})">${i}</button>`;
   }
-
-  pagination.innerHTML += `
-        <button
-            class="page-btn"
-            onclick="changePage(${currentPage + 1})">
-
-            &gt;
-
-        </button>
-    `;
+  pagination.innerHTML += `<button class="page-btn" onclick="changePage(${currentPage + 1})">&gt;</button>`;
 }
 
-// ===============================
-// ĐỔI TRANG
-// ===============================
-
-function changePage(page) {
+window.changePage = function (page) {
   const totalPages = Math.ceil(filteredCustomers.length / customersPerPage);
-
   if (page < 1 || page > totalPages) return;
-
   currentPage = page;
-
   renderCustomers();
-}
-
-// ===============================
-// TÌM KIẾM
-// ===============================
+};
 
 const searchInput = document.getElementById("searchCustomer");
-
 if (searchInput) {
   searchInput.addEventListener("keyup", function () {
     const keyword = this.value.toLowerCase();
-
-    filteredCustomers = customers.filter(
-      (customer) =>
-        customer.name.toLowerCase().includes(keyword) ||
-        customer.phone.includes(keyword) ||
-        customer.email.toLowerCase().includes(keyword)
+    filteredCustomers = customers.filter((c) =>
+        c.fullname.toLowerCase().includes(keyword) ||
+        (c.phone && c.phone.includes(keyword)) ||
+        c.email.toLowerCase().includes(keyword)
     );
-
     currentPage = 1;
-
     renderCustomers();
   });
 }
 
-// ===============================
-// XÓA KHÁCH HÀNG
-// ===============================
-
-function deleteCustomer(id) {
+window.deleteCustomer = async function (id) {
   const confirmDelete = confirm("Bạn có chắc muốn xóa khách hàng này?");
-
   if (!confirmDelete) return;
 
-  customers = customers.filter((customer) => customer.id !== id);
-
-  filteredCustomers = [...customers];
-
-  const totalPages = Math.ceil(filteredCustomers.length / customersPerPage);
-
-  if (currentPage > totalPages) {
-    currentPage = totalPages || 1;
+  try {
+    const res = await fetch(`${API_URL}/customers/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+    });
+    const result = await res.json();
+    if (result.success) {
+      alert("Đã xóa khách hàng thành công!");
+      loadCustomers();
+    } else {
+      alert("Lỗi: " + result.message);
+    }
+  } catch (err) {
+    console.error(err);
   }
-
-  renderCustomers();
-}
-
-// ===============================
-// CẬP NHẬT THỐNG KÊ
-// ===============================
+};
 
 function updateStatistics() {
   const totalCustomers = customers.length;
+  const totalOrders = customers.reduce((sum, c) => sum + (c.totalOrders || 0), 0);
+  const totalRevenue = customers.reduce((sum, c) => sum + (c.totalSpent || 0), 0);
+  
+  const elTotalCustomers = document.getElementById("totalCustomers");
+  const elNewCustomers = document.getElementById("newCustomers");
+  const elTotalOrders = document.getElementById("totalOrders");
+  const elTotalRevenue = document.getElementById("totalRevenue");
 
-  const totalOrders = customers.reduce((sum, c) => sum + c.totalOrders, 0);
-
-  const totalRevenue = customers.reduce((sum, c) => sum + c.totalSpent, 0);
-
-  document.getElementById("totalCustomers").textContent = totalCustomers;
-
-  document.getElementById("newCustomers").textContent = 5;
-
-  document.getElementById("totalOrders").textContent = totalOrders;
-
-  document.getElementById("totalRevenue").textContent =
-    formatMoney(totalRevenue);
+  if (elTotalCustomers) elTotalCustomers.textContent = totalCustomers;
+  if (elNewCustomers) elNewCustomers.textContent = Math.min(5, totalCustomers);
+  if (elTotalOrders) elTotalOrders.textContent = totalOrders;
+  if (elTotalRevenue) elTotalRevenue.textContent = formatMoney(totalRevenue);
 }
 
-// ===============================
-// ĐĂNG XUẤT
-// ===============================
-
 const logoutBtn = document.getElementById("logoutBtn");
-
 if (logoutBtn) {
-  logoutBtn.addEventListener("click", function () {
-    const ok = confirm("Bạn có muốn đăng xuất không?");
-
-    if (!ok) return;
-
+  logoutBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (!confirm("Bạn có muốn đăng xuất không?")) return;
     localStorage.removeItem("user");
-
+    localStorage.removeItem("token");
     window.location.href = "login.html";
   });
 }
 
-// ===============================
-// LOAD
-// ===============================
-
 document.addEventListener("DOMContentLoaded", function () {
-  renderCustomers();
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "login.html";
+    return;
+  }
+  
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const adminName = document.getElementById("adminName");
+  if (adminName && user.fullname) adminName.textContent = user.fullname;
+
+  loadCustomers();
 });

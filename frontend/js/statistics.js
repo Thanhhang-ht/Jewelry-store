@@ -3,81 +3,11 @@
 // Jewelry Store Admin
 // ==========================================
 
-// ==========================================
-// DỮ LIỆU MẪU
-// Sau này thay bằng API
-// ==========================================
+const API_URL = "http://localhost:3000/api";
 
-const statisticsData = [
-  { date: "2026-06-01", revenue: 2500000, orders: 5 },
-
-  { date: "2026-06-02", revenue: 1800000, orders: 4 },
-
-  { date: "2026-06-03", revenue: 3200000, orders: 7 },
-
-  { date: "2026-06-04", revenue: 4100000, orders: 9 },
-
-  { date: "2026-06-05", revenue: 2800000, orders: 6 },
-
-  { date: "2026-06-06", revenue: 5600000, orders: 12 },
-
-  { date: "2026-06-07", revenue: 4300000, orders: 10 },
-
-  { date: "2026-06-08", revenue: 2900000, orders: 6 },
-
-  { date: "2026-06-09", revenue: 10200000, orders: 20 },
-
-  { date: "2026-06-10", revenue: 3800000, orders: 8 },
-
-  { date: "2026-06-11", revenue: 4100000, orders: 9 },
-
-  { date: "2026-06-12", revenue: 3900000, orders: 8 },
-
-  { date: "2026-06-13", revenue: 4700000, orders: 11 },
-
-  { date: "2026-06-14", revenue: 5200000, orders: 12 },
-
-  { date: "2026-06-15", revenue: 3100000, orders: 7 },
-
-  { date: "2026-06-16", revenue: 4900000, orders: 10 },
-
-  { date: "2026-06-17", revenue: 4200000, orders: 9 },
-
-  { date: "2026-06-18", revenue: 3700000, orders: 8 },
-
-  { date: "2026-06-19", revenue: 5100000, orders: 11 },
-
-  { date: "2026-06-20", revenue: 4800000, orders: 10 },
-
-  { date: "2026-06-21", revenue: 2600000, orders: 5 },
-
-  { date: "2026-06-22", revenue: 3100000, orders: 6 },
-
-  { date: "2026-06-23", revenue: 6200000, orders: 13 },
-
-  { date: "2026-06-24", revenue: 5500000, orders: 12 },
-
-  { date: "2026-06-25", revenue: 4600000, orders: 9 },
-
-  { date: "2026-06-26", revenue: 5100000, orders: 11 },
-
-  { date: "2026-06-27", revenue: 6800000, orders: 14 },
-
-  { date: "2026-06-28", revenue: 7300000, orders: 15 },
-
-  { date: "2026-06-29", revenue: 5900000, orders: 12 },
-
-  { date: "2026-06-30", revenue: 6400000, orders: 13 },
-];
-
-// ==========================================
-// THỐNG KÊ TĨNH
-// Sau này lấy từ Backend
-// ==========================================
-
-const totalProducts = 120;
-
-const totalCustomers = 60;
+let statisticsData = [];
+let totalProducts = 0;
+let totalCustomers = 0;
 
 // ==========================================
 // BIẾN TOÀN CỤC
@@ -200,11 +130,11 @@ function updateChart() {
 
 function updateOverviewCards() {
   const totalRevenue = filteredData.reduce((sum, item) => {
-    return sum + item.revenue;
+    return sum + Number(item.revenue);
   }, 0);
 
   const totalOrders = filteredData.reduce((sum, item) => {
-    return sum + item.orders;
+    return sum + Number(item.orders);
   }, 0);
 
   document.getElementById("totalProducts").textContent = totalProducts;
@@ -223,7 +153,7 @@ function updateOverviewCards() {
 
 function getHighestRevenue() {
   return filteredData.reduce((max, item) => {
-    return item.revenue > max.revenue ? item : max;
+    return Number(item.revenue) > Number(max.revenue) ? item : max;
   });
 }
 
@@ -233,7 +163,7 @@ function getHighestRevenue() {
 
 function getLowestRevenue() {
   return filteredData.reduce((min, item) => {
-    return item.revenue < min.revenue ? item : min;
+    return Number(item.revenue) < Number(min.revenue) ? item : min;
   });
 }
 
@@ -245,7 +175,7 @@ function getAverageRevenue() {
   if (filteredData.length === 0) return 0;
 
   const total = filteredData.reduce((sum, item) => {
-    return sum + item.revenue;
+    return sum + Number(item.revenue);
   }, 0);
 
   return Math.round(total / filteredData.length);
@@ -265,14 +195,14 @@ function updateSummaryCards() {
   const average = getAverageRevenue();
 
   document.getElementById("highestRevenue").textContent = formatMoney(
-    highest.revenue
+    Number(highest.revenue)
   );
 
   document.getElementById("highestDate").textContent =
     "Ngày " + formatDate(highest.date);
 
   document.getElementById("lowestRevenue").textContent = formatMoney(
-    lowest.revenue
+    Number(lowest.revenue)
   );
 
   document.getElementById("lowestDate").textContent =
@@ -418,13 +348,47 @@ function loadDefaultData() {
 // DOM READY
 // ==========================================
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "login.html";
+    return;
+  }
+  
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const adminName = document.getElementById("adminName");
+  if (adminName && user.fullname) adminName.textContent = user.fullname;
+
+  await fetchDataFromAPI();
+
   // Khởi tạo biểu đồ
   createChart();
 
   // Load dữ liệu mặc định
   loadDefaultData();
 });
+
+async function fetchDataFromAPI() {
+  try {
+    const headers = { "Authorization": `Bearer ${localStorage.getItem("token")}` };
+    
+    const statRes = await fetch(`${API_URL}/dashboard/statistics`, { headers });
+    const statResult = await statRes.json();
+    if (statResult.success) {
+      totalProducts = statResult.data.totalProducts;
+      totalCustomers = statResult.data.totalCustomers;
+    }
+
+    const revRes = await fetch(`${API_URL}/dashboard/revenue`, { headers });
+    const revResult = await revRes.json();
+    if (revResult.success) {
+      statisticsData = revResult.data;
+      filteredData = [...statisticsData];
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 // ==========================================
 // ĐĂNG XUẤT
@@ -458,31 +422,7 @@ function refreshStatistics(data) {
   updateStatistics();
 }
 
-// ==========================================
-// DEMO API (ĐỂ COMMENT)
-// ==========================================
-
-/*
-
-Sau này chỉ cần thay statisticsData bằng API.
-
-Ví dụ:
-
-fetch("http://localhost:8080/api/statistics")
-.then(res => res.json())
-.then(data=>{
-
-    statisticsData = data;
-
-    filteredData = [...statisticsData];
-
-    createChart();
-
-    updateStatistics();
-
-});
-
-*/
+// Removed API demo comment
 
 // ==========================================
 // DEBUG
