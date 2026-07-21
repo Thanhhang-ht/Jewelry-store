@@ -99,27 +99,37 @@
 
     </section>
 
-    <!-- AI -->
+    <!-- AI CHATBOT -->
     <section class="ai">
-
         <div class="robot">
             <i class="fa-solid fa-robot"></i>
         </div>
 
         <div class="ai-text">
+            <h2>🤖 AI TƯ VẤN TRANG SỨC</h2>
+            <p style="color:#555; margin-bottom: 15px; font-size:0.95rem;">Hỏi bất cứ điều gì về trang sức – mình sẵn sàng tư vấn!</p>
 
-            <h2>AI TƯ VẤN TRANG SỨC</h2>
-
-            <div class="chat">
-                <input type="text" id="msg" placeholder="Hãy chia sẻ nhu cầu của bạn...">
-
-                <button onclick="chatAI()">
-                    Bắt đầu tư vấn
-                </button>
+            <!-- Cửa sổ hiển thị hội thoại -->
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-bubble bot">
+                    <span>Xin chào! 👋 Mình là trợ lý tư vấn trang sức của <strong>Jewelry Store</strong>. Bạn cần tư vấn gì hôm nay?</span>
+                </div>
+                <div class="chat-quick-btns" id="quickBtns">
+                    <button onclick="sendQuick('Tư vấn mua nhẫn')">💍 Tư vấn mua nhẫn</button>
+                    <button onclick="sendQuick('Tư vấn dây chuyền')">📿 Dây chuyền</button>
+                    <button onclick="sendQuick('Tư vấn vòng tay')">💎 Vòng tay</button>
+                    <button onclick="sendQuick('Sản phẩm bán chạy')">🔥 Bán chạy nhất</button>
+                </div>
             </div>
 
+            <!-- Ô nhập tin nhắn -->
+            <div class="chat">
+                <input type="text" id="msg" placeholder="Nhập câu hỏi của bạn..." onkeydown="if(event.key==='Enter') chatAI()">
+                <button onclick="chatAI()">
+                    <i class="fa-solid fa-paper-plane"></i> Gửi
+                </button>
+            </div>
         </div>
-
     </section>
 
     <!-- FOOTER -->

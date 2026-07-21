@@ -395,7 +395,93 @@ div h2 {
   cursor: pointer;
 }
 
+/* CHAT WINDOW - Cửa sổ hội thoại */
+.chat-window {
+  max-height: 280px;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.06);
+  scroll-behavior: smooth;
+}
+
+/* Bong bóng chat */
+.chat-bubble {
+  display: flex;
+  max-width: 85%;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.chat-bubble span {
+  padding: 10px 15px;
+  border-radius: 18px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Bot – căn trái, màu xanh nhạt */
+.chat-bubble.bot {
+  align-self: flex-start;
+}
+.chat-bubble.bot span {
+  background: #e8f0fe;
+  color: #1a1a2e;
+  border-bottom-left-radius: 4px;
+}
+
+/* User – căn phải, màu xanh đậm */
+.chat-bubble.user {
+  align-self: flex-end;
+}
+.chat-bubble.user span {
+  background: #0c4fb5;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+/* Hiệu ứng "đang nhập..." */
+.chat-bubble.typing span {
+  background: #e8f0fe;
+  color: #666;
+  font-style: italic;
+}
+
+/* Nút gợi ý nhanh */
+.chat-quick-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.chat-quick-btns button {
+  padding: 6px 14px;
+  border: 1px solid #0c4fb5;
+  border-radius: 20px;
+  background: #fff;
+  color: #0c4fb5;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chat-quick-btns button:hover {
+  background: #0c4fb5;
+  color: #fff;
+}
+
 /* FOOTER */
+
 
 footer {
   background: #003f9f;
