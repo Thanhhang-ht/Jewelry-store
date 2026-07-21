@@ -1,7 +1,7 @@
 // ==========================================
 // CHANGE PASSWORD - Jewelry Store
 // ==========================================
-const API_URL = "http://localhost:3000/api";
+const API_URL = "/api";
 
 // ---------- Hiện / Ẩn mật khẩu ----------
 document.querySelectorAll(".toggle-password").forEach((icon) => {

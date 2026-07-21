@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api";
+const API_URL = "/api";
 const params = new URLSearchParams(window.location.search);
 const mode = params.get("mode") || "add";
 const editId = params.get("id");

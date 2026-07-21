@@ -3,7 +3,7 @@
 // Jewelry Store Admin
 // ==========================================
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "/api";
 
 let statisticsData = [];
 let totalProducts = 0;

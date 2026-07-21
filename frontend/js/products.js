@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:3000/api/products";
-const CATEGORY_API = "http://localhost:3000/api/categories";
+const API_URL = "/api/products";
+const CATEGORY_API = "/api/categories";
 
 let allProducts = [];
 let currentCategory = "all";

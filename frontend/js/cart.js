@@ -4,7 +4,7 @@
 // thông tin sản phẩm lấy từ API
 // =========================================
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "/api";
 
 function formatMoney(value) {
   return Number(value).toLocaleString("vi-VN") + "đ";

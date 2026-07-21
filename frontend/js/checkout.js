@@ -5,7 +5,7 @@
 // đặt hàng qua POST /api/orders
 // =========================================
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "/api";
 
 let subtotal = 0;
 const shippingFee = 30000;
