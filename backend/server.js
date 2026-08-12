@@ -5,6 +5,7 @@ require("dotenv").config(); // Load các biến môi trường từ .env
 
 // Kết nối Database (Sequelize)
 const { sequelize } = require("./src/models");
+const seedDatabase = require("./src/config/seed");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -55,8 +56,9 @@ app.use((req, res) => {
 // START SERVER & CONNECT DB
 // ===========================
 sequelize.sync({ force: false }) // force: false để không xóa bảng cũ khi khởi động lại
-  .then(() => {
+  .then(async () => {
     console.log("✅ Đồng bộ Database MySQL thành công!");
+    await seedDatabase(); // Tự động nạp dữ liệu mẫu nếu CSDL trống
     app.listen(PORT, () => {
       console.log(`🚀 Server đang chạy tại: http://localhost:${PORT}`);
       console.log(`📦 API endpoint: http://localhost:${PORT}/api/health`);
@@ -65,4 +67,5 @@ sequelize.sync({ force: false }) // force: false để không xóa bảng cũ kh
   .catch((err) => {
     console.error("❌ Lỗi kết nối hoặc đồng bộ Database:", err);
   });
+
 
