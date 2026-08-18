@@ -25,11 +25,24 @@ function renderCategories(categories) {
   const catList = document.querySelector(".category-list");
   if (!catList) return;
   
+  // Đọc tham số category từ URL (ví dụ: products.html?category=Nhẫn)
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramCategory = urlParams.get("category");
+  if (paramCategory) {
+    const matchedCat = categories.find(
+      (c) => c.name.toLowerCase() === paramCategory.toLowerCase() || c.id == paramCategory
+    );
+    if (matchedCat) {
+      currentCategory = matchedCat.id;
+    }
+  }
+
   // Nút Tất cả
-  let html = `<button class="active" data-id="all">Tất cả</button>`;
+  let html = `<button class="${currentCategory === 'all' ? 'active' : ''}" data-id="all">Tất cả</button>`;
   
   categories.forEach(cat => {
-    html += `<button data-id="${cat.id}">${cat.name}</button>`;
+    const isActive = currentCategory == cat.id ? "active" : "";
+    html += `<button class="${isActive}" data-id="${cat.id}">${cat.name}</button>`;
   });
   
   catList.innerHTML = html;
