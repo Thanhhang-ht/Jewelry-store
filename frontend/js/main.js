@@ -1,13 +1,15 @@
 const API_URL = "/api";
 
 let products = [];
+let allStoreProducts = []; // Lưu toàn bộ sản phẩm trong CSDL để AI tra cứu
 
 async function loadLatestProducts() {
   try {
     const res = await fetch(`${API_URL}/products`);
     const result = await res.json();
     if (result.success) {
-      // Chỉ lấy 4 sản phẩm mới nhất để hiển thị ở trang chủ
+      allStoreProducts = result.data; // Lưu toàn bộ sản phẩm cho AI
+      // Chỉ lấy 4 sản phẩm mới nhất để hiển thị ở danh sách trang chủ
       products = result.data.slice(0, 4);
       renderProducts(products);
     }
@@ -24,7 +26,6 @@ function renderProducts(list) {
     .map(
       (p) => `
     <div class="pro-item" data-id="${p.id}">
-
       <div class="pro-img">
         <img src="${p.image || '../image/image 24.png'}" alt="${p.name}">
         <i class="fa-regular fa-heart love"></i>
@@ -44,7 +45,6 @@ function renderProducts(list) {
           <i class="fa-solid fa-cart-plus"></i>
         </button>
       </div>
-
     </div>
   `
     )
@@ -83,7 +83,7 @@ function bindEvents() {
 function addToCart(productId) {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   
-  const product = products.find(p => p.id == productId);
+  const product = allStoreProducts.find(p => p.id == productId) || products.find(p => p.id == productId);
   if (!product) return;
   
   const existingItem = cart.find(item => item.id == productId);
@@ -94,145 +94,143 @@ function addToCart(productId) {
   }
   
   localStorage.setItem('cart', JSON.stringify(cart));
-  alert(`Đã thêm "${product.name}" vào giỏ hàng!`);
+  alert(`🎉 Đã thêm "${product.name}" vào giỏ hàng!`);
 }
 
 function goToDetail(id) {
   window.location.href = `product-detail.html?id=${id}`;
 }
 
-// ======================
-// AI CHATBOT - RULE BASED
-// ======================
+// ===============================================
+// AI CHATBOT TƯ VẤN THÔNG MINH (SMART AI ASSISTANT)
+// ===============================================
 
-// Cơ sở kiến thức của AI tư vấn trang sức
-const chatKnowledge = [
-  {
-    keywords: ["nhẫn", "mua nhẫn", "tư vấn nhẫn", "nhẫn cưới", "nhẫn đôi", "nhẫn nữ"],
-    reply: `💍 <strong>Tư vấn chọn nhẫn:</strong><br>
-• <b>Nhẫn đôi/cưới:</b> Nên chọn bạc 925 hoặc bạch kim, đơn giản nhưng tinh tế<br>
-• <b>Nhẫn thời trang:</b> Có thể chọn đính đá CZ, thiết kế phong phú<br>
-• <b>Size nhẫn:</b> Nữ thường size 5-7, Nam size 8-10<br>
-• Giá nhẫn tại shop từ <b>460.000đ – 800.000đ</b><br>
-👉 <a href="products.html" style="color:#0c4fb5">Xem tất cả nhẫn tại đây</a>`
-  },
-  {
-    keywords: ["dây chuyền", "vòng cổ", "mua dây chuyền", "tư vấn dây chuyền", "chuỗi"],
-    reply: `📿 <strong>Tư vấn chọn dây chuyền:</strong><br>
-• <b>Cho mặt dài:</b> Dây chuyền ngắn 40-45cm tạo điểm nhấn<br>
-• <b>Cho mặt tròn:</b> Dây chuyền dài 50-60cm giúp kéo dài cổ<br>
-• <b>Chất liệu:</b> Bạc 925 bền, không gỉ, phù hợp mặc hàng ngày<br>
-• Giá từ <b>495.000đ – 900.000đ</b><br>
-👉 <a href="products.html" style="color:#0c4fb5">Khám phá dây chuyền</a>`
-  },
-  {
-    keywords: ["vòng tay", "mua vòng", "tư vấn vòng tay", "lắc tay"],
-    reply: `💎 <strong>Tư vấn chọn vòng tay:</strong><br>
-• <b>Vòng trơn:</b> Thanh lịch, phù hợp công sở<br>
-• <b>Vòng charm:</b> Cá tính, phù hợp dạo phố<br>
-• <b>Vòng đôi:</b> Ý nghĩa cho cặp đôi<br>
-• Size vòng tay nữ chuẩn: <b>16-17cm</b><br>
-• Giá từ <b>510.000đ – 870.000đ</b><br>
-👉 <a href="products.html" style="color:#0c4fb5">Xem vòng tay</a>`
-  },
-  {
-    keywords: ["bông tai", "khuyên tai", "hoa tai", "tư vấn bông tai"],
-    reply: `✨ <strong>Tư vấn chọn bông tai:</strong><br>
-• <b>Mặt tròn:</b> Chọn bông tai dài để thon hơn<br>
-• <b>Mặt dài:</b> Bông tai tròn hoặc nút cân đối khuôn mặt<br>
-• <b>Dịp đặc biệt:</b> Bông đính đá CZ lấp lánh<br>
-• <b>Hàng ngày:</b> Bông nút nhỏ, thanh lịch<br>
-• Giá từ <b>430.000đ – 750.000đ</b><br>
-👉 <a href="products.html" style="color:#0c4fb5">Xem bông tai</a>`
-  },
-  {
-    keywords: ["bán chạy", "sản phẩm hot", "phổ biến", "nhiều người mua", "bán nhiều nhất", "hot nhất"],
-    reply: `🔥 <strong>Sản phẩm bán chạy nhất tại Jewelry Store:</strong><br>
-1. 💍 Nhẫn bạc đính đá CZ – bán chạy #1<br>
-2. 📿 Dây chuyền bạc nữ – ưa chuộng nhất<br>
-3. 💎 Vòng tay bạc đôi – quà tặng số 1<br>
-4. ✨ Bông tai ngôi sao – trending hiện tại<br>
-👉 <a href="products.html" style="color:#0c4fb5">Xem toàn bộ sản phẩm</a>`
-  },
-  {
-    keywords: ["giá", "bao nhiêu tiền", "giá cả", "chi phí", "mắc không", "rẻ không", "giá tiền"],
-    reply: `💰 <strong>Bảng giá tham khảo tại Jewelry Store:</strong><br>
-• <b>Nhẫn:</b> 460.000đ – 800.000đ<br>
-• <b>Dây chuyền:</b> 495.000đ – 900.000đ<br>
-• <b>Vòng tay:</b> 510.000đ – 870.000đ<br>
-• <b>Bông tai:</b> 430.000đ – 750.000đ<br>
-🎁 Miễn phí vận chuyển cho đơn từ <b>500.000đ</b>`
-  },
-  {
-    keywords: ["chất liệu", "bạc", "bạc 925", "vàng", "platin", "bạch kim", "chất lượng", "bền không"],
-    reply: `⚗️ <strong>Thông tin chất liệu trang sức:</strong><br>
-• <b>Bạc 925 (Sterling Silver):</b> Bền, sáng bóng, ít gây dị ứng ✅<br>
-• <b>Bạc mạ vàng:</b> Sang trọng, giá hợp lý<br>
-• <b>Đá CZ (Cubic Zirconia):</b> Lấp lánh như kim cương thật<br>
-💡 <b>Mẹo bảo quản:</b> Tránh tiếp xúc nước hoa, mồ hôi; lau khô sau khi đeo`
-  },
-  {
-    keywords: ["quà tặng", "tặng bạn gái", "tặng bạn trai", "tặng vợ", "quà sinh nhật", "quà valentine", "gift", "tặng"],
-    reply: `🎁 <strong>Gợi ý quà tặng trang sức:</strong><br>
-• <b>Tặng bạn gái/vợ:</b> Dây chuyền tim, nhẫn đính đá, bông tai<br>
-• <b>Tặng cặp đôi:</b> Nhẫn đôi, vòng tay đôi charm<br>
-• <b>Ngân sách 500k:</b> Nhẫn bạc hoặc bông tai cao cấp<br>
-• <b>Ngân sách 1tr+:</b> Set dây chuyền + bông tai đồng bộ<br>
-📦 Shop có <b>gói quà miễn phí</b> cho mọi đơn hàng!`
-  },
-  {
-    keywords: ["vận chuyển", "giao hàng", "ship", "bao lâu", "nhận hàng khi nào"],
-    reply: `🚚 <strong>Chính sách vận chuyển:</strong><br>
-• <b>Nội thành:</b> 1-2 ngày làm việc<br>
-• <b>Tỉnh thành khác:</b> 2-4 ngày làm việc<br>
-• <b>Phí ship:</b> 30.000đ – Miễn phí cho đơn từ <b>500.000đ</b><br>
-• Có thể theo dõi đơn hàng sau khi đặt`
-  },
-  {
-    keywords: ["đổi trả", "bảo hành", "hoàn tiền", "đổi hàng", "lỗi sản phẩm"],
-    reply: `🔄 <strong>Chính sách đổi trả & bảo hành:</strong><br>
-• <b>Đổi trả miễn phí</b> trong 7 ngày nếu sản phẩm lỗi từ nhà sản xuất<br>
-• <b>Bảo hành:</b> 6 tháng cho các sản phẩm tại shop<br>
-• <b>Điều kiện:</b> Sản phẩm còn nguyên vẹn, chưa qua chỉnh sửa<br>
-📞 Liên hệ hotline để được hỗ trợ nhanh nhất`
-  },
-  {
-    keywords: ["liên hệ", "hotline", "điện thoại", "email", "địa chỉ", "cửa hàng", "ở đâu"],
-    reply: `📞 <strong>Thông tin liên hệ Jewelry Store:</strong><br>
-• <b>Hotline:</b> 0123 456 789<br>
-• <b>Email:</b> support@jewelrystore.vn<br>
-• <b>Giờ làm việc:</b> 8:00 – 21:00 (Thứ 2 – Chủ nhật)<br>
-• <b>Địa chỉ:</b> 123 Đường Trang Sức, TP.HCM`
-  },
-  {
-    keywords: ["xin chào", "hello", "hi", "chào", "hey", "alo"],
-    reply: `👋 Xin chào! Mình là <strong>JewelBot</strong> – trợ lý tư vấn trang sức của Jewelry Store.<br>
-Mình có thể tư vấn về: <b>Nhẫn, Dây chuyền, Vòng tay, Bông tai</b>, giá cả, chất liệu, quà tặng...<br>
-Bạn cần tư vấn gì hôm nay? 😊`
-  },
-  {
-    keywords: ["cảm ơn", "thanks", "thank you", "cảm ơn bạn", "ok rồi"],
-    reply: `😊 Cảm ơn bạn đã tin tưởng <strong>Jewelry Store</strong>!<br>
-Chúc bạn tìm được món trang sức ưng ý. 💍✨<br>
-Nếu cần tư vấn thêm, mình luôn sẵn sàng!`
-  }
-];
+// Hàm tạo HTML hiển thị danh sách sản phẩm mini ngay trong Bong bóng Chat AI
+function renderChatProductCards(productList) {
+  if (!productList || productList.length === 0) return "";
+  
+  const itemsHtml = productList.slice(0, 3).map(p => `
+    <div class="chat-product-item">
+      <img src="${p.image || '../image/image 24.png'}" alt="${p.name}">
+      <div class="chat-product-info">
+        <h5>${p.name}</h5>
+        <p>${Number(p.price).toLocaleString('vi-VN')}đ</p>
+      </div>
+      <div class="chat-product-actions">
+        <button class="view-btn" onclick="goToDetail(${p.id})">Xem</button>
+        <button class="add-btn" onclick="addToCart(${p.id})">+ Giỏ</button>
+      </div>
+    </div>
+  `).join("");
 
-// Hàm tìm câu trả lời phù hợp
+  return `<div class="chat-product-list">${itemsHtml}</div>`;
+}
+
+// Xử lý câu trả lời của AI dựa trên dữ liệu thực tế
 function getBotReply(message) {
   const msg = message.toLowerCase().trim();
   
-  for (const item of chatKnowledge) {
-    if (item.keywords.some(kw => msg.includes(kw))) {
-      return item.reply;
+  // 1. Tra cứu Giá tiền (dưới X, trên X, khoảng X)
+  if (msg.includes("dưới") || msg.includes("rẻ") || msg.includes("<") || msg.includes("thấp hơn")) {
+    let maxPrice = 500000;
+    if (msg.includes("600") || msg.includes("600k")) maxPrice = 600000;
+    if (msg.includes("700") || msg.includes("700k")) maxPrice = 700000;
+    if (msg.includes("800") || msg.includes("800k")) maxPrice = 800000;
+    if (msg.includes("1 triệu") || msg.includes("1tr") || msg.includes("1000k")) maxPrice = 1000000;
+    
+    const matched = allStoreProducts.filter(p => Number(p.price) <= maxPrice);
+    if (matched.length > 0) {
+      return `💰 <strong>Các sản phẩm có giá dưới ${maxPrice.toLocaleString('vi-VN')}đ:</strong><br>
+Đây là một số mẫu trang sức ngân sách tiết kiệm dành cho bạn:` + renderChatProductCards(matched);
     }
   }
-  
-  // Trả lời mặc định nếu không nhận ra
-  return `🤔 Mình chưa hiểu câu hỏi của bạn. Bạn có thể thử hỏi về:<br>
-• <b>Nhẫn, Dây chuyền, Vòng tay, Bông tai</b><br>
-• <b>Giá cả, Chất liệu, Bảo hành</b><br>
-• <b>Quà tặng, Vận chuyển, Liên hệ</b>`;
+
+  // 2. Tra cứu Nhẫn
+  if (msg.includes("nhẫn") || msg.includes("ring")) {
+    const matched = allStoreProducts.filter(p => p.name.toLowerCase().includes("nhẫn") || (p.category && p.category.name && p.category.name.toLowerCase().includes("nhẫn")));
+    return `💍 <strong>Gợi ý các mẫu Nhẫn đẹp nhất:</strong><br>
+• <b>Chất liệu:</b> Bạc 925 chuẩn cao cấp, đính đá CZ lấp lánh<br>
+• <b>Size nhẫn:</b> Nữ thường từ size 5-7, Nam từ size 8-10` + renderChatProductCards(matched.length > 0 ? matched : allStoreProducts.slice(0, 2));
+  }
+
+  // 3. Tra cứu Dây chuyền
+  if (msg.includes("dây chuyền") || msg.includes("vòng cổ") || msg.includes("dây")) {
+    const matched = allStoreProducts.filter(p => p.name.toLowerCase().includes("dây chuyền") || (p.category && p.category.name && p.category.name.toLowerCase().includes("dây chuyền")));
+    return `📿 <strong>Gợi ý Dây chuyền hot nhất:</strong><br>
+• Design mảnh mai, thanh lịch phù hợp đeo hàng ngày và làm quà tặng` + renderChatProductCards(matched.length > 0 ? matched : allStoreProducts.slice(0, 2));
+  }
+
+  // 4. Tra cứu Vòng tay / Lắc tay
+  if (msg.includes("vòng tay") || msg.includes("lắc tay") || msg.includes("vòng")) {
+    const matched = allStoreProducts.filter(p => p.name.toLowerCase().includes("vòng") || (p.category && p.category.name && p.category.name.toLowerCase().includes("vòng")));
+    return `💎 <strong>Gợi ý Vòng tay & Lắc tay:</strong><br>
+• Tôn lên nét thon gọn và nữ tính cho cổ tay` + renderChatProductCards(matched.length > 0 ? matched : allStoreProducts.slice(0, 2));
+  }
+
+  // 5. Tra cứu Bông tai / Khuyên tai
+  if (msg.includes("bông tai") || msg.includes("khuyên tai") || msg.includes("hoa tai")) {
+    const matched = allStoreProducts.filter(p => p.name.toLowerCase().includes("bông tai") || (p.category && p.category.name && p.category.name.toLowerCase().includes("bông tai")));
+    return `✨ <strong>Gợi ý Bông tai xinh xắn:</strong><br>
+• Thiết kế nụ lấp lánh, nhẹ nhàng và quý phái` + renderChatProductCards(matched.length > 0 ? matched : allStoreProducts.slice(0, 2));
+  }
+
+  // 6. Sản phẩm bán chạy / Hot / Mới
+  if (msg.includes("bán chạy") || msg.includes("hot") || msg.includes("nổi bật") || msg.includes("mới")) {
+    return `🔥 <strong>Top các sản phẩm trang sức hot nhất hiện nay:</strong>` + renderChatProductCards(allStoreProducts.slice(0, 3));
+  }
+
+  // 7. Tư vấn Quà tặng
+  if (msg.includes("quà") || msg.includes("tặng") || msg.includes("bạn gái") || msg.includes("sinh nhật") || msg.includes("valentine")) {
+    return `🎁 <strong>Gợi ý quà tặng trang sức ý nghĩa:</strong><br>
+• <b>Tặng bạn gái/vợ:</b> Dây chuyền tim, Nhẫn bạc đính đá, Bông tai<br>
+• <b>Gói quà:</b> Shop hỗ trợ hộp quà miễn phí cho mọi đơn hàng!` + renderChatProductCards(allStoreProducts.slice(0, 3));
+  }
+
+  // 8. Chất liệu & Bảo quản
+  if (msg.includes("chất liệu") || msg.includes("bạc") || msg.includes("bền") || msg.includes("gỉ") || msg.includes("phai")) {
+    return `⚗️ <strong>Thông tin chất liệu & Bảo quản:</strong><br>
+• <b>Chất liệu:</b> Bạc 925 (Sterling Silver) cao cấp sáng bóng, kháng khuẩn, không gỉ ✅<br>
+• <b>Đá trang trí:</b> Đá Cubic Zirconia (CZ) tán sắc lấp lánh chuẩn kim cương<br>
+💡 <b>Mẹo bảo quản:</b> Tránh dính nước hoa/hóa chất, lau khô bằng khăn mềm sau khi đeo.`;
+  }
+
+  // 9. Vận chuyển & Phí ship
+  if (msg.includes("ship") || msg.includes("giao hàng") || msg.includes("vận chuyển") || msg.includes("bao lâu")) {
+    return `🚚 <strong>Chính sách giao hàng:</strong><br>
+• <b>Thời gian:</b> 1-2 ngày (Nội thành), 2-4 ngày (Tỉnh thành khác)<br>
+• <b>Phí ship:</b> 30.000đ – <b>Miễn phí ship</b> cho đơn từ 500.000đ!`;
+  }
+
+  // 10. Bảo hành & Đổi trả
+  if (msg.includes("bảo hành") || msg.includes("đổi trả") || msg.includes("lỗi")) {
+    return `🔄 <strong>Chính sách Bảo hành & Đổi trả:</strong><br>
+• <b>Bảo hành:</b> 6 tháng cho toàn bộ sản phẩm tại cửa hàng<br>
+• <b>Đổi trả:</b> Miễn phí 1 đổi 1 trong 7 ngày nếu lỗi từ nhà sản xuất.`;
+  }
+
+  // 11. Xin chào / Cảm ơn / Liên hệ
+  if (msg.includes("chào") || msg.includes("hi") || msg.includes("hello")) {
+    return `👋 Xin chào! Mình là <strong>JewelBot</strong> – trợ lý tư vấn trang sức thông minh.<br>
+Bạn đang tìm <b>Nhẫn, Dây chuyền, Vòng tay</b> hay cần chọn quà tặng? Cho mình biết nhu cầu nhé! 😊`;
+  }
+
+  if (msg.includes("cảm ơn") || msg.includes("thanks") || msg.includes("ok")) {
+    return `😊 Rất vui được hỗ trợ bạn! Chúc bạn chọn được món trang sức ưng ý tại <strong>Jewelry Store</strong>. 💎✨`;
+  }
+
+  // 12. Tìm kiếm linh hoạt theo từ khóa trong toàn bộ tên sản phẩm
+  const matchedKeywords = allStoreProducts.filter(p => 
+    p.name.toLowerCase().includes(msg) || 
+    (p.material && p.material.toLowerCase().includes(msg)) ||
+    (p.description && p.description.toLowerCase().includes(msg))
+  );
+
+  if (matchedKeywords.length > 0) {
+    return `🔍 <strong>Tìm thấy các sản phẩm phù hợp với "${message}":</strong>` + renderChatProductCards(matchedKeywords);
+  }
+
+  // Trả về mặc định linh hoạt kèm gợi ý sản phẩm
+  return `🤔 Mình tìm thấy một số mẫu trang sức nổi bật nhất có thể bạn sẽ thích:` + renderChatProductCards(allStoreProducts.slice(0, 2));
 }
 
 // Thêm tin nhắn vào cửa sổ chat
@@ -275,10 +273,10 @@ async function chatAI() {
   input.focus();
   
   // Hiệu ứng "đang nhập..."
-  const typingBubble = appendBubble("⏳ Đang xử lý...", "bot typing");
+  const typingBubble = appendBubble("⏳ JewelBot đang tìm kiếm...", "bot typing");
   
-  // Giả lập delay 800ms cho chân thực
-  await new Promise(resolve => setTimeout(resolve, 800));
+  // Giả lập delay 700ms cho chân thực
+  await new Promise(resolve => setTimeout(resolve, 700));
   
   // Lấy câu trả lời
   const reply = getBotReply(msg);
@@ -287,7 +285,6 @@ async function chatAI() {
   typingBubble.remove();
   appendBubble(reply, "bot");
 }
-
 
 window.onload = () => {
   loadLatestProducts();
