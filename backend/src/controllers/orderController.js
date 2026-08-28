@@ -144,3 +144,28 @@ exports.updateOrderStatus = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+// Lấy danh sách đơn hàng cá nhân của người dùng đang đăng nhập
+exports.getMyOrders = async (req, res) => {
+  try {
+    const { Op } = require('sequelize');
+    const user = req.user;
+    
+    const whereCondition = user.phone ? {
+      [Op.or]: [
+        { user_id: user.id },
+        { phone: user.phone }
+      ]
+    } : { user_id: user.id };
+
+    const orders = await Order.findAll({
+      where: whereCondition,
+      include: [{ model: OrderItem, as: 'items' }],
+      order: [['created_at', 'DESC']]
+    });
+    
+    res.json({ success: true, data: orders });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};

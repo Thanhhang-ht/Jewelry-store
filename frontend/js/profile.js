@@ -23,28 +23,68 @@ if (logoutBtn) {
 // ======================================================
 // CHỈNH SỬA THÔNG TIN
 // ======================================================
+// CHỈNH SỬA THÔNG TIN
+// ======================================================
 if (editBtn) {
-  editBtn.addEventListener("click", () => {
-    alert("Chức năng chỉnh sửa thông tin đang được cập nhật (Tùy chọn tương lai).");
+  editBtn.addEventListener("click", async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const currentName = document.getElementById("userName")?.textContent || "";
+    const currentPhone = document.getElementById("userPhone")?.textContent || "";
+    const currentAddress = localStorage.getItem("user_address") || "";
+
+    const newName = prompt("Nhập họ và tên mới:", currentName);
+    if (newName === null) return;
+
+    const newPhone = prompt("Nhập số điện thoại mới:", currentPhone === "Chưa cập nhật" ? "" : currentPhone);
+    if (newPhone === null) return;
+
+    const newAddress = prompt("Nhập địa chỉ mới:", currentAddress);
+    if (newAddress === null) return;
+
+    try {
+      const res = await fetch(`${API_URL}/auth/profile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          fullname: newName.trim(),
+          phone: newPhone.trim(),
+          address: newAddress.trim()
+        })
+      });
+      const result = await res.json();
+      if (result.success) {
+        alert("🎉 Cập nhật thông tin cá nhân thành công!");
+        loadProfile();
+      } else {
+        alert("Lỗi: " + result.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Không thể kết nối đến máy chủ!");
+    }
   });
 }
 
 // ======================================================
-// TẠO HTML ĐỊA CHỈ (MOCK)
+// TẠO HTML ĐỊA CHỈ THỰC TẾ
 // ======================================================
-function createAddressHTML(address) {
+function createAddressHTML(user) {
   return `
-  <div class="address-card" data-id="${address.id}">
+  <div class="address-card" data-id="${user.id}">
       <div class="address-top">
           <div>
-              <input type="radio" name="address">
-              <span>${address.label}</span>
+              <input type="radio" name="address" checked>
+              <span>Địa chỉ mặc định</span>
           </div>
-          <i class="fa-solid fa-ellipsis-vertical menu-btn"></i>
       </div>
-      <h4 class="receiver-name">${address.name}</h4>
-      <p class="receiver-phone">${address.phone}</p>
-      <p class="receiver-address">${address.address}</p>
+      <h4 class="receiver-name">${user.fullname}</h4>
+      <p class="receiver-phone">${user.phone || "Chưa có SĐT"}</p>
+      <p class="receiver-address">${user.address || "Chưa có địa chỉ"}</p>
   </div>`;
 }
 
@@ -77,6 +117,7 @@ async function loadProfile() {
     
     if (result.success) {
       const user = result.data;
+      localStorage.setItem("user_address", user.address || "");
       
       const sidebarName = document.getElementById("sidebarUserName");
       const sidebarEmail = document.getElementById("sidebarUserEmail");
@@ -95,6 +136,11 @@ async function loadProfile() {
       if (joinDate) {
         const d = new Date(user.created_at);
         joinDate.textContent = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+      }
+
+      // Render địa chỉ thật của người dùng
+      if (addressList) {
+        addressList.innerHTML = createAddressHTML(user);
       }
     } else {
       localStorage.removeItem("token");

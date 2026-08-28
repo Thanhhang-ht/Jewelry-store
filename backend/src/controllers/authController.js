@@ -123,3 +123,35 @@ exports.changePassword = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+// Cập nhật thông tin tài khoản (Họ tên, Số điện thoại, Địa chỉ)
+exports.updateProfile = async (req, res) => {
+  try {
+    const { fullname, phone, address } = req.body;
+    const user = await User.findByPk(req.user.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy người dùng!' });
+    }
+
+    if (fullname !== undefined) user.fullname = fullname;
+    if (phone !== undefined) user.phone = phone;
+    if (address !== undefined) user.address = address;
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Cập nhật thông tin thành công!',
+      data: {
+        id: user.id,
+        fullname: user.fullname,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        role: user.role
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};

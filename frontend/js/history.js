@@ -274,46 +274,55 @@ document.addEventListener("click", (e) => {
 // LOAD ĐƠN HÀNG
 // ======================================================
 
-function loadOrders() {
-  /*
-  Backend:
+async function loadOrders() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "login.html";
+    return;
+  }
 
-  fetch(API.orders)
-      .then(res => res.json())
-      .then(data => {
-
-          orders = data;
-
-          renderOrders();
-
-      });
-
-  */
-
-  renderOrders();
+  try {
+    const res = await fetch("/api/orders/my-orders", {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    const result = await res.json();
+    if (result.success && result.data) {
+      orders = result.data.map(o => ({
+        id: o.id,
+        code: o.order_code,
+        date: new Date(o.created_at).toLocaleDateString('vi-VN'),
+        total: Number(o.total_price).toLocaleString('vi-VN') + 'đ',
+        status: o.status === 'pending' || o.status === 'processing' ? 'processing' : (o.status === 'shipping' ? 'shipping' : (o.status === 'completed' ? 'success' : 'cancel'))
+      }));
+      renderOrders();
+    }
+  } catch (err) {
+    console.error("Lỗi tải lịch sử đơn hàng:", err);
+  }
 }
 
 // ======================================================
 // LOAD THÔNG TIN USER
 // ======================================================
 
-function loadUser() {
-  /*
-  Backend:
-
-  fetch("/api/profile")
-      .then(res => res.json())
-      .then(user => {
-
-          document.getElementById("sidebarUserName").textContent =
-              user.name;
-
-          document.getElementById("sidebarUserEmail").textContent =
-              user.email;
-
-      });
-
-  */
+async function loadUser() {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+  try {
+    const res = await fetch("/api/auth/profile", {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    const result = await res.json();
+    if (result.success) {
+      const user = result.data;
+      const sidebarName = document.getElementById("sidebarUserName");
+      const sidebarEmail = document.getElementById("sidebarUserEmail");
+      if (sidebarName) sidebarName.textContent = user.fullname;
+      if (sidebarEmail) sidebarEmail.textContent = user.email;
+    }
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 // ======================================================
