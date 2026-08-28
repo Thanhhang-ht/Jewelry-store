@@ -232,8 +232,42 @@ document.querySelector(".update-btn")?.addEventListener("click", () => {
   alert("Giỏ hàng đã được cập nhật!");
 });
 
+// Tải danh sách gợi ý sản phẩm thực tế từ API
+async function renderSuggestedProducts() {
+  const container = document.querySelector(".suggest-list");
+  if (!container) return;
+
+  try {
+    const res = await fetch(`${API_URL}/products`);
+    const result = await res.json();
+    if (result.success && result.data.length > 0) {
+      const items = result.data.slice(0, 4);
+      container.innerHTML = items
+        .map(
+          (p) => `
+        <div class="card" data-id="${p.id}">
+          <img src="${p.image || '../image/image 24.png'}" alt="${p.name}">
+          <div class="card-info">
+            <h3>${p.name}</h3>
+            <p>${Number(p.price).toLocaleString('vi-VN')}đ</p>
+          </div>
+          <div class="card-bottom">
+            <a href="product-detail.html?id=${p.id}" class="detail-btn">Xem chi tiết</a>
+            <i class="fa-regular fa-heart love"></i>
+          </div>
+        </div>
+      `
+        )
+        .join("");
+    }
+  } catch (err) {
+    console.error("Lỗi tải gợi ý sản phẩm:", err);
+  }
+}
+
 // Khởi chạy khi tải trang
 document.addEventListener("DOMContentLoaded", () => {
   renderCart();
   initSelectAll();
+  renderSuggestedProducts();
 });
