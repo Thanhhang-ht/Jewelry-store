@@ -152,28 +152,69 @@ async function loadProfile() {
 }
 
 // ======================================================
-// RENDER ĐƠN HÀNG (MOCK TẠM TRƯỚC KHI LÀM PHASE 4)
+// RENDER ĐƠN HÀNG GẦN ĐÂY THỰC TẾ
 // ======================================================
-function loadOrders() {
-  // Sẽ tích hợp ở Phase 4 (History/Orders)
-}
+async function loadOrders() {
+  const token = localStorage.getItem("token");
+  if (!token) return;
 
-// ======================================================
-// RENDER ĐỊA CHỈ (MOCK)
-// ======================================================
-function loadAddresses() {
-  if (addressList) {
-    addressList.innerHTML = createAddressHTML({
-        id: 1, label: "Nhà riêng", name: "Nguyễn Văn A", phone: "0123456789", address: "123 Đường ABC, Quận XYZ, TP.HCM"
+  const tbody = document.getElementById("orderTable");
+  if (!tbody) return;
+
+  try {
+    const res = await fetch(`${API_URL}/orders/my-orders`, {
+      headers: { "Authorization": `Bearer ${token}` }
     });
+    const result = await res.json();
+    if (result.success && result.data && result.data.length > 0) {
+      const recentOrders = result.data.slice(0, 5);
+
+      tbody.innerHTML = recentOrders.map(o => {
+        let statusClass = 'processing';
+        let statusText = 'Đang xử lý';
+
+        if (o.status === 'shipping') {
+          statusClass = 'shipping';
+          statusText = 'Đang giao';
+        } else if (o.status === 'completed') {
+          statusClass = 'success';
+          statusText = 'Hoàn thành';
+        } else if (o.status === 'cancelled') {
+          statusClass = 'cancel';
+          statusText = 'Đã hủy';
+        }
+
+        const dateStr = new Date(o.created_at).toLocaleDateString('vi-VN');
+        const totalStr = Number(o.total_price).toLocaleString('vi-VN') + 'đ';
+
+        return `
+          <tr data-id="${o.id}">
+            <td>${o.order_code}</td>
+            <td>${dateStr}</td>
+            <td>${totalStr}</td>
+            <td>
+              <span class="status ${statusClass}">
+                ${statusText}
+              </span>
+            </td>
+            <td>
+              <a href="order-detail.html?id=${o.id}" class="detail-btn">
+                Xem chi tiết
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    } else {
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 20px; color: #666;">Bạn chưa có đơn hàng nào gần đây.</td></tr>`;
+    }
+  } catch (err) {
+    console.error("Lỗi tải đơn hàng gần đây:", err);
   }
 }
 
-// ======================================================
 // KHỞI TẠO TRANG
-// ======================================================
 document.addEventListener("DOMContentLoaded", () => {
   loadProfile();
   loadOrders();
-  loadAddresses();
 });
