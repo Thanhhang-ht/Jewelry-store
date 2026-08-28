@@ -94,6 +94,8 @@ exports.createOrder = async (req, res) => {
     const nextId = lastOrder ? lastOrder.id + 1 : 1;
     const orderCode = `DH${String(nextId).padStart(3, '0')}`;
 
+    const validPayment = (payment_method === 'bank') ? 'bank' : 'cod';
+
     // 4. Lưu đơn hàng
     const order = await Order.create({
       order_code: orderCode,
@@ -103,7 +105,7 @@ exports.createOrder = async (req, res) => {
       shipping_address,
       total_price: totalPrice - discountAmount,
       status: 'pending',
-      payment_method: payment_method || 'cod',
+      payment_method: validPayment,
       note,
       coupon_id: couponId,
       discount_amount: discountAmount

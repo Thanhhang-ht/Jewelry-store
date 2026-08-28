@@ -221,7 +221,10 @@ window.placeOrder = async function () {
   const paymentInputs = document.querySelectorAll('input[name="payment"]');
   let payment = "cod";
   paymentInputs.forEach((input) => {
-    if (input.checked) payment = input.value;
+    if (input.checked) {
+      const val = input.value;
+      payment = (val === "bank") ? "bank" : "cod";
+    }
   });
 
   // Lấy mã giảm giá đang chọn
