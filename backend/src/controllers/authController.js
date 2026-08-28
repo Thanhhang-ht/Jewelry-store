@@ -45,9 +45,10 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const cleanEmail = email ? email.trim().toLowerCase() : '';
 
     // 1. Kiểm tra tài khoản tồn tại
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email: cleanEmail } });
     if (!user) {
       return res.status(401).json({ success: false, message: 'Email hoặc mật khẩu không chính xác!' });
     }

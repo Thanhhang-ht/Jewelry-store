@@ -3,17 +3,40 @@ const { Category, Product, Coupon, User } = require('../models');
 
 async function seedDatabase() {
   try {
+    // 1. LUÔN ĐẢM BẢO TÀI KHOẢN ADMIN TỒN TẠI VÀ MẬT KHẨU LÀ 123456
+    const hashedPass = await bcrypt.hash('123456', 10);
+    const existingAdmin = await User.findOne({ where: { email: 'admin@jewelrystore.com' } });
+    
+    if (!existingAdmin) {
+      await User.create({
+        fullname: 'Quản Trị Viên',
+        email: 'admin@jewelrystore.com',
+        password: hashedPass,
+        role: 'admin',
+        phone: '0900000000',
+        address: 'TP. Hồ Chí Minh'
+      });
+      console.log('🔑 Đã khởi tạo tài khoản Admin: admin@jewelrystore.com / 123456');
+    } else {
+      // Cập nhật lại mật khẩu chuẩn 123456 nếu tài khoản đã tồn tại
+      existingAdmin.password = hashedPass;
+      existingAdmin.role = 'admin';
+      await existingAdmin.save();
+      console.log('🔑 Đã đồng bộ mật khẩu Admin về: 123456');
+    }
+
+    // 2. Nạp dữ liệu danh mục & sản phẩm nếu CSDL chưa có
     const categoryCount = await Category.count();
     if (categoryCount === 0) {
       console.log('🌱 Đang nạp dữ liệu mẫu (Seeding Database)...');
 
-      // 1. Tạo Danh mục
+      // Tạo Danh mục
       const catRing = await Category.create({ name: 'Nhẫn', description: 'Các mẫu nhẫn bạc, nhẫn đính đá lấp lánh dành cho cả nam và nữ.', status: 'active', image: '../image/emojione-monotone_ring.png' });
       const catNecklace = await Category.create({ name: 'Dây chuyền', description: 'Mẫu dây chuyền mảnh mai, tinh xảo kết hợp nhiều kiểu mặt đá bắt mắt.', status: 'active', image: '../image/Vector.png' });
       const catBracelet = await Category.create({ name: 'Vòng tay', description: 'Lắc tay, vòng tay bạc mềm mại giúp cổ tay thanh mảnh nổi bật.', status: 'active', image: '../image/game-icons_gem-chain.png' });
       const catEarring = await Category.create({ name: 'Bông tai', description: 'Bông tai nụ, bông tai dáng dài tinh xảo tôn lên nét thanh tú khuôn mặt.', status: 'active', image: '../image/game-icons_drop-earrings.png' });
 
-      // 2. Tạo Sản phẩm
+      // Tạo Sản phẩm
       await Product.bulkCreate([
         {
           code: 'SP001',
@@ -105,7 +128,7 @@ async function seedDatabase() {
         }
       ]);
 
-      // 3. Tạo Mã giảm giá
+      // Tạo Mã giảm giá
       await Coupon.bulkCreate([
         {
           code: 'GIAM10',
@@ -130,27 +153,6 @@ async function seedDatabase() {
           usage_limit: 200,
           used_count: 10,
           status: 'active'
-        }
-      ]);
-
-      // 4. Tạo Tài khoản Admin mẫu & User mẫu
-      const hashedPass = await bcrypt.hash('123456', 10);
-      await User.bulkCreate([
-        {
-          fullname: 'Quản Trị Viên',
-          email: 'admin@jewelrystore.com',
-          password: hashedPass,
-          role: 'admin',
-          phone: '0900000000',
-          address: 'TP. Hồ Chí Minh'
-        },
-        {
-          fullname: 'Phan Thanh Hằng',
-          email: 'thanhhang23905@gmail.com',
-          password: hashedPass,
-          role: 'user',
-          phone: '0365954848',
-          address: 'TP. Hồ Chí Minh'
         }
       ]);
 
