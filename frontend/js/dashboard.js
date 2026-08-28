@@ -43,7 +43,8 @@ function getStatusText(status) {
 }
 
 function showCurrentDate() {
-  const today = new  currentDate.textContent = today.toLocaleDateString("vi-VN");
+  const today = new Date();
+  if (currentDate) currentDate.textContent = today.toLocaleDateString("vi-VN");
 }
 
 // =====================================

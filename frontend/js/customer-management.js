@@ -25,12 +25,10 @@ async function loadCustomers() {
     });
     const result = await res.json();
     if (result.success) {
-      // Vì mockup cũ có logic mua sắm (totalOrders, totalSpent), 
-      // Ở đây database User có thể chưa lưu chi tiết, tạm thời fallback.
       customers = result.data.map(user => ({
         ...user,
-        totalOrders: user.totalOrders || Math.floor(Math.random() * 5),
-        totalSpent: user.totalSpent || Math.floor(Math.random() * 5000000)
+        totalOrders: user.totalOrders || 0,
+        totalSpent: user.totalSpent || 0
       }));
       filteredCustomers = [...customers];
       renderCustomers();

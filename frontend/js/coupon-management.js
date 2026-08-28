@@ -77,18 +77,18 @@ function renderCoupons(coupons) {
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td><input type="checkbox" class="coupon-checkbox" value="${coupon.id}"></td>
-            <td><strong>${coupon.code}</strong></td>
-            <td>${coupon.discount_type === 'fixed' ? Number(coupon.discount_value).toLocaleString() : coupon.discount_value}${typeLabel}</td>
-            <td>Đơn từ ${Number(coupon.min_order_value).toLocaleString()}đ</td>
+            <td><strong style="color: #8c6600; background: #fffdf0; padding: 5px 10px; border-radius: 6px; border: 1px dashed #d4af37; font-family: monospace; font-size: 0.95rem;"><i class="fa-solid fa-ticket"></i> ${coupon.code}</strong></td>
+            <td style="color: #c5221f; font-weight: bold; font-size: 0.95rem;">${coupon.discount_type === 'fixed' ? Number(coupon.discount_value).toLocaleString() : coupon.discount_value}${typeLabel}</td>
+            <td style="font-weight: 500;">Đơn từ ${Number(coupon.min_order_value).toLocaleString()}đ</td>
             <td>
-                <span class="status-badge ${coupon.status === 'active' ? 'active' : 'inactive'}">
-                    ${coupon.status === 'active' ? 'Hoạt động' : 'Đã khóa'}
+                <span class="status-badge ${coupon.status === 'active' ? 'active' : 'inactive'}" style="padding: 4px 12px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; background: ${coupon.status === 'active' ? '#e6f4ea' : '#fce8e6'}; color: ${coupon.status === 'active' ? '#137333' : '#c5221f'}; display: inline-block;">
+                    ${coupon.status === 'active' ? '● Hoạt động' : '○ Đã khóa'}
                 </span>
             </td>
             <td>
-                <div class="action-buttons">
-                    <a href="coupon-form.html?mode=edit&id=${coupon.id}" class="btn-edit" title="Sửa"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <button class="btn-delete" title="Xóa" onclick="deleteCoupon(${coupon.id})"><i class="fa-regular fa-trash-can"></i></button>
+                <div class="action-buttons" style="display: flex; gap: 8px;">
+                    <a href="coupon-form.html?mode=edit&id=${coupon.id}" class="btn-edit" title="Sửa" style="color: #1a73e8; padding: 5px 10px; border-radius: 6px; border: 1px solid #d2e3fc; background: #e8f0fe; text-decoration: none; font-weight: 600; font-size: 0.85rem;"><i class="fa-regular fa-pen-to-square"></i> Sửa</a>
+                    <button class="btn-delete" title="Xóa" onclick="deleteCoupon(${coupon.id})" style="color: #d93025; padding: 5px 10px; border-radius: 6px; border: 1px solid #fce8e6; background: #fce8e6; cursor: pointer; font-weight: 600; font-size: 0.85rem;"><i class="fa-regular fa-trash-can"></i> Xóa</button>
                 </div>
             </td>
         `;

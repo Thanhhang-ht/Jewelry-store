@@ -19,9 +19,10 @@ exports.getActiveCoupons = async (req, res) => {
     });
     // Lọc thêm điều kiện thời hạn và lượt dùng
     const validCoupons = coupons.filter(c => {
-      const inDate = now >= new Date(c.start_date) && now <= new Date(c.end_date);
+      const inStartDate = !c.start_date || now >= new Date(c.start_date);
+      const inEndDate = !c.end_date || now <= new Date(c.end_date);
       const hasUsage = !c.usage_limit || c.used_count < c.usage_limit;
-      return inDate && hasUsage;
+      return inStartDate && inEndDate && hasUsage;
     });
     res.json({ success: true, data: validCoupons });
   } catch (err) {
@@ -39,7 +40,7 @@ exports.applyCoupon = async (req, res) => {
     if (!coupon) {
       return res.status(404).json({ success: false, message: 'Mã giảm giá không tồn tại hoặc đã bị khóa!' });
     }
-    if (now < new Date(coupon.start_date) || now > new Date(coupon.end_date)) {
+    if ((coupon.start_date && now < new Date(coupon.start_date)) || (coupon.end_date && now > new Date(coupon.end_date))) {
       return res.status(400).json({ success: false, message: 'Mã giảm giá đã hết hạn sử dụng!' });
     }
     if (coupon.usage_limit !== null && coupon.used_count >= coupon.usage_limit) {

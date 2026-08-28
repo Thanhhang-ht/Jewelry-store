@@ -149,17 +149,21 @@ exports.updateOrderStatus = async (req, res) => {
 exports.getMyOrders = async (req, res) => {
   try {
     const { Op } = require('sequelize');
+    const { User } = require('../models');
     const user = req.user;
     
-    const whereCondition = user.phone ? {
-      [Op.or]: [
-        { user_id: user.id },
-        { phone: user.phone }
-      ]
-    } : { user_id: user.id };
+    const fullUser = await User.findByPk(user.id);
+    const userPhone = fullUser ? fullUser.phone : null;
+
+    const conditions = [{ user_id: user.id }];
+    if (userPhone && userPhone.trim() !== '') {
+      conditions.push({ phone: userPhone.trim() });
+    }
 
     const orders = await Order.findAll({
-      where: whereCondition,
+      where: {
+        [Op.or]: conditions
+      },
       include: [{ model: OrderItem, as: 'items' }],
       order: [['created_at', 'DESC']]
     });

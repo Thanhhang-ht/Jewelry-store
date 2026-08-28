@@ -1,6 +1,7 @@
-const { User } = require('../models');
+const { User, Order } = require('../models');
+const { Op } = require('sequelize');
 
-// Lấy danh sách tất cả khách hàng (Admin)
+// Lấy danh sách tất cả khách hàng kèm thống kê thực tế (Admin)
 exports.getAllCustomers = async (req, res) => {
   try {
     const customers = await User.findAll({
@@ -8,7 +9,32 @@ exports.getAllCustomers = async (req, res) => {
       attributes: { exclude: ['password'] },
       order: [['created_at', 'DESC']]
     });
-    res.json({ success: true, data: customers });
+
+    const customersWithStats = await Promise.all(customers.map(async (c) => {
+      const plainUser = c.get({ plain: true });
+      
+      const conditions = [{ user_id: c.id }];
+      if (c.phone && c.phone.trim() !== '') {
+        conditions.push({ phone: c.phone.trim() });
+      }
+
+      const totalOrders = await Order.count({
+        where: { [Op.or]: conditions }
+      });
+
+      const totalSpentSum = await Order.sum('total_price', {
+        where: {
+          [Op.or]: conditions,
+          status: { [Op.not]: 'cancelled' }
+        }
+      });
+
+      plainUser.totalOrders = totalOrders || 0;
+      plainUser.totalSpent = totalSpentSum || 0;
+      return plainUser;
+    }));
+
+    res.json({ success: true, data: customersWithStats });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

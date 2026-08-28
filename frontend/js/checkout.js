@@ -28,11 +28,52 @@ function getSelectedCoupon() {
 }
 
 // ============================
+// ĐỒNG BỘ ĐỊA CHỈ TỪ PROFILE & SỔ ĐỊA CHỈ
+// ============================
+async function prefillCustomerAddress() {
+  const nameInput = document.getElementById("fullname");
+  const phoneInput = document.getElementById("phone");
+  const addressInput = document.getElementById("address");
+
+  // 1. Ưu tiên lấy từ Sổ địa chỉ mặc định (localStorage)
+  const savedAddresses = JSON.parse(localStorage.getItem("addresses")) || [];
+  const defaultAddr = savedAddresses.find(a => a.isDefault) || savedAddresses[0];
+
+  if (defaultAddr) {
+    if (nameInput && defaultAddr.receiver) nameInput.value = defaultAddr.receiver;
+    if (phoneInput && defaultAddr.phone) phoneInput.value = defaultAddr.phone;
+    if (addressInput && defaultAddr.address) addressInput.value = defaultAddr.address;
+  }
+
+  // 2. Nếu đã đăng nhập, tự động lấy thông tin Profile CSDL mới nhất
+  const token = localStorage.getItem("token");
+  if (token) {
+    try {
+      const res = await fetch(`${API_URL}/auth/profile`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      const result = await res.json();
+      if (result.success && result.data) {
+        const u = result.data;
+        if (nameInput && u.fullname) nameInput.value = u.fullname;
+        if (phoneInput && u.phone) phoneInput.value = u.phone;
+        if (addressInput && u.address) addressInput.value = u.address;
+      }
+    } catch (err) {
+      console.error("Lỗi đồng bộ địa chỉ thanh toán:", err);
+    }
+  }
+}
+
+// ============================
 // KHỞI TẠO TRANG THANH TOÁN
 // ============================
 async function initCheckout() {
   const container = document.getElementById("checkoutProducts");
   if (!container) return;
+
+  // Điền địa chỉ khách hàng
+  await prefillCustomerAddress();
 
   const cart = getCart();
 
@@ -108,28 +149,30 @@ async function loadCoupons() {
         .map((c) => {
           const descText =
             c.discount_type === "percent"
-              ? `Giảm ${c.discount_value}% đơn hàng`
+              ? `Giảm ${c.discount_value}%`
               : `Giảm ${Number(c.discount_value).toLocaleString()}đ`;
-          const minText = `Đơn tối thiểu ${Number(c.min_order_value || 0).toLocaleString()}đ`;
+          const minText = `Đơn từ ${Number(c.min_order_value || 0).toLocaleString()}đ`;
           const isDisabled = subtotal < Number(c.min_order_value);
           const disabledAttr = isDisabled ? "disabled" : "";
-          const couponStyle = isDisabled
-            ? "opacity: 0.5; cursor: not-allowed;"
-            : "cursor: pointer;";
-          const endDate = new Date(c.end_date).toLocaleDateString("vi-VN");
+          const endDate = c.end_date ? new Date(c.end_date).toLocaleDateString("vi-VN") : "Vĩnh viễn";
 
           return `
-          <label class="coupon" style="${couponStyle}">
+          <label class="coupon ${isDisabled ? 'disabled' : ''}">
             <input type="radio" name="coupon" value="${c.code}"
               data-type="${c.discount_type}"
               data-value="${c.discount_value}"
               data-max="${c.max_discount_value || 0}"
               data-min="${c.min_order_value}"
               ${disabledAttr}>
-            <h3>${c.code}</h3>
-            <p>${descText}</p>
-            <small>${minText}</small>
-            <span>HSD: ${endDate}</span>
+            <div class="coupon-header">
+              <span class="coupon-badge"><i class="fa-solid fa-ticket"></i> ${c.code}</span>
+            </div>
+            <div class="coupon-desc">${descText}</div>
+            <div class="coupon-min">${minText}</div>
+            <div class="coupon-footer">
+              <span>HSD: ${endDate}</span>
+              ${isDisabled ? '<span style="color:#e53e3e;font-weight:bold;">Chưa đủ điều kiện</span>' : '<span style="color:#2b6cb0;font-weight:bold;">Khả dụng</span>'}
+            </div>
           </label>
         `;
         })
@@ -138,10 +181,16 @@ async function loadCoupons() {
 
     // Thêm lựa chọn "Không dùng mã"
     html += `
-      <label class="coupon" style="cursor: pointer;">
+      <label class="coupon selected">
         <input type="radio" name="coupon" value="NONE" data-type="none" data-value="0" data-max="0" data-min="0" checked>
-        <h3>Không sử dụng mã</h3>
-        <p>Không áp dụng giảm giá</p>
+        <div class="coupon-header">
+          <span class="coupon-badge" style="background:#edf2f7;color:#4a5568;border-color:#cbd5e0;"><i class="fa-solid fa-ban"></i> BỎ QUA</span>
+        </div>
+        <div class="coupon-desc" style="color:#4a5568;">Không dùng mã</div>
+        <div class="coupon-min">Giữ nguyên giá thanh toán</div>
+        <div class="coupon-footer">
+          <span>Tùy chọn mặc định</span>
+        </div>
       </label>
     `;
 

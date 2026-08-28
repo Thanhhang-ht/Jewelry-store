@@ -39,3 +39,20 @@ exports.adminOnly = (req, res, next) => {
     });
   }
 };
+
+// Middleware xác thực tùy chọn (nếu có token thì gán req.user, không có thì bỏ qua)
+exports.optionalAuth = (req, res, next) => {
+  try {
+    let token;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded;
+    }
+  } catch (err) {
+    // Token hết hạn hoặc không đúng dạng thì bỏ qua
+  }
+  next();
+};
