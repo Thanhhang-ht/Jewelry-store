@@ -53,6 +53,28 @@ function renderProducts(list) {
   bindEvents();
 }
 
+window.toggleWishlist = function(product) {
+  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+  const index = wishlist.findIndex(item => item.id == product.id);
+
+  if (index !== -1) {
+    wishlist.splice(index, 1);
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    alert(`Đã xóa "${product.name}" khỏi danh sách yêu thích.`);
+    return false;
+  } else {
+    wishlist.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image
+    });
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    alert(`💖 Đã thêm "${product.name}" vào danh sách yêu thích!`);
+    return true;
+  }
+};
+
 function bindEvents() {
   // ADD TO CART
   document.querySelectorAll(".cart-btn").forEach((btn) => {
@@ -64,10 +86,16 @@ function bindEvents() {
 
   // LOVE / FAVORITE
   document.querySelectorAll(".love").forEach((icon) => {
-    icon.addEventListener("click", () => {
-      icon.classList.toggle("fa-regular");
-      icon.classList.toggle("fa-solid");
-      icon.style.color = icon.classList.contains("fa-solid") ? "red" : "black";
+    icon.addEventListener("click", (e) => {
+      const itemEl = e.currentTarget.closest(".pro-item");
+      const id = itemEl ? itemEl.dataset.id : null;
+      const product = allStoreProducts.find(p => p.id == id) || products.find(p => p.id == id);
+      if (!product) return;
+
+      const isAdded = toggleWishlist(product);
+      icon.classList.toggle("fa-regular", !isAdded);
+      icon.classList.toggle("fa-solid", isAdded);
+      icon.style.color = isAdded ? "red" : "black";
     });
   });
 

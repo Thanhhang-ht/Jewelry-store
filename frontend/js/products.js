@@ -133,10 +133,16 @@ function renderProducts(list) {
 function bindEvents() {
   // LOVE
   document.querySelectorAll(".love").forEach((icon) => {
-    icon.onclick = () => {
-      icon.classList.toggle("fa-regular");
-      icon.classList.toggle("fa-solid");
-      icon.style.color = icon.classList.contains("fa-solid") ? "red" : "#000";
+    icon.onclick = (e) => {
+      const card = e.currentTarget.closest(".card");
+      const id = card ? card.dataset.id : null;
+      const product = allProducts.find(p => p.id == id);
+      if (!product) return;
+
+      const isAdded = window.toggleWishlist ? window.toggleWishlist(product) : false;
+      icon.classList.toggle("fa-regular", !isAdded);
+      icon.classList.toggle("fa-solid", isAdded);
+      icon.style.color = isAdded ? "red" : "#000";
     };
   });
 
