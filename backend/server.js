@@ -46,6 +46,7 @@ app.get("/api/health", (req, res) => {
 
 // SERVE FRONTEND
 app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, "../frontend/html")));
 
 // Fallback: trả về index.html cho mọi route không khớp (hỗ trợ client-side routing)
 app.use((req, res) => {

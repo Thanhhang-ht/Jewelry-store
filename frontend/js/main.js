@@ -80,7 +80,7 @@ function bindEvents() {
   });
 }
 
-function addToCart(productId) {
+window.addToCart = function(productId) {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   
   const product = allStoreProducts.find(p => p.id == productId) || products.find(p => p.id == productId);
@@ -95,11 +95,11 @@ function addToCart(productId) {
   
   localStorage.setItem('cart', JSON.stringify(cart));
   alert(`🎉 Đã thêm "${product.name}" vào giỏ hàng!`);
-}
+};
 
-function goToDetail(id) {
+window.goToDetail = function(id) {
   window.location.href = `product-detail.html?id=${id}`;
-}
+};
 
 // ===============================================
 // AI CHATBOT TƯ VẤN THÔNG MINH (SMART AI ASSISTANT)
@@ -117,8 +117,8 @@ function renderChatProductCards(productList) {
         <p>${Number(p.price).toLocaleString('vi-VN')}đ</p>
       </div>
       <div class="chat-product-actions">
-        <button class="view-btn" onclick="goToDetail(${p.id})">Xem</button>
-        <button class="add-btn" onclick="addToCart(${p.id})">+ Giỏ</button>
+        <button type="button" class="view-btn" onclick="goToDetail(${p.id})">Xem</button>
+        <button type="button" class="add-btn" onclick="addToCart(${p.id})">+ Giỏ</button>
       </div>
     </div>
   `).join("");
