@@ -215,11 +215,12 @@ function checkAllProducts() {
 }
 
 async function deleteProduct(id) {
-  if (!confirm("Bạn có chắc muốn xóa sản phẩm này?")) return;
+  if (!confirm("Bạn có chắc muốn xóa (ẩn) sản phẩm này khỏi website không?")) return;
   const result = await ProductAPI.remove(id);
   if (result.success) {
-    alert("Xóa thành công!");
-    ProductManager.products = ProductManager.products.filter(p => p.id != id);
+    alert("Đã ẩn sản phẩm thành công!");
+    const product = ProductManager.products.find(p => p.id == id);
+    if (product) product.status = 'inactive';
     applyFilters();
   } else {
     alert("Lỗi: " + result.message);

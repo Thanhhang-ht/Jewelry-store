@@ -61,9 +61,9 @@ async function loadCategoryData() {
         if (uploadBox) uploadBox.style.display = "none";
       }
 
-      const statusSelect = document.getElementById("status");
-      if (statusSelect) {
-          statusSelect.value = category.status;
+      const statusRadio = document.querySelector(`input[name="status"][value="${category.status}"]`);
+      if (statusRadio) {
+          statusRadio.checked = true;
       }
     } else {
       alert("Không tìm thấy danh mục!");
@@ -84,8 +84,8 @@ if (categoryForm) {
       return;
     }
 
-    const statusSelect = document.getElementById("status");
-    const statusVal = statusSelect ? statusSelect.value : "active";
+    const statusRadio = document.querySelector('input[name="status"]:checked');
+    const statusVal = statusRadio ? statusRadio.value : "active";
 
     const payload = {
       name: categoryName.value.trim(),
@@ -119,4 +119,30 @@ if (categoryForm) {
       alert("Đã xảy ra lỗi hệ thống!");
     }
   });
+}
+
+const deleteBtn = document.getElementById("deleteBtn");
+if (deleteBtn) {
+  if (mode === "add") {
+    deleteBtn.style.display = "none";
+  } else {
+    deleteBtn.addEventListener("click", async () => {
+      if (!confirm("Bạn có chắc muốn xóa (ẩn) danh mục này không?")) return;
+      try {
+        const res = await fetch(`${API_URL}/categories/${editId}`, {
+          method: "DELETE",
+          headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+        });
+        const result = await res.json();
+        if (result.success) {
+          alert("Đã ẩn danh mục khỏi trang web thành công!");
+          window.location.href = "category-management.html";
+        } else {
+          alert("Lỗi: " + result.message);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  }
 }

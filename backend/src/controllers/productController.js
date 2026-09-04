@@ -56,15 +56,15 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-// Xóa sản phẩm (Admin)
+// Xóa mềm sản phẩm (Admin) - Ẩn trên web, giữ CSDL
 exports.deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByPk(req.params.id);
     if (!product) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy sản phẩm!' });
     }
-    await product.destroy();
-    res.json({ success: true, message: 'Xóa sản phẩm thành công!' });
+    await product.update({ status: 'inactive' });
+    res.json({ success: true, message: 'Đã ẩn sản phẩm khỏi website thành công (Dữ liệu CSDL vẫn được lưu trữ)!' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

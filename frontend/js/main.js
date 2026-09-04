@@ -8,9 +8,9 @@ async function loadLatestProducts() {
     const res = await fetch(`${API_URL}/products`);
     const result = await res.json();
     if (result.success) {
-      allStoreProducts = result.data; // Lưu toàn bộ sản phẩm cho AI
+      allStoreProducts = result.data.filter(p => p.status === 'active'); // Lưu toàn bộ sản phẩm cho AI (chỉ active)
       // Chỉ lấy 4 sản phẩm mới nhất để hiển thị ở danh sách trang chủ
-      products = result.data.slice(0, 4);
+      products = allStoreProducts.slice(0, 4);
       renderProducts(products);
     }
   } catch (err) {

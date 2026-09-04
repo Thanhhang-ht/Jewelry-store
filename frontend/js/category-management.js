@@ -176,7 +176,7 @@ function renderCategories() {
 }
 
 window.deleteCategory = async function (id) {
-  if (!confirm("Bạn có chắc chắn muốn xóa danh mục này?")) return;
+  if (!confirm("Bạn có chắc chắn muốn xóa (ẩn) danh mục này khỏi website không?")) return;
 
   try {
     const res = await fetch(`${API_URL}/categories/${id}`, {
@@ -187,7 +187,7 @@ window.deleteCategory = async function (id) {
     });
     const result = await res.json();
     if (result.success) {
-      alert("Đã xóa danh mục thành công!");
+      alert("Đã ẩn danh mục thành công!");
       loadCategoriesData();
     } else {
       alert("Lỗi: " + result.message);

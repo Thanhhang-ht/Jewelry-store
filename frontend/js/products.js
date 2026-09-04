@@ -63,7 +63,7 @@ async function loadProducts() {
     const res = await fetch(API_URL);
     const result = await res.json();
     if (result.success) {
-      allProducts = result.data.filter(p => p.status !== 'hidden');
+      allProducts = result.data.filter(p => p.status === 'active');
       filterProducts();
     }
   } catch (err) {
