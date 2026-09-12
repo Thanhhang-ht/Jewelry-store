@@ -18,7 +18,7 @@ const Category = sequelize.define('Category', {
     type: DataTypes.STRING(255)
   },
   status: {
-    type: DataTypes.ENUM('active', 'inactive'),
+    type: DataTypes.STRING(20),
     defaultValue: 'active'
   },
   created_at: {

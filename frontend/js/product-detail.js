@@ -20,7 +20,7 @@ async function loadProductDetail(id) {
     const result = await res.json();
 
     if (result.success && result.data) {
-      if (result.data.status !== 'active') {
+      if (result.data.status === 'inactive' || result.data.status === 'hidden' || result.data.status === 'stop') {
         alert("Sản phẩm này hiện đang ngừng kinh doanh hoặc bị ẩn!");
         window.location.href = "products.html";
         return;
@@ -194,7 +194,7 @@ async function loadRelatedProducts(currentId) {
     const result = await res.json();
     
     if (result.success) {
-      const products = result.data.filter(p => p.status === 'active');
+      const products = result.data.filter(p => p.status !== 'inactive' && p.status !== 'hidden' && p.status !== 'stop');
       
       // Lọc các sản phẩm khác ID hiện tại
       let relatedProducts = products.filter(p => p.id !== currentId);

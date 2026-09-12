@@ -14,7 +14,7 @@ exports.getAllCategories = async (req, res) => {
 
     const categoriesWithCount = categories.map(cat => {
       const plain = cat.get({ plain: true });
-      const activeProducts = (plain.products || []).filter(p => p.status === 'active');
+      const activeProducts = (plain.products || []).filter(p => p.status !== 'inactive' && p.status !== 'hidden' && p.status !== 'stop');
       plain.productCount = activeProducts.length;
       return plain;
     });
@@ -35,7 +35,7 @@ exports.getCategoryById = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Không tìm thấy danh mục!' });
     }
     const plain = category.get({ plain: true });
-    const activeProducts = (plain.products || []).filter(p => p.status === 'active');
+    const activeProducts = (plain.products || []).filter(p => p.status !== 'inactive' && p.status !== 'hidden' && p.status !== 'stop');
     plain.productCount = activeProducts.length;
     res.json({ success: true, data: plain });
   } catch (err) {

@@ -34,7 +34,7 @@ const Product = sequelize.define('Product', {
     type: DataTypes.TEXT
   },
   status: {
-    type: DataTypes.ENUM('selling', 'out_of_stock', 'hidden'),
+    type: DataTypes.STRING(20),
     defaultValue: 'selling'
   },
   category_id: {
