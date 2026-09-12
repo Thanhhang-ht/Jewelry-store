@@ -44,299 +44,287 @@ async function seedDatabase() {
       catEarring = await Category.create({ name: 'Bông tai', description: 'Bông tai nụ, bông tai dáng dài tinh xảo tôn lên nét thanh tú khuôn mặt.', status: 'active', image: '../image/game-icons_drop-earrings.png' });
     }
 
-    // 3. NẠP / ĐỒNG BỘ 24 SẢN PHẨM MẪU (NHƯ WEB THẬT)
-    const productCount = await Product.count();
-    const activeProductCount = await Product.count({ where: { status: 'selling' } });
+    // 3. NẠP / ĐỒNG BỘ 24 SẢN PHẨM CHUẨN XÁC TÊN & HÌNH ẢNH
+    const sampleProducts = [
+      // NHẪN (Rings)
+      {
+        code: 'SP001',
+        name: 'Nhẫn bạc đính đá CZ',
+        category_id: catRing.id,
+        price: 610000,
+        stock: 50,
+        status: 'selling',
+        image: '../image/image 4.png',
+        material: 'Bạc 925',
+        description: 'Nhẫn bạc đính đá CZ lấp lánh mang phong cách hiện đại, tinh xảo trong từng đường nét chế tác.'
+      },
+      {
+        code: 'SP005',
+        name: 'Nhẫn bạc đính đá cao cấp',
+        category_id: catRing.id,
+        price: 460000,
+        stock: 30,
+        status: 'selling',
+        image: '../image/image 6.png',
+        material: 'Bạc 925',
+        description: 'Nhẫn bạc đính đá tinh tế thiết kế sang trọng phù hợp đi tiệc.'
+      },
+      {
+        code: 'SP006',
+        name: 'Nhẫn bạc trơn cao cấp',
+        category_id: catRing.id,
+        price: 540000,
+        stock: 20,
+        status: 'selling',
+        image: '../image/image_7.png',
+        material: 'Bạc 999',
+        description: 'Nhẫn bạc trơn bóng sáng cao cấp chế tác thủ công tỉ mỉ.'
+      },
+      {
+        code: 'SP009',
+        name: 'Nhẫn bạc hoa cúc tinh xảo',
+        category_id: catRing.id,
+        price: 580000,
+        stock: 15,
+        status: 'selling',
+        image: '../image/image_6.png',
+        material: 'Bạc 925',
+        description: 'Nhẫn thiết kế hình hoa cúc nhỏ nhắn đính đá rạng rỡ.'
+      },
 
-    if (productCount < 15 || activeProductCount === 0) {
-      console.log('🌱 Đang nạp danh sách 24 sản phẩm cao cấp phong phú cho CSDL...');
-      
-      // Xóa các sản phẩm cũ nếu dính trạng thái sai hoặc ít sản phẩm
-      if (productCount > 0 && activeProductCount === 0) {
-        await Product.destroy({ where: {} });
+      // DÂY CHUYỀN (Necklaces)
+      {
+        code: 'SP002',
+        name: 'Dây chuyền bạc 102',
+        category_id: catNecklace.id,
+        price: 495000,
+        stock: 35,
+        status: 'selling',
+        image: '../image/image 2.png',
+        material: 'Bạc 925',
+        description: 'Dây chuyền bạc tinh tế, tối giản nhưng thanh lịch, phù hợp làm phụ kiện hàng ngày.'
+      },
+      {
+        code: 'SP007',
+        name: 'Dây chuyền bạc nữ cao cấp',
+        category_id: catNecklace.id,
+        price: 670000,
+        stock: 45,
+        status: 'selling',
+        image: '../image/image 9.png',
+        material: 'Bạc S925',
+        description: 'Dây chuyền thiết kế hoa tuyết cách điệu mang phong cách nữ tính thanh thuần.'
+      },
+      {
+        code: 'SP012',
+        name: 'Dây chuyền bạc hoa tuyết',
+        category_id: catNecklace.id,
+        price: 730000,
+        stock: 28,
+        status: 'selling',
+        image: '../image/image 14.png',
+        material: 'Bạc S925',
+        description: 'Dây chuyền bạc cao cấp đính đá hình hoa tuyết kiêu sa.'
+      },
+      {
+        code: 'SP013',
+        name: 'Dây chuyền bạc mặt tròn tinh tế',
+        category_id: catNecklace.id,
+        price: 520000,
+        stock: 30,
+        status: 'selling',
+        image: '../image/image_2.png',
+        material: 'Bạc 925',
+        description: 'Dây chuyền mặt tròn đính đá đơn giản thanh lịch.'
+      },
+      {
+        code: 'SP015',
+        name: 'Dây chuyền bạc đính đá hồng',
+        category_id: catNecklace.id,
+        price: 850000,
+        stock: 18,
+        status: 'selling',
+        image: '../image/image 15.png',
+        material: 'Bạc 925',
+        description: 'Dây chuyền đính đá hồng quyến rũ và nữ tính.'
+      },
+      {
+        code: 'SP016',
+        name: 'Dây chuyền bạc mặt ngọc trai',
+        category_id: catNecklace.id,
+        price: 990000,
+        stock: 12,
+        status: 'selling',
+        image: '../image/image 16.png',
+        material: 'Bạc 925 & Ngọc trai',
+        description: 'Dây chuyền mặt ngọc trai tự nhiên kết hợp chất liệu bạc cao cấp.'
+      },
+
+      // VÒNG TAY (Bracelets)
+      {
+        code: 'SP003',
+        name: 'Vòng tay bạc PT',
+        category_id: catBracelet.id,
+        price: 510000,
+        stock: 40,
+        status: 'selling',
+        image: '../image/image_3.png',
+        material: 'Bạc 925',
+        description: 'Vòng tay bạc cao cấp tạo điểm nhấn nhẹ nhàng cho cổ tay phái nữ.'
+      },
+      {
+        code: 'SP008',
+        name: 'Vòng tay kim cương',
+        category_id: catBracelet.id,
+        price: 870000,
+        stock: 15,
+        status: 'selling',
+        image: '../image/image 10.png',
+        material: 'Bạc đính CZ cao cấp',
+        description: 'Vòng tay đính đá CZ giả kim cương lấp lánh cuốn hút.'
+      },
+      {
+        code: 'SP014',
+        name: 'Vòng tay bạc cao cấp',
+        category_id: catBracelet.id,
+        price: 570000,
+        stock: 25,
+        status: 'selling',
+        image: '../image/image 11.png',
+        material: 'Bạc S925',
+        description: 'Vòng tay bạc thiết kế mảnh mai tôn lên nét dịu dàng.'
+      },
+      {
+        code: 'SP017',
+        name: 'Lắc tay bạc đính đá lấp lánh',
+        category_id: catBracelet.id,
+        price: 640000,
+        stock: 22,
+        status: 'selling',
+        image: '../image/image 18.png',
+        material: 'Bạc 925',
+        description: 'Lắc tay bạc đính đá CZ phong cách lộng lẫy.'
+      },
+      {
+        code: 'SP018',
+        name: 'Lắc tay bạc charm cao cấp',
+        category_id: catBracelet.id,
+        price: 690000,
+        stock: 20,
+        status: 'selling',
+        image: '../image/image 19.png',
+        material: 'Bạc S925',
+        description: 'Lắc tay phối các hạt charm nhỏ nhắn xinh xắn.'
+      },
+      {
+        code: 'SP019',
+        name: 'Vòng tay bạc mạ vàng 18K',
+        category_id: catBracelet.id,
+        price: 820000,
+        stock: 16,
+        status: 'selling',
+        image: '../image/image 20.png',
+        material: 'Bạc 925 mạ Vàng',
+        description: 'Vòng tay mạ vàng 18K sang trọng và quý phái.'
+      },
+      {
+        code: 'SP020',
+        name: 'Lắc tay bạc đôi quyến rũ',
+        category_id: catBracelet.id,
+        price: 590000,
+        stock: 30,
+        status: 'selling',
+        image: '../image/image 21.png',
+        material: 'Bạc 925',
+        description: 'Lắc tay dạng dây đôi mềm mại điểm xuyết đá tinh xảo.'
+      },
+
+      // BÔNG TAI (Earrings)
+      {
+        code: 'SP004',
+        name: 'Bông tai bạc ngôi sao',
+        category_id: catEarring.id,
+        price: 480000,
+        stock: 25,
+        status: 'selling',
+        image: '../image/image 5.png',
+        material: 'Bạc 925',
+        description: 'Bông tai nhỏ xinh hình ngôi sao lấp lánh, làm nổi bật nét dịu dàng và thanh thoát.'
+      },
+      {
+        code: 'SP010',
+        name: 'Bông tai bạc tinh tế',
+        category_id: catEarring.id,
+        price: 430000,
+        stock: 20,
+        status: 'selling',
+        image: '../image/image_12.png',
+        material: 'Bạc 925',
+        description: 'Bông tai bạc dáng nụ đính đá nhỏ xinh xắn.'
+      },
+      {
+        code: 'SP011',
+        name: 'Bông tai cao cấp',
+        category_id: catEarring.id,
+        price: 750000,
+        stock: 18,
+        status: 'selling',
+        image: '../image/image 13.png',
+        material: 'Bạc 925',
+        description: 'Bông tai đính đá cao cấp phong cách quý phái dự tiệc.'
+      },
+      {
+        code: 'SP021',
+        name: 'Bông tai bạc nụ nhỏ xinh',
+        category_id: catEarring.id,
+        price: 390000,
+        stock: 45,
+        status: 'selling',
+        image: '../image/image 24.png',
+        material: 'Bạc S925',
+        description: 'Bông tai nụ đính đá lấp lánh phong cách dễ thương.'
+      },
+      {
+        code: 'SP022',
+        name: 'Bông tai bạc ngọc trai',
+        category_id: catEarring.id,
+        price: 450000,
+        stock: 30,
+        status: 'selling',
+        image: '../image/image 25.png',
+        material: 'Bạc 925 & Ngọc trai',
+        description: 'Bông tai nụ đính hạt ngọc trai nhân tạo cao cấp sang trọng.'
+      },
+      {
+        code: 'SP023',
+        name: 'Bông tai tròn bạc cao cấp',
+        category_id: catEarring.id,
+        price: 510000,
+        stock: 35,
+        status: 'selling',
+        image: '../image/image 26.png',
+        material: 'Bạc S925',
+        description: 'Bông tai kiểu khuyên tròn phong cách hiện đại cá tính.'
+      },
+      {
+        code: 'SP024',
+        name: 'Bông tai dáng dài kiều diễm',
+        category_id: catEarring.id,
+        price: 620000,
+        stock: 20,
+        status: 'selling',
+        image: '../image/image 23.png',
+        material: 'Bạc 925',
+        description: 'Bông tai thả dáng dài đính đá lấp lánh làm thon gọn khuôn mặt.'
       }
+    ];
 
-      const sampleProducts = [
-        // NHẪN (Rings)
-        {
-          code: 'SP001',
-          name: 'Nhẫn bạc đính đá CZ baguette',
-          category_id: catRing.id,
-          price: 610000,
-          stock: 50,
-          status: 'selling',
-          image: '../image/image 4.png',
-          material: 'Bạc 925 đính đá CZ',
-          description: 'Nhẫn bạc đính đá CZ baguette lấp lánh mang phong cách sang trọng hiện đại, tinh xảo trong từng đường nét chế tác.'
-        },
-        {
-          code: 'SP005',
-          name: 'Nhẫn bạc đính đá Royal Crown',
-          category_id: catRing.id,
-          price: 460000,
-          stock: 30,
-          status: 'selling',
-          image: '../image/image 6.png',
-          material: 'Bạc 925 phủ Bạch Kim',
-          description: 'Nhẫn dáng vương miện đính đá quý tinh tế, quý phái, phù hợp đi tiệc và làm quà tặng kỉ niệm.'
-        },
-        {
-          code: 'SP006',
-          name: 'Nhẫn bạc trơn Ý Minimalist',
-          category_id: catRing.id,
-          price: 540000,
-          stock: 20,
-          status: 'selling',
-          image: '../image/image_7.png',
-          material: 'Bạc 999 Ý',
-          description: 'Nhẫn bạc trơn bóng sáng tối giản phong cách chuẩn Ý, dễ dàng phối hợp cùng mọi trang phục hàng ngày.'
-        },
-        {
-          code: 'SP009',
-          name: 'Nhẫn Moissanite Solitaire 1 Carat',
-          category_id: catRing.id,
-          price: 1250000,
-          stock: 15,
-          status: 'selling',
-          image: '../image/image 11.png',
-          material: 'Bạc 925 mạ Vàng Trắng',
-          description: 'Mặt đá Moissanite 1 Carat cắt chuẩn 8 trái tim 8 mũi tên lấp lánh hoàn hảo như kim cương tự nhiên.'
-        },
-        {
-          code: 'SP010',
-          name: 'Nhẫn bạc đôi Eternity Promise',
-          category_id: catRing.id,
-          price: 780000,
-          stock: 25,
-          status: 'selling',
-          image: '../image/image 13.png',
-          material: 'Bạc S925',
-          description: 'Thiết kế nhẫn dải đá CZ nối tiếp tượng trưng cho tình yêu vĩnh cửu không hồi kết.'
-        },
-        {
-          code: 'SP011',
-          name: 'Nhẫn nữ Cánh Thiên Thần Sparkle',
-          category_id: catRing.id,
-          price: 590000,
-          stock: 40,
-          status: 'selling',
-          image: '../image/image 14.png',
-          material: 'Bạc Ý 925 đính đá',
-          description: 'Đôi cánh thiên thần ôm trọn viên đá chủ màu xanh biển huyền ảo, thu hút mọi ánh nhìn.'
-        },
-
-        // DÂY CHUYỀN (Necklaces)
-        {
-          code: 'SP002',
-          name: 'Dây chuyền bạc 102 Elegance',
-          category_id: catNecklace.id,
-          price: 495000,
-          stock: 35,
-          status: 'selling',
-          image: '../image/image 2.png',
-          material: 'Bạc 925',
-          description: 'Dây chuyền bạc tinh tế, mặt tròn đính đá CZ trắng thanh lịch, phù hợp phối phụ kiện hàng ngày.'
-        },
-        {
-          code: 'SP007',
-          name: 'Dây chuyền bạc nữ Hoa Tuyết Snowflake',
-          category_id: catNecklace.id,
-          price: 670000,
-          stock: 45,
-          status: 'selling',
-          image: '../image/image 9.png',
-          material: 'Bạc S925',
-          description: 'Hình tượng hoa tuyết mùa đông thuần khiết tỏa sáng rạng rỡ, tôn nét thanh thuần kiều diễm.'
-        },
-        {
-          code: 'SP012',
-          name: 'Dây chuyền Trái Tim Đôi Rose Gold',
-          category_id: catNecklace.id,
-          price: 850000,
-          stock: 18,
-          status: 'selling',
-          image: '../image/image 15.png',
-          material: 'Bạc 925 mạ Vàng Hồng',
-          description: 'Trái tim kép kết hợp mạ vàng hồng quyến rũ, quà tặng ngọt ngào cho người thương.'
-        },
-        {
-          code: 'SP013',
-          name: 'Dây chuyền bạc Ngọc Trai Natural Pearl',
-          category_id: catNecklace.id,
-          price: 990000,
-          stock: 12,
-          status: 'selling',
-          image: '../image/image 16.png',
-          material: 'Bạc 925 & Ngọc trai nước ngọt',
-          description: 'Ngọc trai thiên nhiên tròn trịa đính cùng dây chuyền bạc thanh mảnh nữ tính và quý phái.'
-        },
-        {
-          code: 'SP014',
-          name: 'Dây chuyền Cỏ 4 Lá Lucky Shamrock',
-          category_id: catNecklace.id,
-          price: 520000,
-          stock: 30,
-          status: 'selling',
-          image: '../image/image 17.png',
-          material: 'Bạc 925 đính đá Emerald',
-          description: 'Biểu tượng may mắn 4 lá với viền đá CZ xanh lấp lánh mang lại vận may cho người đeo.'
-        },
-        {
-          code: 'SP015',
-          name: 'Dây chuyền bạc Đá Mặt Trăng Moonstone',
-          category_id: catNecklace.id,
-          price: 730000,
-          stock: 22,
-          status: 'selling',
-          image: '../image/image 18.png',
-          material: 'Bạc Ý 925 & Đá Moonstone',
-          description: 'Đá mặt trăng phát quang ánh xanh huyền bí under ánh sáng, phong cách mộng mơ thời thượng.'
-        },
-
-        // VÒNG TAY (Bracelets)
-        {
-          code: 'SP003',
-          name: 'Vòng tay bạc PT Charming',
-          category_id: catBracelet.id,
-          price: 510000,
-          stock: 40,
-          status: 'selling',
-          image: '../image/image_3.png',
-          material: 'Bạc 925',
-          description: 'Vòng tay bạc cao cấp dạng kiềng mềm dẻo tạo điểm nhấn nhẹ nhàng quyến rũ cho cổ tay.'
-        },
-        {
-          code: 'SP008',
-          name: 'Vòng tay Kim Cương CZ Luxe Bracelet',
-          category_id: catBracelet.id,
-          price: 870000,
-          stock: 15,
-          status: 'selling',
-          image: '../image/image 10.png',
-          material: 'Bạc đính CZ cao cấp',
-          description: 'Dải đá CZ full vòng lấp lánh tuyệt mỹ, đẳng cấp chuẩn trang sức dự tiệc cao cấp.'
-        },
-        {
-          code: 'SP016',
-          name: 'Lắc tay bạc Charm Trái Tim Sweet Love',
-          category_id: catBracelet.id,
-          price: 640000,
-          stock: 28,
-          status: 'selling',
-          image: '../image/image 19.png',
-          material: 'Bạc S925',
-          description: 'Lắc tay bạc xích mảnh phối các hạt charm trái tim rơi nhẹ nhàng thanh thoát.'
-        },
-        {
-          code: 'SP017',
-          name: 'Vòng tay bạc mạ Vàng 18K Luxury',
-          category_id: catBracelet.id,
-          price: 1150000,
-          stock: 10,
-          status: 'selling',
-          image: '../image/image 20.png',
-          material: 'Bạc 925 mạ Vàng 18K',
-          description: 'Lớp mạ vàng 18K sang trọng với khóa cài độc đáo chắc chắn, phối hợp tuyệt vời với đồng hồ.'
-        },
-        {
-          code: 'SP018',
-          name: 'Lắc tay bạc Cánh Bướm Butterfly Dream',
-          category_id: catBracelet.id,
-          price: 580000,
-          stock: 32,
-          status: 'selling',
-          image: '../image/image 21.png',
-          material: 'Bạc 925 đính đá',
-          description: 'Đôi cánh bướm dập dìu đính đá lấp lánh tôn vẻ thanh tú đài các cho phái đẹp.'
-        },
-        {
-          code: 'SP019',
-          name: 'Kiềng tay bạc trơn nguyên chất 999',
-          category_id: catBracelet.id,
-          price: 490000,
-          stock: 50,
-          status: 'selling',
-          image: '../image/image 22.png',
-          material: 'Bạc Ý 999',
-          description: 'Kiềng tay bạc trơn bóng sáng nguyên chất 999 chế tác thủ công tỉ mỉ, linh hoạt điều chỉnh.'
-        },
-
-        // BÔNG TAI (Earrings)
-        {
-          code: 'SP004',
-          name: 'Bông tai bạc Ngôi Sao Starry Night',
-          category_id: catEarring.id,
-          price: 480000,
-          stock: 25,
-          status: 'selling',
-          image: '../image/image 5.png',
-          material: 'Bạc 925',
-          description: 'Bông tai nhỏ xinh hình ngôi sao lấp lánh, làm nổi bật nét dịu dàng và thanh thoát.'
-        },
-        {
-          code: 'SP020',
-          name: 'Bông tai dáng dài Giọt Nước Crystal Drop',
-          category_id: catEarring.id,
-          price: 620000,
-          stock: 20,
-          status: 'selling',
-          image: '../image/image 23.png',
-          material: 'Bạc 925 & Pha lê Swarovski',
-          description: 'Dáng bông thả dài thanh thoát tạo cảm giác thon gọn và nâng tầm khí chất khuôn mặt.'
-        },
-        {
-          code: 'SP021',
-          name: 'Bông tai nụ Nơ Xinh Cute Ribbon',
-          category_id: catEarring.id,
-          price: 390000,
-          stock: 45,
-          status: 'selling',
-          image: '../image/image 24.png',
-          material: 'Bạc S925',
-          description: 'Bông tai nụ hình chiếc nơ nhỏ nhắn đính đá tỉ mỉ, đáng yêu tôn lên nụ cười tươi tắn.'
-        },
-        {
-          code: 'SP022',
-          name: 'Bông tai vành kẹp Ear Cuff Modern',
-          category_id: catEarring.id,
-          price: 450000,
-          stock: 30,
-          status: 'selling',
-          image: '../image/image 25.png',
-          material: 'Bạc Ý 925',
-          description: 'Thiết kế vành kẹp cá tính thời thượng không cần xỏ lỗ tai thứ hai, phong cách hiện đại.'
-        },
-        {
-          code: 'SP023',
-          name: 'Bông tai tròn Hoop Earrings Classic',
-          category_id: catEarring.id,
-          price: 510000,
-          stock: 35,
-          status: 'selling',
-          image: '../image/image 26.png',
-          material: 'Bạc 925 mạ Bạch Kim',
-          description: 'Khuyên tròn cổ điển bản nhỏ chuẩn phom dáng thời trang quốc tế không lo lỗi mốt.'
-        },
-        {
-          code: 'SP024',
-          name: 'Bông tai bạc Ngọc Trai Vintage Queen',
-          category_id: catEarring.id,
-          price: 790000,
-          stock: 15,
-          status: 'selling',
-          image: '../image/image 27.png',
-          material: 'Bạc 925 & Ngọc Trai',
-          description: 'Đỉnh cao quý phái phong cách hoàng gia tân cổ điển dành riêng cho các đêm tiệc trang trọng.'
-        }
-      ];
-
-      for (const prod of sampleProducts) {
-        await Product.upsert(prod);
-      }
-      console.log('✅ Đã nạp thành công 24 sản phẩm trang sức mẫu vào CSDL!');
-    } else {
-      await Product.update({ status: 'selling' }, { where: { status: ['active', ''] } });
+    // Nạp lại toàn bộ dữ liệu mẫu chuẩn
+    await Product.destroy({ where: {} });
+    for (const prod of sampleProducts) {
+      await Product.create(prod);
     }
+    console.log('✅ Đã nạp thành công 24 sản phẩm trang sức chuẩn tên & hình ảnh!');
 
     // 4. MÃ GIẢM GIÁ
     const couponCount = await Coupon.count();

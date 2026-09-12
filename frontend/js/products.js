@@ -3,6 +3,8 @@ const CATEGORY_API = "/api/categories";
 
 let allProducts = [];
 let currentCategory = "all";
+let currentPage = 1;
+const pageSize = 8;
 
 async function initPage() {
   await loadCategories();
@@ -47,12 +49,13 @@ function renderCategories(categories) {
   
   catList.innerHTML = html;
   
-  // Gắn sự kiện click
+  // Gắn sự kiện click danh mục
   catList.querySelectorAll("button").forEach((btn) => {
     btn.onclick = () => {
       catList.querySelectorAll("button").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       currentCategory = btn.dataset.id;
+      currentPage = 1; // Reset về trang 1 khi đổi danh mục
       filterProducts();
     };
   });
@@ -81,12 +84,22 @@ function filterProducts() {
     return matchCategory && matchSearch;
   });
   
-  renderProducts(filtered);
+  const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+  if (currentPage > totalPages) currentPage = 1;
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const pageItems = filtered.slice(startIndex, startIndex + pageSize);
+
+  renderProducts(pageItems);
+  renderPagination(totalPages);
 }
 
 const searchInput = document.getElementById("searchInput");
 if (searchInput) {
-  searchInput.addEventListener("input", filterProducts);
+  searchInput.addEventListener("input", () => {
+    currentPage = 1; // Reset về trang 1 khi tìm kiếm
+    filterProducts();
+  });
 }
 
 function renderProducts(list) {
@@ -94,7 +107,7 @@ function renderProducts(list) {
   if (!container) return;
 
   if (list.length === 0) {
-    container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 20px;">Không tìm thấy sản phẩm nào.</p>`;
+    container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 40px 20px; font-size: 1.1rem; color: #666;">Không tìm thấy sản phẩm nào.</p>`;
     return;
   }
 
@@ -103,7 +116,7 @@ function renderProducts(list) {
       (p) => `
     <div class="card" data-id="${p.id}">
 
-      <img src="${p.image || '../image/image 24.png'}" alt="${p.name}">
+      <img src="${p.image || '../image/image 4.png'}" alt="${p.name}">
 
       <div class="content">
         <h3>${p.name}</h3>
@@ -114,12 +127,8 @@ function renderProducts(list) {
             Xem chi tiết
           </a>
 
-          <i class="fa-regular fa-heart love"></i>
+          <i class="fa-regular fa-heart love" title="Thêm vào yêu thích"></i>
         </div>
-        
-        <button class="cart-btn" data-id="${p.id}" style="width: 100%; margin-top: 10px; background: #333; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;">
-          Thêm vào giỏ
-        </button>
       </div>
 
     </div>
@@ -130,8 +139,58 @@ function renderProducts(list) {
   bindEvents();
 }
 
+function renderPagination(totalPages) {
+  const paginationContainer = document.querySelector(".pagination");
+  if (!paginationContainer) return;
+
+  if (totalPages <= 1) {
+    paginationContainer.style.display = "none";
+    return;
+  }
+
+  paginationContainer.style.display = "flex";
+  
+  let html = `<button class="prev-page" ${currentPage === 1 ? "disabled style='opacity:0.4;cursor:not-allowed;'" : ""}>&lt;</button>`;
+
+  for (let i = 1; i <= totalPages; i++) {
+    const activeClass = i === currentPage ? "active" : "";
+    html += `<button class="page-num ${activeClass}" data-page="${i}">${i}</button>`;
+  }
+
+  html += `<button class="next-page" ${currentPage === totalPages ? "disabled style='opacity:0.4;cursor:not-allowed;'" : ""}>&gt;</button>`;
+
+  paginationContainer.innerHTML = html;
+
+  // Gắn sự kiện chuyển trang
+  paginationContainer.querySelectorAll(".page-num").forEach((btn) => {
+    btn.onclick = () => {
+      currentPage = parseInt(btn.dataset.page);
+      filterProducts();
+      window.scrollTo({ top: 250, behavior: "smooth" });
+    };
+  });
+
+  const prevBtn = paginationContainer.querySelector(".prev-page");
+  if (prevBtn && currentPage > 1) {
+    prevBtn.onclick = () => {
+      currentPage--;
+      filterProducts();
+      window.scrollTo({ top: 250, behavior: "smooth" });
+    };
+  }
+
+  const nextBtn = paginationContainer.querySelector(".next-page");
+  if (nextBtn && currentPage < totalPages) {
+    nextBtn.onclick = () => {
+      currentPage++;
+      filterProducts();
+      window.scrollTo({ top: 250, behavior: "smooth" });
+    };
+  }
+}
+
 function bindEvents() {
-  // LOVE
+  // LOVE (Yêu thích)
   document.querySelectorAll(".love").forEach((icon) => {
     icon.onclick = (e) => {
       const card = e.currentTarget.closest(".card");
@@ -145,31 +204,6 @@ function bindEvents() {
       icon.style.color = isAdded ? "red" : "#000";
     };
   });
-
-  // CART
-  document.querySelectorAll(".cart-btn").forEach((btn) => {
-    btn.onclick = () => {
-      const id = btn.dataset.id;
-      addToCart(id);
-    };
-  });
-}
-
-function addToCart(productId) {
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
-  const product = allProducts.find(p => p.id == productId);
-  if (!product) return;
-  
-  const existingItem = cart.find(item => item.id == productId);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({ ...product, quantity: 1 });
-  }
-  
-  localStorage.setItem('cart', JSON.stringify(cart));
-  alert(`Đã thêm "${product.name}" vào giỏ hàng!`);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
