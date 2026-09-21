@@ -16,11 +16,25 @@ function getProductAvatar(imageField) {
 }
 
 window.isProductInWishlist = function(productId) {
+  const token = localStorage.getItem('token');
+  const user = localStorage.getItem('user');
+  if (!token || !user) return false;
+
   let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
   return wishlist.some(item => item.id == productId);
 };
 
 window.toggleWishlist = function(product) {
+  const token = localStorage.getItem('token');
+  const user = localStorage.getItem('user');
+
+  if (!token || !user) {
+    if (confirm("Bạn cần đăng nhập để sử dụng tính năng yêu thích!\nBạn có muốn chuyển đến trang đăng nhập ngay không?")) {
+      window.location.href = "login.html";
+    }
+    return false;
+  }
+
   let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
   const index = wishlist.findIndex(item => item.id == product.id);
 
