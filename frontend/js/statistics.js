@@ -130,6 +130,29 @@ function updateChart() {
 
 let storeTotalOrders = 0;
 let storeTotalRevenue = 0;
+let productsGrowth = 0;
+let ordersGrowth = 0;
+let customersGrowth = 0;
+let revenueGrowth = 0;
+
+function renderGrowthBadge(elementId, growthValue) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const val = Number(growthValue || 0);
+  if (val > 0) {
+    el.className = "increase";
+    el.style.color = "#16a34a";
+    el.textContent = `↑${val}%`;
+  } else if (val < 0) {
+    el.className = "decrease";
+    el.style.color = "#dc2626";
+    el.textContent = `↓${Math.abs(val)}%`;
+  } else {
+    el.className = "neutral";
+    el.style.color = "#64748b";
+    el.textContent = `0%`;
+  }
+}
 
 function updateOverviewCards() {
   const sumRevenue = filteredData.reduce((sum, item) => sum + Number(item.revenue || 0), 0);
@@ -147,6 +170,11 @@ function updateOverviewCards() {
   if (totalCustEl) totalCustEl.textContent = totalCustomers;
   if (totalOrdEl) totalOrdEl.textContent = displayOrders;
   if (totalRevEl) totalRevEl.textContent = formatMoney(displayRevenue);
+
+  renderGrowthBadge("productsGrowthTag", productsGrowth);
+  renderGrowthBadge("ordersGrowthTag", ordersGrowth);
+  renderGrowthBadge("customersGrowthTag", customersGrowth);
+  renderGrowthBadge("revenueGrowthTag", revenueGrowth);
 }
 
 function getHighestRevenue() {
@@ -285,6 +313,10 @@ async function fetchDataFromAPI(startDate = "", endDate = "") {
       totalCustomers = statResult.data.totalCustomers || 0;
       storeTotalOrders = statResult.data.totalOrders || 0;
       storeTotalRevenue = statResult.data.totalRevenue || 0;
+      productsGrowth = statResult.data.productsGrowth || 0;
+      ordersGrowth = statResult.data.ordersGrowth || 0;
+      customersGrowth = statResult.data.customersGrowth || 0;
+      revenueGrowth = statResult.data.revenueGrowth || 0;
     }
 
     let revUrl = `${API_URL}/dashboard/revenue`;

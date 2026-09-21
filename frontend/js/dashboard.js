@@ -78,12 +78,27 @@ async function loadAdminInfo() {
 // LOAD THỐNG KÊ
 // =====================================
 
+function renderGrowthBadge(elementId, growthValue) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const val = Number(growthValue || 0);
+  if (val > 0) {
+    el.className = "increase";
+    el.style.color = "#16a34a";
+    el.textContent = `↑${val}%`;
+  } else if (val < 0) {
+    el.className = "decrease";
+    el.style.color = "#dc2626";
+    el.textContent = `↓${Math.abs(val)}%`;
+  } else {
+    el.className = "neutral";
+    el.style.color = "#64748b";
+    el.textContent = `0%`;
+  }
+}
+
 async function loadDashboardStatistics() {
   try {
-    // ==========================
-    // BACKEND
-    // ==========================
-
     const response = await fetch(`${API_BASE}/dashboard/statistics`, {
       headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
     });
@@ -99,6 +114,11 @@ async function loadDashboardStatistics() {
     totalOrders.textContent = data.totalOrders;
     totalCustomers.textContent = data.totalCustomers;
     totalRevenue.textContent = formatMoney(data.totalRevenue);
+
+    renderGrowthBadge("productsGrowthTag", data.productsGrowth);
+    renderGrowthBadge("ordersGrowthTag", data.ordersGrowth);
+    renderGrowthBadge("customersGrowthTag", data.customersGrowth);
+    renderGrowthBadge("revenueGrowthTag", data.revenueGrowth);
 
   } catch (error) {
     console.error(error);

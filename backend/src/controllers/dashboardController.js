@@ -2,6 +2,14 @@ const { Product, Order, User, OrderItem } = require('../models');
 const { Op } = require('sequelize');
 const sequelize = require('../config/database');
 
+function calculateGrowth(current, previous) {
+  if (previous === 0) {
+    return current > 0 ? 100 : 0;
+  }
+  const growth = ((current - previous) / previous) * 100;
+  return Math.round(growth * 10) / 10;
+}
+
 exports.getStatistics = async (req, res) => {
   try {
     const totalProducts = await Product.count();
@@ -15,13 +23,53 @@ exports.getStatistics = async (req, res) => {
       }
     });
 
+    // Tính toán số liệu tháng này và tháng trước để tính % tăng/giảm thực tế
+    const now = new Date();
+    const firstDayThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const firstDayLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const lastDayLastMonth = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
+
+    // 1. Sản phẩm mới
+    const productsThisMonth = await Product.count({ where: { created_at: { [Op.gte]: firstDayThisMonth } } });
+    const productsLastMonth = await Product.count({ where: { created_at: { [Op.gte]: firstDayLastMonth, [Op.lte]: lastDayLastMonth } } });
+    const productsGrowth = calculateGrowth(productsThisMonth, productsLastMonth);
+
+    // 2. Đơn hàng
+    const ordersThisMonth = await Order.count({ where: { created_at: { [Op.gte]: firstDayThisMonth } } });
+    const ordersLastMonth = await Order.count({ where: { created_at: { [Op.gte]: firstDayLastMonth, [Op.lte]: lastDayLastMonth } } });
+    const ordersGrowth = calculateGrowth(ordersThisMonth, ordersLastMonth);
+
+    // 3. Khách hàng mới
+    const customersThisMonth = await User.count({ where: { role: 'user', created_at: { [Op.gte]: firstDayThisMonth } } });
+    const customersLastMonth = await User.count({ where: { role: 'user', created_at: { [Op.gte]: firstDayLastMonth, [Op.lte]: lastDayLastMonth } } });
+    const customersGrowth = calculateGrowth(customersThisMonth, customersLastMonth);
+
+    // 4. Doanh thu
+    const revThisMonth = await Order.sum('total_price', {
+      where: {
+        status: { [Op.in]: ['completed', 'success', 'shipping', 'processing', 'pending'] },
+        created_at: { [Op.gte]: firstDayThisMonth }
+      }
+    }) || 0;
+    const revLastMonth = await Order.sum('total_price', {
+      where: {
+        status: { [Op.in]: ['completed', 'success', 'shipping', 'processing', 'pending'] },
+        created_at: { [Op.gte]: firstDayLastMonth, [Op.lte]: lastDayLastMonth }
+      }
+    }) || 0;
+    const revenueGrowth = calculateGrowth(Number(revThisMonth), Number(revLastMonth));
+
     res.json({
       success: true,
       data: {
         totalProducts,
         totalOrders,
         totalCustomers,
-        totalRevenue: Number(totalRevenue || 0)
+        totalRevenue: Number(totalRevenue || 0),
+        productsGrowth,
+        ordersGrowth,
+        customersGrowth,
+        revenueGrowth
       }
     });
   } catch (err) {
