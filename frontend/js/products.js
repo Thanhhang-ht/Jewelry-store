@@ -102,6 +102,50 @@ if (searchInput) {
   });
 }
 
+function getProductAvatar(imageField) {
+  if (!imageField) return '../image/image 4.png';
+  if (Array.isArray(imageField)) return imageField[0] || '../image/image 4.png';
+  if (typeof imageField === 'string' && imageField.trim().startsWith('[')) {
+    try {
+      const arr = JSON.parse(imageField);
+      if (Array.isArray(arr) && arr.length > 0) return arr[0];
+    } catch(e) {}
+  }
+  return imageField;
+}
+
+if (!window.isProductInWishlist) {
+  window.isProductInWishlist = function(productId) {
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    return wishlist.some(item => item.id == productId);
+  };
+}
+
+if (!window.toggleWishlist) {
+  window.toggleWishlist = function(product) {
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const index = wishlist.findIndex(item => item.id == product.id);
+
+    if (index !== -1) {
+      wishlist.splice(index, 1);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      alert(`Đã xóa "${product.name}" khỏi danh sách yêu thích.`);
+      return false;
+    } else {
+      const avatar = getProductAvatar(product.image);
+      wishlist.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: avatar
+      });
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      alert(`💖 Đã thêm "${product.name}" vào danh sách yêu thích!`);
+      return true;
+    }
+  };
+}
+
 function renderProducts(list) {
   const container = document.getElementById("productList");
   if (!container) return;
@@ -113,10 +157,15 @@ function renderProducts(list) {
 
   container.innerHTML = list
     .map(
-      (p) => `
+      (p) => {
+        const avatar = getProductAvatar(p.image);
+        const inWishlist = window.isProductInWishlist(p.id);
+        const heartClass = inWishlist ? "fa-solid fa-heart love" : "fa-regular fa-heart love";
+        const heartColor = inWishlist ? "color: red;" : "color: #000;";
+        return `
     <div class="card" data-id="${p.id}">
 
-      <img src="${p.image || '../image/image 4.png'}" alt="${p.name}">
+      <img src="${avatar}" alt="${p.name}">
 
       <div class="content">
         <h3>${p.name}</h3>
@@ -127,12 +176,13 @@ function renderProducts(list) {
             Xem chi tiết
           </a>
 
-          <i class="fa-regular fa-heart love" title="Thêm vào yêu thích"></i>
+          <i class="${heartClass}" style="${heartColor}" title="Thêm vào yêu thích"></i>
         </div>
       </div>
 
     </div>
-  `
+  `;
+      }
     )
     .join("");
 

@@ -25,7 +25,7 @@ const Product = sequelize.define('Product', {
     defaultValue: 0
   },
   image: {
-    type: DataTypes.STRING(255)
+    type: DataTypes.TEXT
   },
   material: {
     type: DataTypes.STRING(100)

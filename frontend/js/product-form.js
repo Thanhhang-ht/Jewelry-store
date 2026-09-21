@@ -18,8 +18,7 @@ const price = document.getElementById("price");
 const quantity = document.getElementById("quantity");
 const description = document.getElementById("description");
 
-let uploadedImageBase64 = "";
-let existingImage = "";
+let productImagesList = []; // Mảng chứa tối đa 3 ảnh (Ảnh 0 làm Avatar)
 
 window.addEventListener("DOMContentLoaded", async () => {
   await loadCategories();
@@ -78,14 +77,26 @@ async function loadProductData() {
     price.value = Number(p.price).toLocaleString("vi-VN");
     quantity.value = p.stock;
     description.value = p.description || "";
-    existingImage = p.image || "";
+
+    // Parse mảng ảnh cũ nếu có
+    if (p.image) {
+      if (p.image.startsWith("[")) {
+        try {
+          productImagesList = JSON.parse(p.image);
+        } catch (e) {
+          productImagesList = [p.image];
+        }
+      } else if (p.image.includes("|||")) {
+        productImagesList = p.image.split("|||");
+      } else {
+        productImagesList = [p.image];
+      }
+    }
 
     const statusRadio = document.querySelector(`input[name="status"][value="${p.status}"]`);
     if (statusRadio) statusRadio.checked = true;
 
-    if (p.image) {
-      renderPreview();
-    }
+    renderPreview();
   } catch (err) {
     console.error(err);
   }
@@ -109,46 +120,82 @@ if (quantity) {
 }
 
 if (imageInput) {
-  imageInput.addEventListener("change", function () {
+  imageInput.addEventListener("change", async function () {
     const files = [...this.files];
     if (files.length === 0) return;
+
+    if (productImagesList.length + files.length > 3) {
+      alert("⚠️ Bạn chỉ được chọn tối đa 3 ảnh cho mỗi sản phẩm!");
+    }
+
+    const remainingSlots = 3 - productImagesList.length;
+    const filesToRead = files.slice(0, remainingSlots);
+
+    for (const file of filesToRead) {
+      const base64 = await readFileAsBase64(file);
+      productImagesList.push(base64);
+    }
+
+    imageInput.value = ""; // Reset input
+    renderPreview();
+  });
+}
+
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = function (e) {
-      uploadedImageBase64 = e.target.result;
-      renderPreview();
-    };
-    reader.readAsDataURL(files[0]);
+    reader.onload = (e) => resolve(e.target.result);
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
   });
 }
 
 function renderPreview() {
   if (!previewList) return;
   previewList.innerHTML = "";
-  const imgSrc = uploadedImageBase64 || existingImage;
-  if (!imgSrc) return;
 
-  const div = document.createElement("div");
-  div.style.position = "relative";
-  div.style.display = "inline-block";
-  div.innerHTML = `
-    <img src="${imgSrc}" style="width:100px;height:100px;object-fit:cover;border-radius:5px;">
-    <button type="button" class="remove-image" style="position:absolute;top:-5px;right:-5px;background:red;color:white;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.75rem;">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-  `;
-  div.querySelector(".remove-image").addEventListener("click", () => {
-    uploadedImageBase64 = "";
-    existingImage = "";
-    if (imageInput) imageInput.value = "";
-    previewList.innerHTML = "";
+  const uploadBtnLabel = document.querySelector(".upload-item");
+  if (uploadBtnLabel) {
+    if (productImagesList.length >= 3) {
+      uploadBtnLabel.style.display = "none";
+    } else {
+      uploadBtnLabel.style.display = "flex";
+    }
+  }
+
+  productImagesList.forEach((imgSrc, index) => {
+    const div = document.createElement("div");
+    div.style.position = "relative";
+    div.style.display = "inline-block";
+    div.style.marginRight = "10px";
+    div.style.marginBottom = "10px";
+
+    const isAvatar = index === 0;
+    const badgeText = isAvatar ? "★ Avatar" : `Ảnh ${index + 1}`;
+    const badgeBg = isAvatar ? "#0d4dbb" : "rgba(0,0,0,0.6)";
+
+    div.innerHTML = `
+      <img src="${imgSrc}" style="width:100px;height:100px;object-fit:cover;border-radius:6px;border: ${isAvatar ? '2px solid #0d4dbb' : '1px solid #ccc'};">
+      <span style="position:absolute;bottom:5px;left:5px;background:${badgeBg};color:white;font-size:0.65rem;padding:2px 6px;border-radius:4px;font-weight:bold;">${badgeText}</span>
+      <button type="button" class="remove-image" data-index="${index}" style="position:absolute;top:-6px;right:-6px;background:#d93025;color:white;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.75rem;box-shadow:0 2px 5px rgba(0,0,0,0.2);">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    `;
+
+    div.querySelector(".remove-image").addEventListener("click", (e) => {
+      e.stopPropagation();
+      productImagesList.splice(index, 1);
+      renderPreview();
+    });
+
+    previewList.appendChild(div);
   });
-  previewList.appendChild(div);
 }
 
 function validateForm() {
-  if (!productName.value.trim()) { alert("Vui lòng nhập tên!"); return false; }
+  if (!productName.value.trim()) { alert("Vui lòng nhập tên sản phẩm!"); return false; }
   if (!categoryId.value) { alert("Vui lòng chọn danh mục!"); return false; }
-  if (!price.value.trim()) { alert("Vui lòng nhập giá!"); return false; }
+  if (!price.value.trim()) { alert("Vui lòng nhập giá bán!"); return false; }
   if (!quantity.value.trim()) { alert("Vui lòng nhập số lượng!"); return false; }
   return true;
 }
@@ -161,7 +208,13 @@ if (productForm) {
     const parsedPrice = parseInt(price.value.replace(/\D/g, ""));
     const parsedStock = parseInt(quantity.value.replace(/\D/g, ""));
     const statusVal = document.querySelector("input[name='status']:checked")?.value || "selling";
-    const finalImage = uploadedImageBase64 || existingImage || "../image/image 4.png";
+    
+    let finalImage = "../image/image 4.png";
+    if (productImagesList.length === 1) {
+      finalImage = productImagesList[0];
+    } else if (productImagesList.length > 1) {
+      finalImage = JSON.stringify(productImagesList);
+    }
 
     const payload = {
       name: productName.value.trim(),
@@ -214,7 +267,7 @@ if (btnCancel) {
 
 if (btnDelete) {
   btnDelete.addEventListener("click", async () => {
-    if (!confirm("Chắc chắn xóa?")) return;
+    if (!confirm("Chắc chắn xóa sản phẩm này?")) return;
     try {
       const res = await fetch(`${API_URL}/products/${editId}`, {
         method: "DELETE",

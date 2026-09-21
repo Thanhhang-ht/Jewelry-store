@@ -77,7 +77,21 @@ function renderProductRow(product) {
   const statusClass = product.status === "selling" ? "selling" : "out-stock";
   const statusText = product.status === "selling" ? "Đang bán" : "Hết hàng";
   const catName = product.category ? product.category.name : "Không rõ";
-  const image = product.image || '../image/image 4.png';
+  let image = '../image/image 4.png';
+  if (product.image) {
+    if (product.image.startsWith("[")) {
+      try {
+        const imgs = JSON.parse(product.image);
+        image = imgs[0] || image;
+      } catch (e) {
+        image = product.image;
+      }
+    } else if (product.image.includes("|||")) {
+      image = product.image.split("|||")[0];
+    } else {
+      image = product.image;
+    }
+  }
 
   return `
         <tr>

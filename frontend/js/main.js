@@ -3,6 +3,46 @@ const API_URL = "/api";
 let products = [];
 let allStoreProducts = []; // Lưu toàn bộ sản phẩm trong CSDL để AI tra cứu
 
+function getProductAvatar(imageField) {
+  if (!imageField) return '../image/image 24.png';
+  if (Array.isArray(imageField)) return imageField[0] || '../image/image 24.png';
+  if (typeof imageField === 'string' && imageField.trim().startsWith('[')) {
+    try {
+      const arr = JSON.parse(imageField);
+      if (Array.isArray(arr) && arr.length > 0) return arr[0];
+    } catch(e) {}
+  }
+  return imageField;
+}
+
+window.isProductInWishlist = function(productId) {
+  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+  return wishlist.some(item => item.id == productId);
+};
+
+window.toggleWishlist = function(product) {
+  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+  const index = wishlist.findIndex(item => item.id == product.id);
+
+  if (index !== -1) {
+    wishlist.splice(index, 1);
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    alert(`Đã xóa "${product.name}" khỏi danh sách yêu thích.`);
+    return false;
+  } else {
+    const avatar = getProductAvatar(product.image);
+    wishlist.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: avatar
+    });
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    alert(`💖 Đã thêm "${product.name}" vào danh sách yêu thích!`);
+    return true;
+  }
+};
+
 async function loadLatestProducts() {
   try {
     const res = await fetch(`${API_URL}/products`);
@@ -24,11 +64,16 @@ function renderProducts(list) {
 
   container.innerHTML = list
     .map(
-      (p) => `
+      (p) => {
+        const avatar = getProductAvatar(p.image);
+        const inWishlist = window.isProductInWishlist(p.id);
+        const heartClass = inWishlist ? "fa-solid fa-heart love" : "fa-regular fa-heart love";
+        const heartColor = inWishlist ? "color: red;" : "color: black;";
+        return `
     <div class="pro-item" data-id="${p.id}">
       <div class="pro-img">
-        <img src="${p.image || '../image/image 24.png'}" alt="${p.name}">
-        <i class="fa-regular fa-heart love"></i>
+        <img src="${avatar}" alt="${p.name}">
+        <i class="${heartClass}" style="${heartColor}"></i>
       </div>
 
       <div class="pro-info">
@@ -46,34 +91,13 @@ function renderProducts(list) {
         </button>
       </div>
     </div>
-  `
+  `;
+      }
     )
     .join("");
 
   bindEvents();
 }
-
-window.toggleWishlist = function(product) {
-  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  const index = wishlist.findIndex(item => item.id == product.id);
-
-  if (index !== -1) {
-    wishlist.splice(index, 1);
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    alert(`Đã xóa "${product.name}" khỏi danh sách yêu thích.`);
-    return false;
-  } else {
-    wishlist.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image
-    });
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    alert(`💖 Đã thêm "${product.name}" vào danh sách yêu thích!`);
-    return true;
-  }
-};
 
 function bindEvents() {
   // ADD TO CART
@@ -92,7 +116,7 @@ function bindEvents() {
       const product = allStoreProducts.find(p => p.id == id) || products.find(p => p.id == id);
       if (!product) return;
 
-      const isAdded = toggleWishlist(product);
+      const isAdded = window.toggleWishlist(product);
       icon.classList.toggle("fa-regular", !isAdded);
       icon.classList.toggle("fa-solid", isAdded);
       icon.style.color = isAdded ? "red" : "black";

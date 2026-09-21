@@ -2,275 +2,131 @@
 <html lang="vi">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Thêm/Sửa mã giảm giá - Jewelry Store</title>
+    <title>Mã giảm giá - Jewelry Store Admin</title>
 
     <!-- CSS -->
-
     <link rel="stylesheet" href="../css/dashboard.css">
-
     <link rel="stylesheet" href="../css/category-form.css">
 
     <!-- Font Awesome -->
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
-
 </head>
 
 <body>
-
     <div class="dashboard-container">
 
-        <!-- ==========================
-                SIDEBAR
-        =========================== -->
-
+        <!-- SIDEBAR -->
         <aside class="sidebar">
-
             <div class="logo">
-
                 <h1>Jewelry Store</h1>
-
                 <p>ADMIN PANEL</p>
-
             </div>
-
             <hr>
-
             <ul class="sidebar-menu">
-
                 <li>
-
                     <a href="dashboard.html">
-
-                        <i class="fa-solid fa-house"></i>
-
-                        Dashboard
-
+                        <i class="fa-solid fa-house"></i> Dashboard
                     </a>
-
                 </li>
-
                 <li>
-
                     <a href="product-management.html">
-
-                        <i class="fa-solid fa-cube"></i>
-
-                        Quản lý sản phẩm
-
+                        <i class="fa-solid fa-cube"></i> Quản lý sản phẩm
                     </a>
-
                 </li>
-
-                <li class="active">
-
-                    <a href="coupon-management.html">
-
-                        <i class="fa-solid fa-table-list"></i>
-
-                        Danh mục
-
-                    </a>
-
-                </li>
-
                 <li>
-
-                    <a href="order-management.html">
-
-                        <i class="fa-solid fa-bag-shopping"></i>
-
-                        Quản lý đơn hàng
-
+                    <a href="category-management.html">
+                        <i class="fa-solid fa-table-list"></i> Danh mục
                     </a>
-
                 </li>
-
+                <li>
+                    <a href="order-management.html">
+                        <i class="fa-solid fa-bag-shopping"></i> Quản lý đơn hàng
+                    </a>
+                </li>
                 <li>
                     <a href="customer-management.html">
-                        <i class="fa-solid fa-user-group"></i>
-                        Quản lý khách hàng
+                        <i class="fa-solid fa-user-group"></i> Quản lý khách hàng
                     </a>
                 </li>
-
-                <li>
+                <li class="active">
                     <a href="coupon-management.html">
-                        <i class="fa-solid fa-ticket"></i>
-                        Mã giảm giá
+                        <i class="fa-solid fa-ticket"></i> Mã giảm giá
                     </a>
                 </li>
-
                 <li>
-
                     <a href="statistics.html">
-
-                        <i class="fa-solid fa-chart-line"></i>
-
-                        Thống kê
-
+                        <i class="fa-solid fa-chart-line"></i> Thống kê
                     </a>
-
                 </li>
-
                 <li id="logoutBtn">
-
                     <a href="#">
-
-                        <i class="fa-solid fa-right-from-bracket"></i>
-
-                        Đăng xuất
-
+                        <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
                     </a>
-
                 </li>
-
             </ul>
 
             <div class="sidebar-user">
-
                 <div class="avatar">
-
                     <i class="fa-solid fa-user"></i>
-
                 </div>
-
                 <div class="user-info">
-
                     <h3 id="adminName">Admin</h3>
-
                     <span>Quản trị viên</span>
-
                 </div>
-
-                <i class="fa-solid fa-chevron-down"></i>
-
             </div>
-
         </aside>
 
-        <!-- ==========================
-                MAIN CONTENT
-        =========================== -->
-
+        <!-- MAIN CONTENT -->
         <main class="main-content">
 
-            <!-- ==========================
-                    HEADER
-            =========================== -->
-
+            <!-- HEADER -->
             <header class="topbar">
-
                 <div class="topbar-left">
-
                     <button class="menu-btn">
-
                         <i class="fa-solid fa-bars"></i>
-
                     </button>
-
-                    <h2 id="formTitle">
-
-                        Thêm danh mục
-
-                    </h2>
-
+                    <h2 id="pageTitle">Thêm mã giảm giá mới</h2>
                 </div>
-
                 <div class="topbar-right">
-
                     <button class="notification-btn">
-
                         <i class="fa-regular fa-bell"></i>
-
                     </button>
-
                 </div>
-
             </header>
 
-            <!-- ==========================
-                    CATEGORY FORM
-            =========================== -->
+            <!-- FORM CONTAINER -->
             <section class="category-form-container">
-
                 <form id="couponForm" class="category-form">
+                    <div class="form-left"></div>
+                    <div class="form-right"></div>
+                </form>
 
-                    <!-- ==========================
-                            LEFT
-                    =========================== -->
-
-                    <form id="couponForm" class="category-form">
-    <div class="form-left"></div>
-    <div class="form-right"></div>
-</form>
-
-                <!-- ==========================
-                        BUTTONS
-                =========================== -->
-
+                <!-- BUTTONS -->
                 <div class="form-actions">
-
                     <a href="coupon-management.html" class="back-btn">
-
-                        Quay lại
-
+                        <i class="fa-solid fa-arrow-left"></i> Quay lại
                     </a>
-
                     <div class="right-actions">
-
-                        <button type="button" id="deleteBtn" class="delete-btn">
-
-                            Xóa danh mục
-
-                        </button>
-
-                        <button type="reset" class="cancel-btn">
-
-                            Hủy
-
-                        </button>
-
+                        <button type="reset" form="couponForm" class="cancel-btn">Hủy</button>
                         <button type="submit" form="couponForm" class="save-btn">
-
-                            Lưu mã giảm giá
-
+                            <i class="fa-solid fa-floppy-disk"></i> Lưu mã giảm giá
                         </button>
-
                     </div>
-
                 </div>
-
             </section>
-            <!-- ==========================
-                    FOOTER
-            =========================== -->
 
+            <!-- FOOTER -->
             <footer class="footer">
-
-                <p>
-
-                    © 2026 Jewelry Store. All rights reserved.
-
-                </p>
-
+                <p>© 2026 Jewelry Store. All rights reserved.</p>
             </footer>
 
         </main>
-
     </div>
 
-    <!-- ==========================
-            JAVASCRIPT
-    =========================== -->
-
+    <!-- JAVASCRIPT -->
     <script src="../js/db.js"></script>
     <script src="../js/coupon-form.js"></script>
-
 </body>
-
 </html>

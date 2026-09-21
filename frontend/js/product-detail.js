@@ -37,6 +37,18 @@ async function loadProductDetail(id) {
   }
 }
 
+function parseProductImages(imageField) {
+  if (!imageField) return ['../image/image 24.png'];
+  if (Array.isArray(imageField)) return imageField.length > 0 ? imageField : ['../image/image 24.png'];
+  if (typeof imageField === 'string' && imageField.trim().startsWith('[')) {
+    try {
+      const arr = JSON.parse(imageField);
+      if (Array.isArray(arr) && arr.length > 0) return arr;
+    } catch(e) {}
+  }
+  return [imageField];
+}
+
 function renderProductDetail(product) {
   document.title = product.name + " | Jewelry Store";
   
@@ -55,18 +67,16 @@ function renderProductDetail(product) {
   const descEl = document.getElementById("productDescription");
   if (descEl) descEl.innerText = product.description || "Chưa có mô tả.";
 
-  const img = product.image || '../image/image 24.png';
+  const imagesList = parseProductImages(product.image);
   const mainImg = document.getElementById("mainImg");
-  if (mainImg) mainImg.src = img;
+  if (mainImg) mainImg.src = imagesList[0];
 
-  // Render thumbs gallery (Fake gallery with the same image)
+  // Render thumbs gallery (Dynamically from uploaded images)
   const thumbsContainer = document.querySelector(".thumbs");
   if (thumbsContainer) {
-    thumbsContainer.innerHTML = `
-      <img src="${img}" class="thumb active">
-      <img src="${img}" class="thumb">
-      <img src="${img}" class="thumb">
-    `;
+    thumbsContainer.innerHTML = imagesList.map((imgSrc, idx) => `
+      <img src="${imgSrc}" class="thumb ${idx === 0 ? 'active' : ''}">
+    `).join("");
     
     const thumbs = thumbsContainer.querySelectorAll(".thumb");
     thumbs.forEach((thumbImg) => {
@@ -125,11 +135,25 @@ function renderProductDetail(product) {
   if (favoriteBtn) {
     const newFavBtn = favoriteBtn.cloneNode(true);
     favoriteBtn.parentNode.replaceChild(newFavBtn, favoriteBtn);
+    const icon = newFavBtn.querySelector("i");
+    
+    // Check initial wishlist status
+    const inWishlist = window.isProductInWishlist ? window.isProductInWishlist(product.id) : false;
+    if (icon) {
+      icon.classList.toggle("fa-regular", !inWishlist);
+      icon.classList.toggle("fa-solid", inWishlist);
+      icon.style.color = inWishlist ? "red" : "#000";
+    }
+
     newFavBtn.addEventListener("click", () => {
-      const icon = newFavBtn.querySelector("i");
-      icon.classList.toggle("fa-regular");
-      icon.classList.toggle("fa-solid");
-      icon.style.color = icon.classList.contains("fa-solid") ? "red" : "#000";
+      if (window.toggleWishlist) {
+        const isAdded = window.toggleWishlist(product);
+        if (icon) {
+          icon.classList.toggle("fa-regular", !isAdded);
+          icon.classList.toggle("fa-solid", isAdded);
+          icon.style.color = isAdded ? "red" : "#000";
+        }
+      }
     });
   }
 
@@ -225,28 +249,40 @@ function renderRelatedProducts(products) {
 
   relatedList.innerHTML = products
     .map(
-      (p) => `
+      (p) => {
+        const avatar = parseProductImages(p.image)[0];
+        const inWishlist = window.isProductInWishlist ? window.isProductInWishlist(p.id) : false;
+        const heartClass = inWishlist ? "fa-solid fa-heart love" : "fa-regular fa-heart love";
+        const heartColor = inWishlist ? "color: red;" : "color: black;";
+        return `
     <div class="card" data-id="${p.id}">
-      <img src="${p.image || '../image/image 24.png'}">
+      <img src="${avatar}">
       <div class="content">
         <h3>${p.name}</h3>
         <p class="price-card">${Number(p.price).toLocaleString("vi-VN")}đ</p>
         <div class="action">
           <a href="product-detail.html?id=${p.id}" class="detail-btn">Xem chi tiết</a>
-          <i class="fa-regular fa-heart love" data-id="${p.id}"></i>
+          <i class="${heartClass}" style="${heartColor}" data-id="${p.id}"></i>
         </div>
       </div>
     </div>
-  `
+  `;
+      }
     )
     .join("");
 
   // Bind love icons for related products
   relatedList.querySelectorAll(".love").forEach((heart) => {
     heart.addEventListener("click", () => {
-      heart.classList.toggle("fa-regular");
-      heart.classList.toggle("fa-solid");
-      heart.style.color = heart.classList.contains("fa-solid") ? "red" : "black";
+      const id = heart.dataset.id;
+      const product = products.find(p => p.id == id);
+      if (!product) return;
+      if (window.toggleWishlist) {
+        const isAdded = window.toggleWishlist(product);
+        heart.classList.toggle("fa-regular", !isAdded);
+        heart.classList.toggle("fa-solid", isAdded);
+        heart.style.color = isAdded ? "red" : "black";
+      }
     });
   });
 }

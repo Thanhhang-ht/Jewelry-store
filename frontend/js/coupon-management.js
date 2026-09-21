@@ -1,5 +1,7 @@
 const API_BASE = "/api";
 
+let allCouponsList = [];
+
 document.addEventListener("DOMContentLoaded", () => {
     // Kiểm tra quyền Admin
     const token = localStorage.getItem("token");
@@ -19,13 +21,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadCoupons();
 
-    // Xử lý nút tìm kiếm
+    // Xử lý tìm kiếm
+    const searchInput = document.getElementById("searchCoupon");
+    if (searchInput) {
+        searchInput.addEventListener("input", filterAndRenderCoupons);
+    }
+
     const searchBtn = document.getElementById("searchBtn");
     if (searchBtn) {
-        searchBtn.addEventListener("click", () => {
-            const query = document.getElementById("searchCoupon").value.toLowerCase();
-            loadCoupons(query);
-        });
+        searchBtn.addEventListener("click", filterAndRenderCoupons);
+    }
+
+    // Xử lý lọc theo trạng thái
+    const statusFilter = document.getElementById("statusFilter");
+    if (statusFilter) {
+        statusFilter.addEventListener("change", filterAndRenderCoupons);
     }
 
     // Xử lý đăng xuất
@@ -40,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-async function loadCoupons(searchQuery = "") {
+async function loadCoupons() {
     try {
         const res = await fetch(`${API_BASE}/coupons`, {
             headers: {
@@ -50,11 +60,9 @@ async function loadCoupons(searchQuery = "") {
         const result = await res.json();
         
         if (result.success) {
-            let coupons = result.data;
-            if (searchQuery) {
-                coupons = coupons.filter(c => c.code.toLowerCase().includes(searchQuery));
-            }
-            renderCoupons(coupons);
+            allCouponsList = result.data || [];
+            updateStatsSummary(allCouponsList);
+            filterAndRenderCoupons();
         } else {
             console.error("Lỗi:", result.message);
         }
@@ -63,32 +71,98 @@ async function loadCoupons(searchQuery = "") {
     }
 }
 
+function updateStatsSummary(coupons) {
+    const totalEl = document.getElementById("statTotal");
+    const activeEl = document.getElementById("statActive");
+    const percentEl = document.getElementById("statPercent");
+    const fixedEl = document.getElementById("statFixed");
+
+    if (totalEl) totalEl.textContent = coupons.length;
+    if (activeEl) activeEl.textContent = coupons.filter(c => c.status === 'active').length;
+    if (percentEl) percentEl.textContent = coupons.filter(c => c.discount_type === 'percent').length;
+    if (fixedEl) fixedEl.textContent = coupons.filter(c => c.discount_type === 'fixed').length;
+}
+
+function filterAndRenderCoupons() {
+    const searchQuery = (document.getElementById("searchCoupon")?.value || "").toLowerCase().trim();
+    const statusVal = document.getElementById("statusFilter")?.value || "all";
+
+    let filtered = allCouponsList.filter(c => {
+        const matchSearch = c.code.toLowerCase().includes(searchQuery);
+        const matchStatus = statusVal === "all" || c.status === statusVal;
+        return matchSearch && matchStatus;
+    });
+
+    renderCoupons(filtered);
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return "Không thời hạn";
+    try {
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
+        return d.toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' });
+    } catch (e) {
+        return dateStr;
+    }
+}
+
 function renderCoupons(coupons) {
     const tbody = document.getElementById("couponTableBody");
+    if (!tbody) return;
     tbody.innerHTML = "";
 
     if (coupons.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Không có mã giảm giá nào.</td></tr>`;
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" style="text-align: center; padding: 40px 20px; color: #64748b;">
+                    <i class="fa-solid fa-ticket" style="font-size: 32px; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
+                    Không tìm thấy mã giảm giá nào.
+                </td>
+            </tr>`;
         return;
     }
 
     coupons.forEach(coupon => {
-        const typeLabel = coupon.discount_type === "percent" ? "%" : "VNĐ";
+        const isPercent = coupon.discount_type === "percent";
+        const valText = isPercent ? `${coupon.discount_value}%` : `${Number(coupon.discount_value).toLocaleString('vi-VN')}đ`;
+        const minOrderText = Number(coupon.min_order_value) > 0 
+            ? `Đơn từ ${Number(coupon.min_order_value).toLocaleString('vi-VN')}đ` 
+            : "Mọi đơn hàng";
+
+        const startDateFormatted = formatDate(coupon.start_date);
+        const endDateFormatted = formatDate(coupon.end_date);
+        const dateRangeText = `${startDateFormatted} - ${endDateFormatted}`;
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td><input type="checkbox" class="coupon-checkbox" value="${coupon.id}"></td>
-            <td><strong style="color: #8c6600; background: #fffdf0; padding: 5px 10px; border-radius: 6px; border: 1px dashed #d4af37; font-family: monospace; font-size: 0.95rem;"><i class="fa-solid fa-ticket"></i> ${coupon.code}</strong></td>
-            <td style="color: #c5221f; font-weight: bold; font-size: 0.95rem;">${coupon.discount_type === 'fixed' ? Number(coupon.discount_value).toLocaleString() : coupon.discount_value}${typeLabel}</td>
-            <td style="font-weight: 500;">Đơn từ ${Number(coupon.min_order_value).toLocaleString()}đ</td>
             <td>
-                <span class="status-badge ${coupon.status === 'active' ? 'active' : 'inactive'}" style="padding: 4px 12px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; background: ${coupon.status === 'active' ? '#e6f4ea' : '#fce8e6'}; color: ${coupon.status === 'active' ? '#137333' : '#c5221f'}; display: inline-block;">
+                <div class="coupon-ticket-badge">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>${coupon.code}</span>
+                </div>
+            </td>
+            <td>
+                <span class="discount-value-badge ${isPercent ? 'percent' : 'fixed'}">
+                    ${isPercent ? '🔥 Giảm ' : '💰 Giảm '}${valText}
+                </span>
+            </td>
+            <td><strong>${minOrderText}</strong></td>
+            <td style="font-size: 13px; color: #64748b;"><i class="fa-regular fa-calendar-days"></i> ${dateRangeText}</td>
+            <td>
+                <span class="status-pill ${coupon.status === 'active' ? 'active' : 'inactive'}">
                     ${coupon.status === 'active' ? '● Hoạt động' : '○ Đã khóa'}
                 </span>
             </td>
             <td>
-                <div class="action-buttons" style="display: flex; gap: 8px;">
-                    <a href="coupon-form.html?mode=edit&id=${coupon.id}" class="btn-edit" title="Sửa" style="color: #1a73e8; padding: 5px 10px; border-radius: 6px; border: 1px solid #d2e3fc; background: #e8f0fe; text-decoration: none; font-weight: 600; font-size: 0.85rem;"><i class="fa-regular fa-pen-to-square"></i> Sửa</a>
-                    <button class="btn-delete" title="Xóa" onclick="deleteCoupon(${coupon.id})" style="color: #d93025; padding: 5px 10px; border-radius: 6px; border: 1px solid #fce8e6; background: #fce8e6; cursor: pointer; font-weight: 600; font-size: 0.85rem;"><i class="fa-regular fa-trash-can"></i> Xóa</button>
+                <div class="action-buttons">
+                    <a href="coupon-form.html?mode=edit&id=${coupon.id}" class="action-btn btn-edit" title="Chỉnh sửa">
+                        <i class="fa-regular fa-pen-to-square"></i> Sửa
+                    </a>
+                    <button class="action-btn btn-delete" title="Xóa" onclick="deleteCoupon(${coupon.id})">
+                        <i class="fa-regular fa-trash-can"></i> Xóa
+                    </button>
                 </div>
             </td>
         `;
@@ -118,3 +192,4 @@ async function deleteCoupon(id) {
         alert("Lỗi kết nối mạng!");
     }
 }
+
