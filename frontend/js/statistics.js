@@ -128,225 +128,130 @@ function updateChart() {
 // CẬP NHẬT 4 THẺ THỐNG KÊ
 // ==========================================
 
+let storeTotalOrders = 0;
+let storeTotalRevenue = 0;
+
 function updateOverviewCards() {
-  const totalRevenue = filteredData.reduce((sum, item) => {
-    return sum + Number(item.revenue);
-  }, 0);
+  const sumRevenue = filteredData.reduce((sum, item) => sum + Number(item.revenue || 0), 0);
+  const sumOrders = filteredData.reduce((sum, item) => sum + Number(item.orders || 0), 0);
 
-  const totalOrders = filteredData.reduce((sum, item) => {
-    return sum + Number(item.orders);
-  }, 0);
+  const displayOrders = sumOrders > 0 ? sumOrders : storeTotalOrders;
+  const displayRevenue = sumRevenue > 0 ? sumRevenue : storeTotalRevenue;
 
-  document.getElementById("totalProducts").textContent = totalProducts;
+  const totalProdEl = document.getElementById("totalProducts");
+  const totalCustEl = document.getElementById("totalCustomers");
+  const totalOrdEl = document.getElementById("totalOrders");
+  const totalRevEl = document.getElementById("totalRevenue");
 
-  document.getElementById("totalCustomers").textContent = totalCustomers;
-
-  document.getElementById("totalOrders").textContent = totalOrders;
-
-  document.getElementById("totalRevenue").textContent =
-    formatMoney(totalRevenue);
+  if (totalProdEl) totalProdEl.textContent = totalProducts;
+  if (totalCustEl) totalCustEl.textContent = totalCustomers;
+  if (totalOrdEl) totalOrdEl.textContent = displayOrders;
+  if (totalRevEl) totalRevEl.textContent = formatMoney(displayRevenue);
 }
-
-// ==========================================
-// DOANH THU CAO NHẤT
-// ==========================================
 
 function getHighestRevenue() {
+  if (filteredData.length === 0) return { revenue: 0, date: new Date() };
   return filteredData.reduce((max, item) => {
     return Number(item.revenue) > Number(max.revenue) ? item : max;
-  });
+  }, filteredData[0]);
 }
-
-// ==========================================
-// DOANH THU THẤP NHẤT
-// ==========================================
 
 function getLowestRevenue() {
+  if (filteredData.length === 0) return { revenue: 0, date: new Date() };
   return filteredData.reduce((min, item) => {
     return Number(item.revenue) < Number(min.revenue) ? item : min;
-  });
+  }, filteredData[0]);
 }
-
-// ==========================================
-// DOANH THU TRUNG BÌNH
-// ==========================================
 
 function getAverageRevenue() {
   if (filteredData.length === 0) return 0;
-
-  const total = filteredData.reduce((sum, item) => {
-    return sum + Number(item.revenue);
-  }, 0);
-
+  const total = filteredData.reduce((sum, item) => sum + Number(item.revenue || 0), 0);
   return Math.round(total / filteredData.length);
 }
 
-// ==========================================
-// CẬP NHẬT 3 THẺ PHÍA DƯỚI
-// ==========================================
-
 function updateSummaryCards() {
-  if (filteredData.length === 0) return;
+  const highestEl = document.getElementById("highestRevenue");
+  const highestDateEl = document.getElementById("highestDate");
+  const lowestEl = document.getElementById("lowestRevenue");
+  const lowestDateEl = document.getElementById("lowestDate");
+  const averageEl = document.getElementById("averageRevenue");
+
+  if (filteredData.length === 0) {
+    if (highestEl) highestEl.textContent = "0đ";
+    if (highestDateEl) highestDateEl.textContent = "Chưa có dữ liệu";
+    if (lowestEl) lowestEl.textContent = "0đ";
+    if (lowestDateEl) lowestDateEl.textContent = "Chưa có dữ liệu";
+    if (averageEl) averageEl.textContent = "0đ";
+    return;
+  }
 
   const highest = getHighestRevenue();
-
   const lowest = getLowestRevenue();
-
   const average = getAverageRevenue();
 
-  document.getElementById("highestRevenue").textContent = formatMoney(
-    Number(highest.revenue)
-  );
-
-  document.getElementById("highestDate").textContent =
-    "Ngày " + formatDate(highest.date);
-
-  document.getElementById("lowestRevenue").textContent = formatMoney(
-    Number(lowest.revenue)
-  );
-
-  document.getElementById("lowestDate").textContent =
-    "Ngày " + formatDate(lowest.date);
-
-  document.getElementById("averageRevenue").textContent = formatMoney(average);
+  if (highestEl) highestEl.textContent = formatMoney(Number(highest.revenue || 0));
+  if (highestDateEl) highestDateEl.textContent = "Ngày " + formatDate(highest.date);
+  if (lowestEl) lowestEl.textContent = formatMoney(Number(lowest.revenue || 0));
+  if (lowestDateEl) lowestDateEl.textContent = "Ngày " + formatDate(lowest.date);
+  if (averageEl) averageEl.textContent = formatMoney(average);
 }
-
-// ==========================================
-// CẬP NHẬT THỜI GIAN
-// ==========================================
 
 function updateUpdateTime() {
   const now = new Date();
-
-  const time =
-    now.toLocaleDateString("vi-VN") + " " + now.toLocaleTimeString("vi-VN");
-
-  document.getElementById("updateTime").textContent = time;
+  const time = now.toLocaleDateString("vi-VN") + " " + now.toLocaleTimeString("vi-VN");
+  const timeEl = document.getElementById("updateTime");
+  if (timeEl) timeEl.textContent = time;
 }
-
-// ==========================================
-// CẬP NHẬT TOÀN BỘ GIAO DIỆN
-// ==========================================
 
 function updateStatistics() {
   updateOverviewCards();
-
   updateSummaryCards();
-
   updateChart();
-
   updateUpdateTime();
 }
-// ==========================================
-// LỌC DỮ LIỆU THEO NGÀY
-// ==========================================
 
-function filterByDate(fromDate, toDate) {
-  filteredData = statisticsData.filter((item) => {
-    const current = new Date(item.date);
+async function handleStatistics() {
+  const fromDate = document.getElementById("fromDate")?.value;
+  const toDate = document.getElementById("toDate")?.value;
 
-    const from = new Date(fromDate);
+  if (!validateFilter(fromDate, toDate)) return;
 
-    const to = new Date(toDate);
-
-    return current >= from && current <= to;
-  });
+  await fetchDataFromAPI(fromDate, toDate);
+  updateStatistics();
 }
-
-// ==========================================
-// KIỂM TRA DỮ LIỆU
-// ==========================================
 
 function validateFilter(fromDate, toDate) {
   if (!fromDate || !toDate) {
     alert("Vui lòng chọn đầy đủ ngày bắt đầu và ngày kết thúc.");
-
     return false;
   }
-
   if (new Date(fromDate) > new Date(toDate)) {
     alert("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
-
     return false;
   }
-
   return true;
 }
 
-// ==========================================
-// XỬ LÝ NÚT THỐNG KÊ
-// ==========================================
-
-function handleStatistics() {
-  const fromDate = document.getElementById("fromDate").value;
-
-  const toDate = document.getElementById("toDate").value;
-
-  if (!validateFilter(fromDate, toDate)) {
-    return;
-  }
-
-  filterByDate(fromDate, toDate);
-
-  if (filteredData.length === 0) {
-    alert("Không có dữ liệu trong khoảng thời gian này.");
-
-    return;
-  }
-
-  updateStatistics();
-}
-
-// ==========================================
-// SỰ KIỆN NÚT XEM THỐNG KÊ
-// ==========================================
-
 const btnStatistic = document.getElementById("btnStatistic");
-
 if (btnStatistic) {
   btnStatistic.addEventListener("click", function () {
     handleStatistics();
   });
 }
 
-// ==========================================
-// ENTER ĐỂ THỐNG KÊ
-// ==========================================
-
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    handleStatistics();
-  }
-});
-
-// ==========================================
-// RESET DỮ LIỆU
-// ==========================================
-
-function resetStatistics() {
-  filteredData = [...statisticsData];
-
-  updateStatistics();
-}
-
-// ==========================================
-// LOAD MẶC ĐỊNH THEO THÁNG HIỆN TẠI
-// ==========================================
-
-function loadDefaultData() {
+function initDefaultDates() {
   const fromInput = document.getElementById("fromDate");
-
   const toInput = document.getElementById("toDate");
 
-  if (fromInput && toInput) {
-    filterByDate(fromInput.value, toInput.value);
-  }
+  const today = new Date();
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(today.getDate() - 30);
 
-  updateStatistics();
+  const formatDateVal = (d) => d.toISOString().split("T")[0];
+
+  if (fromInput && !fromInput.value) fromInput.value = formatDateVal(thirtyDaysAgo);
+  if (toInput && !toInput.value) toInput.value = formatDateVal(today);
 }
-// ==========================================
-// DOM READY
-// ==========================================
 
 document.addEventListener("DOMContentLoaded", async function () {
   const token = localStorage.getItem("token");
@@ -359,34 +264,42 @@ document.addEventListener("DOMContentLoaded", async function () {
   const adminName = document.getElementById("adminName");
   if (adminName && user.fullname) adminName.textContent = user.fullname;
 
-  await fetchDataFromAPI();
+  initDefaultDates();
 
-  // Khởi tạo biểu đồ
+  const fromDate = document.getElementById("fromDate")?.value;
+  const toDate = document.getElementById("toDate")?.value;
+
+  await fetchDataFromAPI(fromDate, toDate);
   createChart();
-
-  // Load dữ liệu mặc định
-  loadDefaultData();
+  updateStatistics();
 });
 
-async function fetchDataFromAPI() {
+async function fetchDataFromAPI(startDate = "", endDate = "") {
   try {
     const headers = { "Authorization": `Bearer ${localStorage.getItem("token")}` };
     
     const statRes = await fetch(`${API_URL}/dashboard/statistics`, { headers });
     const statResult = await statRes.json();
     if (statResult.success) {
-      totalProducts = statResult.data.totalProducts;
-      totalCustomers = statResult.data.totalCustomers;
+      totalProducts = statResult.data.totalProducts || 0;
+      totalCustomers = statResult.data.totalCustomers || 0;
+      storeTotalOrders = statResult.data.totalOrders || 0;
+      storeTotalRevenue = statResult.data.totalRevenue || 0;
     }
 
-    const revRes = await fetch(`${API_URL}/dashboard/revenue`, { headers });
+    let revUrl = `${API_URL}/dashboard/revenue`;
+    if (startDate && endDate) {
+      revUrl += `?startDate=${startDate}&endDate=${endDate}`;
+    }
+
+    const revRes = await fetch(revUrl, { headers });
     const revResult = await revRes.json();
     if (revResult.success) {
-      statisticsData = revResult.data;
+      statisticsData = revResult.data || [];
       filteredData = [...statisticsData];
     }
   } catch (err) {
-    console.error(err);
+    console.error("Lỗi khi tải dữ liệu thống kê:", err);
   }
 }
 

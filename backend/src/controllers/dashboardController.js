@@ -10,7 +10,7 @@ exports.getStatistics = async (req, res) => {
     const totalRevenue = await Order.sum('total_price', {
       where: {
         status: {
-          [Op.in]: ['completed', 'success', 'shipping', 'processing', 'pending'] // Trừ cancelled
+          [Op.in]: ['completed', 'success', 'shipping', 'processing', 'pending']
         }
       }
     });
@@ -21,7 +21,7 @@ exports.getStatistics = async (req, res) => {
         totalProducts,
         totalOrders,
         totalCustomers,
-        totalRevenue: totalRevenue || 0
+        totalRevenue: Number(totalRevenue || 0)
       }
     });
   } catch (err) {
@@ -80,19 +80,33 @@ exports.getBestSellers = async (req, res) => {
 
 exports.getRevenueChart = async (req, res) => {
   try {
-    // Trả về doanh thu theo ngày trong 30 ngày gần nhất
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const { startDate, endDate } = req.query;
+    let whereCondition = {
+      status: {
+        [Op.not]: 'cancelled'
+      }
+    };
+
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      start.setHours(0, 0, 0, 0);
+      const end = new Date(endDate);
+      end.setHours(23, 59, 59, 999);
+
+      whereCondition.created_at = {
+        [Op.gte]: start,
+        [Op.lte]: end
+      };
+    } else {
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      whereCondition.created_at = {
+        [Op.gte]: thirtyDaysAgo
+      };
+    }
 
     const orders = await Order.findAll({
-      where: {
-        created_at: {
-          [Op.gte]: thirtyDaysAgo
-        },
-        status: {
-          [Op.not]: 'cancelled'
-        }
-      },
+      where: whereCondition,
       attributes: [
         [sequelize.fn('DATE', sequelize.col('created_at')), 'date'],
         [sequelize.fn('SUM', sequelize.col('total_price')), 'revenue'],

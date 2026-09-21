@@ -173,6 +173,82 @@ async function seedDatabase() {
         }
       ]);
     }
+
+    // 5. ĐƠN HÀNG MẪU NẾU CHƯA CÓ
+    const orderCount = await Order.count();
+    if (orderCount === 0) {
+      const { OrderItem } = require('../models');
+      const now = new Date();
+      
+      const sampleOrders = [
+        {
+          order_code: 'DH1001',
+          customer_name: 'Nguyễn Văn An',
+          phone: '0912345678',
+          shipping_address: '123 Nguyễn Huệ, Q.1, TP.HCM',
+          total_price: 1105000,
+          status: 'completed',
+          payment_method: 'cod',
+          created_at: new Date(now.getTime() - 15 * 24 * 60 * 60 * 1000)
+        },
+        {
+          order_code: 'DH1002',
+          customer_name: 'Trần Thị Bình',
+          phone: '0987654321',
+          shipping_address: '45 Lê Lợi, Q.1, TP.HCM',
+          total_price: 975000,
+          status: 'completed',
+          payment_method: 'bank',
+          created_at: new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000)
+        },
+        {
+          order_code: 'DH1003',
+          customer_name: 'Lê Hoàng Nam',
+          phone: '0933112233',
+          shipping_address: '78 Điện Biên Phủ, Q.Bình Thạnh, TP.HCM',
+          total_price: 670000,
+          status: 'shipping',
+          payment_method: 'cod',
+          created_at: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000)
+        },
+        {
+          order_code: 'DH1004',
+          customer_name: 'Phạm Minh Anh',
+          phone: '0977889900',
+          shipping_address: '12 Cầu Giấy, Hà Nội',
+          total_price: 1380000,
+          status: 'processing',
+          payment_method: 'bank',
+          created_at: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000)
+        },
+        {
+          order_code: 'DH1005',
+          customer_name: 'Võ Thị Hoa',
+          phone: '0905123456',
+          shipping_address: '99 Trần Phú, Hải Châu, Đà Nẵng',
+          total_price: 610000,
+          status: 'pending',
+          payment_method: 'cod',
+          created_at: now
+        }
+      ];
+
+      for (const ordData of sampleOrders) {
+        const order = await Order.create(ordData);
+        const prod = await Product.findOne();
+        if (prod) {
+          await OrderItem.create({
+            order_id: order.id,
+            product_id: prod.id,
+            product_name: prod.name,
+            price: prod.price,
+            quantity: 1,
+            total_price: prod.price
+          });
+        }
+      }
+      console.log('✅ Đã khởi tạo danh sách đơn hàng mẫu cho CSDL!');
+    }
   } catch (err) {
     console.error('⚠️ Lỗi tự động nạp dữ liệu mẫu:', err.message);
   }
