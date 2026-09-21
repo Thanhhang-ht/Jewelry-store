@@ -144,7 +144,35 @@ if (imageInput) {
 function readFileAsBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = (e) => resolve(e.target.result);
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+        const maxDim = 1000;
+
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const compressedBase64 = canvas.toDataURL("image/jpeg", 0.82);
+        resolve(compressedBase64);
+      };
+      img.onerror = () => resolve(e.target.result);
+      img.src = e.target.result;
+    };
     reader.onerror = (err) => reject(err);
     reader.readAsDataURL(file);
   });
@@ -249,11 +277,11 @@ if (productForm) {
         alert(mode === "add" ? "Thêm sản phẩm thành công!" : "Cập nhật sản phẩm thành công!");
         window.location.href = "product-management.html";
       } else {
-        alert("Lỗi: " + result.message);
+        alert("Lỗi: " + (result.message || "Không thể lưu sản phẩm. Vui lòng kiểm tra quyền đăng nhập"));
       }
     } catch (err) {
       console.error(err);
-      alert("Lỗi kết nối máy chủ");
+      alert("Lỗi khi lưu sản phẩm: " + (err.message || "Vui lòng kiểm tra lại kết nối server"));
     }
   });
 }
